@@ -1,12 +1,12 @@
 package mynetflixjsp.modele;
 
-public class Cocktail {
+public class Saison {
 
 	private int id;
 	private String nom;
 	private String composition;
 
-	public Cocktail(int id, String nom, String composition) {
+	public Saison(int id, String nom, String composition) {
 		this.id = id;
 		this.nom = nom;
 		this.composition = composition;

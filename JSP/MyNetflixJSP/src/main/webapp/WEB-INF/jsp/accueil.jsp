@@ -4,9 +4,11 @@
 <html>
   <head>
   	<meta charset="UTF-8">
-    <title>Cocktail EE</title>
+    <title>MyNetflixJSP</title>
   </head>
   <body>
-  	<a href="<c:url value="/commande"/>">Commander</a>  
+  	<a href="<c:url value="/serie"/>">Serie</a>  
+  	<a href="<c:url value="/saison"/>">Saison</a>  
+  	<a href="<c:url value="/episode"/>">Episode</a>  
   </body>
 </html>

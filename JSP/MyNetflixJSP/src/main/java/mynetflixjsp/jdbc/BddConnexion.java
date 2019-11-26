@@ -19,10 +19,7 @@ public class BddConnexion {
 			user.desactiverAncienUtilisateur();
 			System.out.println(user.isAutorise("Kenjaman", "lecture"));
 			System.out.println(user.isAutorise("Spoonless", "lecture"));
-			List<Utilisateur> users = user.getUtilisateurs();
-			for(Utilisateur u : users) {
-				System.out.printf("%2$s (Id : %1$d) inscrit depuis le %3$td %3$tB %3$tY \n",u.getId(), u.getLogin(), u.getInscription());
-			}
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
