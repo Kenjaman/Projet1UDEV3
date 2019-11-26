@@ -68,3 +68,65 @@ function getNbSaisons(id, cellule){
 	xmlHttpSaisons.open("GET", "http://localhost/apinetflix/api.php?data=saisons&idserie=" + id);
 	xmlHttpSaisons.send();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function getNumSaisons(id, cellule){
+	var NumSaisons = 0;
+	var xmlHttpSaisons = getAjaxRequestObject();
+	xmlHttpSaisons.onreadystatechange = function(){
+		if (this.readyState === 4 && this.status === 200){
+			try{
+				NumSaisons = JSON.parse(this.responseText).length;
+			}catch (e){
+				NumSaisons= 0;
+			}
+			cellule.innerText = NumSaisons;
+		}
+	};
+}
+xmlHttpSaisons.open("GET", "http://localhost/ApiNetflix/api.php?data=saisons" + id);
+xmlHttpSaisons.send();
