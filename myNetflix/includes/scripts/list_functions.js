@@ -32,7 +32,7 @@ function getListeSeries(table){
 			}
 		}
 	};
-	xmlHttpSeries.open("GET", "https://www.devatom.net/formation/UDEV3/APINetflix/api.php?data=series");
+	xmlHttpSeries.open("GET", "http://localhost/apinetflix/api.php?data=series");
 	xmlHttpSeries.send();
 }
 
@@ -48,7 +48,7 @@ function getSaisons(id){
 			}
 		}
 	};
-	xmlHttpSaisons.open("GET", "https://www.devatom.net/formation/UDEV3/APINetflix/api.php?data=saisons&idserie=" + id);
+	xmlHttpSaisons.open("GET", "http://localhost/apinetflix/api.php?data=saisons&idserie=" + id);
 	xmlHttpSaisons.send();
 }
 
@@ -65,6 +65,6 @@ function getNbSaisons(id, cellule){
 			cellule.innerText = nbSaisons;
 		}
 	};
-	xmlHttpSaisons.open("GET", "https://www.devatom.net/formation/UDEV3/APINetflix/api.php?data=saisons&idserie=" + id);
+	xmlHttpSaisons.open("GET", "http://localhost/apinetflix/api.php?data=saisons&idserie=" + id);
 	xmlHttpSaisons.send();
 }
