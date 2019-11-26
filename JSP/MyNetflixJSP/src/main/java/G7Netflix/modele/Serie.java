@@ -1,4 +1,4 @@
-package mynetflixjsp.modele;
+package G7Netflix.modele;
 
 import java.sql.Date;
 

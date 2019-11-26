@@ -1,4 +1,4 @@
-package mynetflixjsp.web;
+package G7Netflix.web;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,7 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-@WebServlet("/Connexion")
+import G7Netflix.jdbc.DAOSaison;
+import G7Netflix.modele.Saison;
+
+@WebServlet("/")
 public class AccueilControleurServlet extends HttpServlet {
 	private static final String VUE_CONNEXION = "/WEB-INF/jsp/connexion.jsp";
 
@@ -37,7 +40,11 @@ public class AccueilControleurServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		try (Connection connection = bddMyNetflix.getConnection()) {
-			
+			System.out.println("Connexion Reussie");
+			DAOSaison testDAO = new DAOSaison(connection);
+			for(Saison saison : testDAO.getSaisons()) {
+				System.out.println(saison.getNumero());
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

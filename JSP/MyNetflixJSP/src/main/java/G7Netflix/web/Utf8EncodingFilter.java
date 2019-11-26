@@ -1,4 +1,4 @@
-package mynetflixjsp.web;
+package G7Netflix.web;
 
 import java.io.IOException;
 
