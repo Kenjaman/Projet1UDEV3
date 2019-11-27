@@ -4,7 +4,7 @@
 <html>
   <head>
   	<meta charset="UTF-8">
-    <title>MyNetflixJSP</title>
+    <title>G7NetFlix</title>
   </head>
   <body>
   	<a href="<c:url value="/serie"/>">Serie</a>  

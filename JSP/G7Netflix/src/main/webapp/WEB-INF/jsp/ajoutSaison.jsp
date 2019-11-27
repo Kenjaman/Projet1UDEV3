@@ -4,7 +4,7 @@
 <html>
   <head>
   	<meta charset="UTF-8">
-    <title>Cocktail EE</title>
+    <title>Ajout Saison</title>
     <style type="text/css">
     	form > div {
     		padding: .5em;
@@ -19,12 +19,12 @@
 
 	<form method="post" accept-charset="utf-8">
 		<div>
-			<label for="cocktail">Cocktail : </label>
-			<select id="cocktail" name="cocktail">
+			<label for="nom">Nom Serie : </label>
+			<select id="statut" name="statut">
 				<option value="0">-- Choisissez --</option>
-				<c:forEach var="cocktail" items="${listeCocktails}">
-					<option value="${cocktail.id}" ${param['cocktail'] == cocktail.id ? "selected" : ""}>
-						<c:out value="${cocktail.nom}"/>
+				<c:forEach var="saison" items="${listSaison}">
+					<option value="${saison.id}">
+						<c:out value="${saison.nom}"/>
 					</option>
 				</c:forEach>
 			</select> 
