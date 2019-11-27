@@ -23,8 +23,8 @@ public class DAOSerie {
 	
     public List<Serie> getSeries() throws SQLException{
         List<Serie> series = new ArrayList<Serie>();    
-        String requeteGetSerie ="SELECT id,"
-                + " nom, nomoriginal, anneeparution, synopsys, idstatut, s.libelle, idpaysorigine, p.nom, p.code FROM serie ser"
+        String requeteGetSerie ="SELECT ser.id,"
+                + " ser.nom, ser.nomoriginal, ser.anneeparution, ser.synopsys, idstatut, s.libelle, idpaysorigine, p.nom, p.code FROM serie ser"
                 + " INNER JOIN statut s ON ser.idstatut = s.id"
                 + " INNER JOIN pays p ON ser.idpaysorigine = p.id";
         try(Statement stmt = connexion.createStatement();
