@@ -8,26 +8,29 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import G7Netflix.modele.Pays;
 import G7Netflix.modele.Serie;
 import G7Netflix.modele.Statut;
 
 public class DAOSerie {
 
-	private Connection connexion;
+	private DataSource dataSource;
 	
-	public DAOSerie(Connection connection) {
+	public DAOSerie(DataSource dataSource) {
 		super();
-		this.connexion=connection;
+		this.dataSource=dataSource;
 	}
 	
     public List<Serie> getSeries() throws SQLException{
         List<Serie> series = new ArrayList<Serie>();    
-        String requeteGetSerie ="SELECT id,"
-                + " nom, nomoriginal, anneeparution, synopsys, idstatut, s.libelle, idpaysorigine, p.nom, p.code FROM serie ser"
+        String requeteGetSerie ="SELECT ser.id,"
+                + " ser.nom, ser.nomoriginal, ser.anneeparution, ser.synopsys, ser.idstatut, s.libelle, ser.idpaysorigine, p.nom, p.code FROM serie ser"
                 + " INNER JOIN statut s ON ser.idstatut = s.id"
                 + " INNER JOIN pays p ON ser.idpaysorigine = p.id";
-        try(Statement stmt = connexion.createStatement();
+        try(Connection connexion = dataSource.getConnection();
+        		Statement stmt = connexion.createStatement();
             ResultSet result = stmt.executeQuery(requeteGetSerie)){
                 int i = 1;
                 while(result.next()) {
@@ -37,7 +40,7 @@ public class DAOSerie {
                     int anneeParution = result.getInt("anneeparution");
                     String synopsys = result.getString("synopsys");
                     Statut statut = new Statut(result.getInt("idstatut"), result.getString("s.libelle"));
-                    Pays paysOrigine = new Pays(result.getInt("idpaysorigine"), result.getString("p.nom"), result.getInt("p.code"));
+                    Pays paysOrigine = new Pays(result.getInt("idpaysorigine"), result.getString("p.nom"), result.getString("p.code"));
                     series.add(new Serie(id, nom, nomOriginal, anneeParution, synopsys, statut, paysOrigine));
                 }
             return series;
@@ -48,7 +51,8 @@ public class DAOSerie {
 	public void addSerie(Serie serie) throws SQLException {
 		String requeteInsertionSerie = "INSERT INTO serie"
 				+ " (nom, nomoriginal, anneeparution, synopsys, idstatut, idpaysorigine) values (?,?,?,?)";
-		try(PreparedStatement stmt = connexion.prepareStatement(requeteInsertionSerie, 
+		try(Connection connexion = dataSource.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(requeteInsertionSerie, 
 				PreparedStatement.RETURN_GENERATED_KEYS)){
 			stmt.setString(1, serie.getNom());
 			stmt.setString(2, serie.getNomOriginal());
@@ -57,20 +61,13 @@ public class DAOSerie {
 			stmt.setInt(5, serie.getStatut().getId());
 			stmt.setInt(6, serie.getPaysOrigine().getId());
 			stmt.executeUpdate(requeteInsertionSerie);
-			serie.setId(extractPrimaryKey(stmt));
+			serie.setId(extractPrimaryKey(connexion,stmt));
 			
 		}
 	}
 
-	public Connection getConnexion() {
-		return connexion;
-	}
-	
-	public void setConnexion(Connection connexion) {
-		this.connexion = connexion;
-	}
 
-	private int extractPrimaryKey(PreparedStatement stmt) throws SQLException {
+	private int extractPrimaryKey(Connection connexion, Statement stmt) throws SQLException {
 		try(ResultSet resultSet = stmt.getGeneratedKeys()) {
 			if(! resultSet.next()) {
 				connexion.rollback();

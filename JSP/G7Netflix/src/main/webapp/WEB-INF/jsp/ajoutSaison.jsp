@@ -26,8 +26,8 @@
 		<div>
 		  <select name="nomSerie">
               <option value="0">--</option>
-              <c:forEach items="${nomSerie}" var="varnomSerie">
-                  <option ${param['nomSerie'] == varnomSerie ? "selected" : ""}><c:out value="${varnomSerie}"/></option>
+              <c:forEach items="${nomsSeries}" var="varnomSerie">
+                  <option ${param['nomSerie'] == varnomSerie ? "selected" : ""}><c:out value="${varnomSerie.nom}"/></option>
               </c:forEach>
           </select>
        	</div>
