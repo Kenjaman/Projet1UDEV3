@@ -4,7 +4,7 @@
 <html>
   <head>
   	<meta charset="UTF-8">
-    <title>Ajout d'une Saison</title>
+    <title>Ajout d'une Série</title>
   </head>
   <body>
   	<section id="topheader">
@@ -22,15 +22,7 @@
 </section>
 <section id="content">
 	<form action="" method="post">
-		<header>Fiche d'ajout d'une saison</header>
-		<div>
-		  <select name="nomSerie">
-              <option value="0">--</option>
-              <c:forEach items="${nomSerie}" var="varnomSerie">
-                  <option ${param['nomSerie'] == varnomSerie ? "selected" : ""}><c:out value="${varnomSerie}"/></option>
-              </c:forEach>
-          </select>
-       	</div>
+		<header>Fiche d'ajout d'une série</header>
 		<div>
 			<label for="nom">Nom :</label>
 			<input type="text" name="nom" id="nom" placeholder="Saisir le nom de la série" value="<c:out value="${param['nom']}"/>">
@@ -49,7 +41,7 @@
 		</div>
 		<div>
 		  <select name="statut">
-              <option value="">--</option>
+              <option value="0">--</option>
               <c:forEach items="${statut}" var="varStatut">
                   <option ${param['statut'] == varStatut ? "selected" : ""}><c:out value="${varStatut}"/></option>
               </c:forEach>
@@ -57,7 +49,7 @@
        	</div>
 		<div>
 		  <select name="paysOrigine">
-              <option value="">--</option>
+              <option value="0">--</option>
               <c:forEach items="${paysOrigine}" var="varPaysOrigine">
                   <option ${param['paysOrigine'] == varPaysOrigine ? "selected" : ""}><c:out value="${varPaysOrigine}"/></option>
               </c:forEach>
