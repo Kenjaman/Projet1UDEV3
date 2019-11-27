@@ -7,75 +7,78 @@ public class Serie {
 	private Integer id;
 	private String nom;
 	private String nomoriginal;
-	private Date anneeparution;	
+	private Integer anneeparution;	
 	private String synopsys;
-	private Integer idstatut;
-	private Integer idpaysorigine;
+	private Statut statut;
+	private Pays paysOrigine;
 	
-	public Serie(Integer id, String nom, String nomoriginal, Date anneeparution, String synopsys, Integer idstatut, Integer idpaysorigine) {
+	public Serie(Integer id, String nom, String nomoriginal, Integer anneeparution, String synopsys, Statut statut,
+			Pays paysOrigine) {
+		super(); 
 		this.id = id;
 		this.nom = nom;
 		this.nomoriginal = nomoriginal;
 		this.anneeparution = anneeparution;
 		this.synopsys = synopsys;
-		this.idstatut = idstatut;
-		this.idpaysorigine = idpaysorigine;
+		this.statut =statut;
+		this.paysOrigine = paysOrigine;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
-	
-	public String getNom() {
-		return nom;
-	}
-	
-	public String getNomoriginal() {
-		return nomoriginal;
-	}
-	
-	public Date getAnneeparution() {
-		return anneeparution;
-	}
-	
-	public String getSynopsys() {
-		return synopsys;
-	}
-	
-	public Integer getIdstatut() {
-		return idstatut;
-	}
-	
-	public Integer getIdpaysorigine() {
-		return idpaysorigine;
-	}
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
+	public String getNom() {
+		return nom;
+	}
+
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	
-	public void setNomoriginal(String nomoriginal) {
+
+	public String getNomOriginal() {
+		return nomoriginal;
+	}
+
+	public void setNomOriginal(String nomoriginal) {
 		this.nomoriginal = nomoriginal;
 	}
-	
-	public void setAnneeparution(Date anneeparution) {
+
+	public Integer getAnneeParution() {
+		return anneeparution;
+	}
+
+	public void setAnneeParution(Integer anneeparution) {
 		this.anneeparution = anneeparution;
 	}
-	
+
+	public String getSynopsys() {
+		return synopsys;
+	}
+
 	public void setSynopsys(String synopsys) {
 		this.synopsys = synopsys;
 	}
-	
-	public void setIdstatut(Integer idstatut) {
-		this.idstatut = idstatut;
+
+	public Statut getStatut() {
+		return statut;
+	}
+
+	public void setStatut(Statut statut) {
+		this.statut = statut;
+	}
+
+	public Pays getPaysOrigine() {
+		return paysOrigine;
+	}
+
+	public void setPaysOrigine(Pays paysOrigine) {
+		this.paysOrigine = paysOrigine;
 	}
 	
-	public void setIdpaysorigine(Integer idpaysorigine) {
-		this.idpaysorigine = idpaysorigine;
-	}
 	
 }
