@@ -32,8 +32,8 @@ public class SaisonControleur extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
-			DAOSaison saison = new DAOSaison(bddMyNetflix.getConnection());
-			DAOSerie serie = new DAOSerie(bddMyNetflix.getConnection());
+			DAOSaison saison = new DAOSaison(bddMyNetflix);
+			DAOSerie serie = new DAOSerie(bddMyNetflix);
 			
 			req.setAttribute("nomsSeries", serie.getSeries());
 			req.setAttribute("listSaison", saison.getSaisons());
@@ -48,15 +48,7 @@ public class SaisonControleur extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		try {
-			DAOSaison newSaison = new DAOSaison(bddMyNetflix.getConnection());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		super.doPost(req, resp);
+		DAOSaison newSaison = new DAOSaison(bddMyNetflix);
 	}
 	
 }

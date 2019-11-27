@@ -8,22 +8,25 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import G7Netflix.modele.Saison;
 
 public class DAOSaison {
 
-	private Connection connexion;
+	private DataSource dataSource;
 	
-	public DAOSaison(Connection connection) {
+	public DAOSaison(DataSource dataSource) {
 		super();
-		this.connexion=connection;
+		this.dataSource=dataSource;
 	}
 	
 	public List<Saison> getSaisons() throws SQLException{
 		List<Saison> saisons = new ArrayList<Saison>();	
 		String requeteGetSaison ="Select id,"
 				+ "numero,resume,annee_diffusion,idstatut,idserie from saison";
-		try(Statement stmt = connexion.createStatement();
+		try(Connection connexion = dataSource.getConnection();
+				Statement stmt = connexion.createStatement();
 				ResultSet result = stmt.executeQuery(requeteGetSaison)){
 			while(result.next()) {
 				int id = result.getInt("id");
@@ -42,38 +45,36 @@ public class DAOSaison {
 	public void addSaison(Saison saison) throws SQLException {
 		String requeteInsertionSaison = "Insert into saison"
 				+ " (numero, idstatut, idserie, annee_diffusion) values (?,?,?,?)";
-		try(PreparedStatement stmt = connexion.prepareStatement(requeteInsertionSaison, 
+		try(Connection connexion = dataSource.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(requeteInsertionSaison, 
 				PreparedStatement.RETURN_GENERATED_KEYS)){
 			stmt.setInt(1, saison.getNumero());
 			stmt.setInt(2, saison.getIdStatut());
 			stmt.setInt(3, saison.getIdSerie());
 			stmt.setInt(4, saison.getAnneeDiffusion());
 			stmt.executeUpdate(requeteInsertionSaison);
-			saison.setId(extractPrimaryKey(stmt));
+			saison.setId(extractPrimaryKey(connexion,stmt));
 			
 		}
 	}
 
-	public Connection getConnexion() {
-		return connexion;
-	}
-	
-	
-	
 
-	public void setConnexion(Connection connexion) {
-		this.connexion = connexion;
+	public DataSource getDataSource() {
+		return dataSource;
 	}
 
-	private int extractPrimaryKey(PreparedStatement stmt) throws SQLException {
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
+	private int extractPrimaryKey(Connection connexion, Statement stmt) throws SQLException {
 		try(ResultSet resultSet = stmt.getGeneratedKeys()) {
 			if(! resultSet.next()) {
 				connexion.rollback();
-				throw new SQLException("Aucune série insérée !");
+				throw new SQLException("Aucune saison insérée !");
 			}
 			return resultSet.getInt(1);
 		}
 	}
-
 	
 }

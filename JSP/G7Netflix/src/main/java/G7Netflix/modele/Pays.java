@@ -4,12 +4,12 @@ public class Pays {
 
 	private Integer id;
 	private String nom;
-	private Integer code;
+	private String code;
 	
-	public Pays(int id, String nom, int code) {
+	public Pays(int id, String nom, String string) {
 		this.id = id;
 		this.nom = nom;
-		this.code = code;	
+		this.code = string;	
 	}
 
 	public Integer getId() {
@@ -28,12 +28,14 @@ public class Pays {
 		this.nom = nom;
 	}
 
-	public Integer getCode() {
+	public String getCode() {
 		return code;
 	}
 
-	public void setCode(Integer code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
+
+
 	
 }

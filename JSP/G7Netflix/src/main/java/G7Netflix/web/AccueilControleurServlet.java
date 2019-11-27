@@ -38,7 +38,7 @@ public class AccueilControleurServlet extends HttpServlet {
 			try (Connection connection = bddMyNetflix.getConnection()) {
 				System.out.println("ploppppp");
 				System.out.println("Connexion Reussie");
-				DAOSaison testDAO = new DAOSaison(connection);
+				DAOSaison testDAO = new DAOSaison(dataSource);
 				for(Saison saison : testDAO.getSaisons()) {
 					System.out.println(saison.getNumero());
 				}
