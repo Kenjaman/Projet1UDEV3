@@ -42,7 +42,7 @@
 		<div>
 		  <select name="statut">
               <option value="0">--</option>
-              <c:forEach items="${statut}" var="varStatut">
+              <c:forEach items="${statuts}" var="varStatut">
                   <option ${param['statut'] == varStatut ? "selected" : ""}><c:out value="${varStatut}"/></option>
               </c:forEach>
           </select>
@@ -50,7 +50,7 @@
 		<div>
 		  <select name="paysOrigine">
               <option value="0">--</option>
-              <c:forEach items="${paysOrigine}" var="varPaysOrigine">
+              <c:forEach items="${paysOrigines}" var="varPaysOrigine">
                   <option ${param['paysOrigine'] == varPaysOrigine ? "selected" : ""}><c:out value="${varPaysOrigine}"/></option>
               </c:forEach>
           </select>
