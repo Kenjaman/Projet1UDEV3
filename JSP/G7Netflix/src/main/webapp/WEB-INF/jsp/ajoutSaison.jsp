@@ -31,38 +31,27 @@
               </c:forEach>
           </select>
        	</div>
-		<div>
-			<label for="nom">Nom :</label>
-			<input type="text" name="nom" id="nom" placeholder="Saisir le nom de la série" value="<c:out value="${param['nom']}"/>">
+       	<div>
+			<label for="numeroSaison">Numéro de Saison: </label>
+			<input id="numeroSaison" name="numeroSaison" type="number" min="1" step="1" value="<c:out value="${param['numeroSaison']}" />"> 
 		</div>
 		<div>
-			<label for="nomOriginal">Nom Original :</label>
-			<input type="text" name="nomOriginal" id="nomOriginal" placeholder="Saisir le nom Original de la série" value="<c:out value="${param['nomOriginal']}"/>">
+			<label for="anneeDiffusion">Année de diffusion : </label>
+			<input id="anneeDiffusion" name="anneeDiffusion" type="number" min="1900" step="1900" value="<c:out value="${param['anneeDiffusion']}" />"> 
 		</div>
 		<div>
-			<label for="anneeParution">Année de Parution : </label>
-			<input id="anneeParution" name="anneeParution" type="number" min="1" step="1" value="<c:out value="${param['anneeParution']}" />"> 
+			<label for="resume">Résumé :</label>
+			<input type="text" name="resume" id="resume" placeholder="Saisir le résumé de la saison" value="<c:out value="${param['resume']}"/>">
 		</div>
 		<div>
-			<label for="synopsys">Synopsys :</label>
-			<input type="text" name="synopsys" id="synopsys" placeholder="Saisir le Synopsys" value="<c:out value="${param['synopsys']}"/>">
-		</div>
-		<div>
-		  <select name="statut">
-              <option value="">--</option>
-              <c:forEach items="${statut}" var="varStatut">
-                  <option ${param['statut'] == varStatut ? "selected" : ""}><c:out value="${varStatut}"/></option>
+		  <select name="statutSaison">
+              <option value="0">--</option>
+              <c:forEach items="${statutSaisons}" var="varStatutSaison">
+                  <option ${param['statutSaison'] == varStatutSaison ? "selected" : ""}><c:out value="${varStatutSaison}"/></option>
               </c:forEach>
           </select>
        	</div>
 		<div>
-		  <select name="paysOrigine">
-              <option value="">--</option>
-              <c:forEach items="${paysOrigine}" var="varPaysOrigine">
-                  <option ${param['paysOrigine'] == varPaysOrigine ? "selected" : ""}><c:out value="${varPaysOrigine}"/></option>
-              </c:forEach>
-          </select>
-       	</div>
 		<div id="actions">
 			<button type="submit">Valider</button>
 			<button type="reset">Annuler</button>
