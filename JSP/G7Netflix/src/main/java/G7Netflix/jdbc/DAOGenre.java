@@ -23,6 +23,7 @@ public class DAOGenre {
 	}
 	
     public List<Genre> getGenres(Serie serie) throws SQLException{
+        List<Genre> genres = new ArrayList<Genre>();    
         String requeteGetSerie ="SELECT g.id, g.libelle FROM genre "
         		+ "INNER JOIN appartient a ON a.idgenre = g.id "
         		+ "INNER JOIN serie s ON a.idserie = " + serie.getId();
