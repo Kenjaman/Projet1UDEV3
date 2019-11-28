@@ -65,6 +65,16 @@ public class DAOSaison {
 		}
 	}
 
+	public void deleteSaison(Saison saison) throws SQLException {
+		String requeteDeleteSaison = "DELETE FROM saison, episode "
+				+ "INNER JOIN episode ON episode.idsaison = saison.id "
+				+ "WHERE saison.id = " + saison.getId();
+		try(Connection connexion = dataSource.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(requeteDeleteSaison, 
+				PreparedStatement.RETURN_GENERATED_KEYS)){
+		stmt.executeUpdate(requeteDeleteSaison);
+		}
+	}
 
 	public DataSource getDataSource() {
 		return dataSource;
