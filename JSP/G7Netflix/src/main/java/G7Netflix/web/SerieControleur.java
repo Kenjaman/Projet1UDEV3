@@ -18,6 +18,7 @@ import G7Netflix.jdbc.DAOPays;
 import G7Netflix.jdbc.DAOSerie;
 import G7Netflix.jdbc.DAOStatut;
 import G7Netflix.modele.Affectation;
+import G7Netflix.modele.DonneesInvalidesException;
 import G7Netflix.modele.Pays;
 import G7Netflix.modele.Serie;
 import G7Netflix.modele.Statut;
@@ -29,10 +30,11 @@ public class SerieControleur extends HttpServlet {
 
 	@Resource(name = "BddMyNetflix")
 	private DataSource bddMyNetflix;
+	
 	private DAOSerie serieDAO;
 	private DAOStatut statutDAO;
 	private DAOAffectation affDAO;
-	private DAOPays pays;
+	private DAOPays paysDAO;
 
 	@Override
 	public void init() throws ServletException {
@@ -40,27 +42,26 @@ public class SerieControleur extends HttpServlet {
 		serieDAO = new DAOSerie(bddMyNetflix);
 		statutDAO = new DAOStatut(bddMyNetflix);
 		affDAO = new DAOAffectation(bddMyNetflix);
-		pays = new DAOPays(bddMyNetflix);
+		paysDAO = new DAOPays(bddMyNetflix);
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		req.setAttribute("entiteeTraiter", "series");
 		try {
-			req.setAttribute("entiteTraiter", "series");
-			if(req.getParameter("action")!=null) {
+			if(req.getParameter("action")!=null) { // Si on a appuyer sur un bouton
+				req.getServletContext().setAttribute("series", serieDAO.getSeries()); //<----- POURQUOI j'ai fait ca ?? Où est ce que je m'en sert ??
 				req.getServletContext().setAttribute("statuts", statutDAO.getStatuts(affDAO.getAffectation("serie")));
-				req.getServletContext().setAttribute("series", serieDAO.getSeries());
-				req.getServletContext().setAttribute("paysOrigines", pays.getPays());
-				if(req.getParameter("action").equals("ajouter")) {
+				req.getServletContext().setAttribute("paysOrigines", paysDAO.getPays());
+				if(req.getParameter("action").equals("ajouter")) { // Appui sur ajouter
 					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SERIE).forward(req, resp);
 				}else if(req.getParameter("action").equals("modifier")) {//Transfert vers la page de modification 
 					req.setAttribute("serie", serieDAO.getSerie(Integer.valueOf(req.getParameter("id"))));
 					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SERIE).forward(req, resp);
-				}else if(req.getParameter("action").equals("supprimer")) {
+				}else if(req.getParameter("action").equals("supprimer")) {// Appui sur supprimer
 					this.doPost(req, resp);
 				}
-			}else {
+			}else { //Si on arrive depuis une autre page
 				req.setAttribute("liste", serieDAO.getSeries());
 				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 			}
@@ -75,24 +76,26 @@ public class SerieControleur extends HttpServlet {
 		try {
 			String nom = req.getParameter("nom");
 			String nomOriginal = req.getParameter("nomOriginal");
-			Integer anneeParution = Integer.valueOf(req.getParameter("anneeParution"));
+			String anneeParution = req.getParameter("anneeParution");
 			String synopsys = req.getParameter("synopsys");
 			Statut statut = statutDAO.getStatut((Integer.valueOf(req.getParameter("statut"))));
-			Pays paysOrigine = pays.getPays(Integer.valueOf(req.getParameter("paysOrigine")));
-			Serie serie = new Serie(nom,nomOriginal,anneeParution,synopsys,statut,paysOrigine);
-			//		System.out.println("Statut "+req.getParameter("statut"));
-			//		System.out.println("Pays Orginine "+req.getParameter("paysOrigine"));
-
-			//		Serie serieAjout = new Serie(nom,nomOriginal,anneeParution);
-			
-				serieDAO.addSerie(serie);
-				System.out.println(serie);
-			if(req.getParameter("action").equals("supprimer")){
-				//			serie.updateSerie(Integer.valueOf(req.getParameter("id")));
+			Pays paysOrigine = paysDAO.getPays(Integer.valueOf(req.getParameter("paysOrigine")));
+			if(req.getParameter("action").equals("modifier")){
+				Integer idSerie = Integer.valueOf(req.getParameter("id"));
+				Serie serieAupdate =new Serie(nom,nomOriginal,anneeParution,synopsys,statut,paysOrigine);
+				serieAupdate.setId(idSerie);
+				serieDAO.updateSerie(serieAupdate);
 			}else if(req.getParameter("action").equals("supprimer")) {
-				//			serie.supprimerSerie(Integer.valueOf(req.getParameter("id")));
+				Serie serieAsupp = serieDAO.getSerie(Integer.valueOf(req.getParameter("id")));
+				serieDAO.deleteSerie(serieAsupp);
+			}else {
+				Serie serie = new Serie(nom,nomOriginal,anneeParution,synopsys,statut,paysOrigine);
+				System.out.println(serie);
+				serieDAO.addSerie(serie);
 			}
-		} catch (NumberFormatException e) {
+		} catch (DonneesInvalidesException e) {
+			req.setAttribute("erreursSerie", e.getErreurs());
+			req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SERIE).forward(req, resp);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {

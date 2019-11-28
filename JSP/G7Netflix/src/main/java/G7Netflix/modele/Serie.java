@@ -14,33 +14,45 @@ public class Serie {
 	private String synopsys;
 	private Statut statut;
 	private Pays paysOrigine;
-	
-	public Serie(Integer id, String nom, String nomoriginal, Integer anneeparution, String synopsys, Statut statut,
-			Pays paysOrigine) {
-		this(nom,nomoriginal,anneeparution,synopsys,statut,paysOrigine);
-		this.id=id;
-	}
 
-	public Serie() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Serie(String nom2, String nomOriginal2, Integer anneeParution2, String synopsys2, Statut statut2,
-			Pays paysOrigine2) {
+	//Constructeur de séries depuis entrée utilisateur
+	public Serie(String nom, String nomOriginal, String anneeParution, String synopsys, Statut statut,
+			Pays paysOrigine) throws DonneesInvalidesException{
 		List<Erreur> errSerie = new ArrayList<Erreur>();
-		this.id = id;
-		errSerie.add(new Erreur("id","Id Inexistant"));
+		if(Utils.isBlank(nom))
+			errSerie.add(new Erreur("nom","Veuillez rensigner un nom"));
+		if(statut.getId()==0)
+			errSerie.add(new Erreur("Statut","Statut non renseigné"));
+		try {
+			if(Integer.valueOf(anneeParution) == 0|| anneeParution == null) {
+				errSerie.add(new Erreur("anneeParution","Année de parution non renseigné"));
+			}else{
+				this.anneeparution = Integer.valueOf(anneeParution);
+			}
+		}catch(NumberFormatException nb) {
+			errSerie.add(new Erreur("anneeParution","Veuillez renseigner un chiffre "));
+		}
 		this.nom = nom;
-		errSerie.add(new Erreur("nom","Veuillez rensigner un nom"));
-		this.nomoriginal = nomoriginal;
-		this.anneeparution = anneeparution;
-		errSerie.add(new Erreur("anneeparution","Année de parution non renseigné"));
+		this.nomoriginal = nomOriginal;
 		this.synopsys = synopsys;
-		this.statut =statut;
-		errSerie.add(new Erreur("statut","Veuillez rentrer un Statut"));
+		this.statut = statut;
+		this.paysOrigine = paysOrigine;
+		if(!errSerie.isEmpty())
+			throw new DonneesInvalidesException(errSerie);
+	}
+
+	//Constructeur pour récupèrer les données de la BDD
+	public Serie(Integer id, String nom, String nomOriginal, Integer anneeparution, String synopsys, Statut statut,
+			Pays paysOrigine) {
+		//		this(nom,nomoriginal,anneeparution,synopsys,statut,paysOrigine);
+		this.id=id;
+		this.nom = nom;
+		this.anneeparution=anneeparution;
+		this.nomoriginal = nomOriginal;
+		this.synopsys = synopsys;
+		this.statut = statut;
 		this.paysOrigine = paysOrigine;
 	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -96,6 +108,6 @@ public class Serie {
 	public void setPaysOrigine(Pays paysOrigine) {
 		this.paysOrigine = paysOrigine;
 	}
-	
-	
+
+
 }

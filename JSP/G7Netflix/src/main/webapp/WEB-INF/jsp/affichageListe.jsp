@@ -10,14 +10,14 @@
   <div id="logo">
   	<img alt="logo" src="<c:url value='/images/KenFlixIcon.svg'/>"/>
   </div>
-  <h1>PLOOOOOOP</h1>
-  	<a href='./<c:out value="${entiteTraiter}"/>?action=ajouter'>Ajouter</a>
+  <h1>LES SERIES</h1>
+  	<a href='./<c:out value="${entiteeTraiter}"/>?action=ajouter'>Ajouter</a>
  	<table>
 		<c:forEach items="${liste}" var="item">
 			<tr>
-				<td><a href='./<c:out value="${entiteTraiter}"/>?id=${item.id}'><c:out value="${item.nom}"/></a></td>
-				<td><a href='./<c:out value="${entiteTraiter}"/>?id=${item.id}&action=modifier'>Modifier</a></td>
-				<td><a href='./<c:out value="${entiteTraiter}"/>?id=${item.id}&action=supprimer'>Delete</a></td>
+				<td><a href='./<c:out value="${entiteeTraiter}"/>?id=${item.id}'><c:out value="${item.nom}"/></a></td>
+				<td><a href='./<c:out value="${entiteeTraiter}"/>?id=${item.id}&action=modifier'>Modifier</a></td>
+				<td><a href='./<c:out value="${entiteeTraiter}"/>?id=${item.id}&action=supprimer'>Delete</a></td>
 			</tr>
 		</c:forEach>
 	</table> 
