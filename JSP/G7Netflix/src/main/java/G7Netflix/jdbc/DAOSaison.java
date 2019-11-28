@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import G7Netflix.modele.Affectation;
 import G7Netflix.modele.Saison;
 import G7Netflix.modele.Serie;
 import G7Netflix.modele.Statut;
@@ -26,8 +27,9 @@ public class DAOSaison {
 	public List<Saison> getSaisons(Serie serie) throws SQLException{
 		List<Saison> saisons = new ArrayList<Saison>();	
 		String requeteGetSaison ="SELECT sai.id, sai.numero, sai.resume, sai.annee_diffusion, "
-				+ "s.id, s.libelle, ser.id FROM saison "
+				+ "s.id, s.libelle, a.id, a.libelle, ser.id FROM saison "
 				+ "INNER JOIN statut s ON sai.idstatut = s.id "
+				+ "INNER JOIN affectation a ON s.idaffectation = a.id"
 				+ "WHERE sai.idserie = " + serie.getId();
 		try(Connection connexion = dataSource.getConnection();
 				Statement stmt = connexion.createStatement();
@@ -37,7 +39,8 @@ public class DAOSaison {
 				int numero = result.getInt("sai.numero");
 				String resume=result.getString("sai.resume");
 				int anneeDiffusion = result.getInt("sai.annee_diffusion");
-				Statut statut = new Statut(result.getInt("s.id"), result.getString("s.libelle"));
+				Statut statut = new Statut(result.getInt("s.id"), result.getString("s.libelle"), 
+						new Affectation(result.getInt("a.id"), result.getString("a.libelle")));
 				saisons.add(new Saison(id, numero, resume, anneeDiffusion, statut, serie));
 			}
 			return saisons;

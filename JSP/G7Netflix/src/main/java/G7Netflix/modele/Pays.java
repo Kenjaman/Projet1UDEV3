@@ -35,7 +35,5 @@ public class Pays {
 	public void setCode(String code) {
 		this.code = code;
 	}
-
-
 	
 }

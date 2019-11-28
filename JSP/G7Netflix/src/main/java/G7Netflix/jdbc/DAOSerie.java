@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import G7Netflix.modele.Affectation;
 import G7Netflix.modele.Pays;
 import G7Netflix.modele.Serie;
 import G7Netflix.modele.Statut;
@@ -26,21 +27,22 @@ public class DAOSerie {
     public List<Serie> getSeries() throws SQLException{
         List<Serie> series = new ArrayList<Serie>();    
         String requeteGetSerie ="SELECT ser.id, ser.nom, ser.nomoriginal, ser.anneeparution, ser.synopsys, "
-                + "ser.idstatut, s.libelle, ser.idpaysorigine, p.nom, p.code FROM serie ser "
+                + "s.id, s.libelle, a.id, a.libelle, p.id, p.nom, p.code FROM serie ser "
                 + "INNER JOIN statut s ON ser.idstatut = s.id "
+                + "INNER JOIN affectation a ON s.idaffectation = a.id "
                 + "INNER JOIN pays p ON ser.idpaysorigine = p.id ";
         try(Connection connexion = dataSource.getConnection();
         		Statement stmt = connexion.createStatement();
             ResultSet result = stmt.executeQuery(requeteGetSerie)){
-                int i = 1;
                 while(result.next()) {
-                    int id = result.getInt("id");
-                    String nom = result.getString("nom");
-                    String nomOriginal = result.getString("nomoriginal");
-                    int anneeParution = result.getInt("anneeparution");
-                    String synopsys = result.getString("synopsys");
-                    Statut statut = new Statut(result.getInt("idstatut"), result.getString("s.libelle"));
-                    Pays paysOrigine = new Pays(result.getInt("idpaysorigine"), result.getString("p.nom"), result.getString("p.code"));
+                    int id = result.getInt("ser.id");
+                    String nom = result.getString("ser.nom");
+                    String nomOriginal = result.getString("ser.nomoriginal");
+                    int anneeParution = result.getInt("ser.anneeparution");
+                    String synopsys = result.getString("ser.synopsys");
+                    Statut statut = new Statut(result.getInt("s.id"), result.getString("s.libelle"),
+                    		new Affectation(result.getInt("a.id"), result.getString("a.libelle")));
+                    Pays paysOrigine = new Pays(result.getInt("p.id"), result.getString("p.nom"), result.getString("p.code"));
                     series.add(new Serie(id, nom, nomOriginal, anneeParution, synopsys, statut, paysOrigine));
                 }
             return series;

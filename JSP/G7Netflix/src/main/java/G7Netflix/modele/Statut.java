@@ -1,30 +1,20 @@
 package G7Netflix.modele;
 
-public class Statut{
-	private Integer id;
-	private String libelle;
+public class Statut extends Correspondance{
 
-	public Statut(Integer id, String libelle) {
-		this.id=id;
-		this.libelle=libelle;
+	private Affectation affectation;
+	
+	public Statut(Integer id, String libelle, Affectation affectation) {
+		super(id, libelle);
+		this.affectation = affectation;
 	}
-
-	public Integer getId() {
-		return id;
+	
+	public Affectation getAffectation() {
+		return affectation;
 	}
-
-	public String getLibelle() {
-		return libelle;
+	
+	public void setAffectation(Affectation affectation) {
+		this.affectation = affectation;
 	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
-	}
-
-
 
 }

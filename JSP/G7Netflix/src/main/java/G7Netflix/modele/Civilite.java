@@ -1,15 +1,11 @@
 package G7Netflix.modele;
 
-public class Civilite {
+public class Civilite extends Correspondance{
 
-	private Integer id;
-	private String libelle;
 	private String abbr;
 	
 	public Civilite(Integer id, String libelle, String abbr) {
-		super();
-		this.id = id;
-		this.libelle = libelle;
+		super(id, libelle);
 		this.abbr = abbr;
 	}
 
@@ -21,18 +17,4 @@ public class Civilite {
 		this.abbr = abbr;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getLibelle() {
-		return libelle;
-	}
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
-	}
-	
-	
 }
