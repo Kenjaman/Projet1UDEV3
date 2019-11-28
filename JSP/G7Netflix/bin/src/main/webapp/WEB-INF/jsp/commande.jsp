@@ -19,6 +19,16 @@
 
 	<form method="post" accept-charset="utf-8">
 		<div>
+		<table>
+			
+			<c:foreach item="${liste}" var="item">
+					<td><a href='./<c:out value="${entiteTraiter}"/>?id=${item.id}'><c:out value="${item.nom}"/></a></td>
+					<td><a href='./<c:out value="${entiteTraiter}"/>?action=modifier'>Modifier</a></td>
+					<td><a href='./<c:out value="${entiteTraiter}"/>?action=supprimer'>Delete</a></td>
+				</tr>
+				</c:foreach>
+
+		</table>
 			<label for="cocktail">Cocktail : </label>
 			<select id="cocktail" name="cocktail">
 				<option value="0">-- Choisissez --</option>
