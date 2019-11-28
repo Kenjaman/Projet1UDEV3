@@ -27,14 +27,14 @@ public class DAOEpisode {
 		this.dataSource = dataSource;
 	}
 
-	public List<Episode> getEpisodes() throws SQLException {
+	public List<Episode> getEpisodes(Saison saison) throws SQLException {
 		List<Episode> episodes = new ArrayList<Episode>();
 		String requeteGetEpisode = "SELECT e.id, e.numero, e.titre, e.titreoriginal, "
 				+ "e.duree, e.resume, e.daterealisation, e.date_premiere_diffusion, "
 				+ "p.id, p.libelle, p.limiteage, s.id, s.libelle, sai.id, sai.numero, sai.resume"
 				+ "INNER JOIN public p ON e.idpublic = p.id"
 				+ "INNER JOIN statut s ON e.idstatut = s.id"
-				+ "INNER JOIN saison sai ON e.idsaison = sai.id";
+				+ "INNER JOIN saison sai ON e.idsaison = " + saison.getId();
 		try (Connection connexion = dataSource.getConnection();
 				Statement stmt = connexion.createStatement();
 				ResultSet result = stmt.executeQuery(requeteGetEpisode)) {

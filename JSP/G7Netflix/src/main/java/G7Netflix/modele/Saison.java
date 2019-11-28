@@ -1,30 +1,21 @@
 package G7Netflix.modele;
 
 public class Saison {
+	
 	private Integer id;
 	private Integer numero;
 	private String resume;
 	private Integer anneeDiffusion;
-	private Integer idStatut;
-	private Integer idSerie;
+	private Statut statut;
+	private Serie serie;
 	
-	
-	
-	public Saison(Integer id, Integer numero, String resume, Integer anneeDiffusion, Integer idStatut,
-			Integer idSerie) {
-		this(numero,resume,anneeDiffusion,idStatut,idSerie);
-		this.id = id;
-
-	}
-	
-	public Saison(Integer numero, String resume, Integer anneeDiffusion, Integer idStatut, Integer idSerie) {
+	public Saison(Integer id, Integer numero, String resume, Integer anneeDiffusion, Statut statut, Serie serie) {
 		this.numero = numero;
 		this.resume = resume;
 		this.anneeDiffusion = anneeDiffusion;
-		this.idStatut = idStatut;
-		this.idSerie = idSerie;
+		this.statut = statut;
+		this.serie = serie;
 	}
-
 
 	public Integer getId() {
 		return id;
@@ -51,17 +42,17 @@ public class Saison {
 	public void setAnneeDiffusion(Integer anneeDiffusion) {
 		this.anneeDiffusion = anneeDiffusion;
 	}
-	public Integer getIdStatut() {
-		return idStatut;
+	public Statut getStatut() {
+		return statut;
 	}
-	public void setIdStatut(Integer idStatut) {
-		this.idStatut = idStatut;
+	public void setStatut(Statut statut) {
+		this.statut = statut;
 	}
-	public Integer getIdSerie() {
-		return idSerie;
+	public Serie getSerie() {
+		return serie;
 	}
-	public void setIdSerie(Integer idSerie) {
-		this.idSerie = idSerie;
+	public void setSerie(Serie serie) {
+		this.serie = serie;
 	}
 
 	
