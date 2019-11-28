@@ -38,8 +38,11 @@ public class SerieControleur extends HttpServlet {
 			if(req.getParameter("action")!=null) {
 				if(req.getParameter("action").equals("ajouter")) {
 					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SERIE).forward(req, resp);
-				}else if(req.getParameter("action").equals("modifier")) {
-					//Transfere vers la page de modification 
+				}else if(req.getParameter("action").equals("modifier")) {//Transfere vers la page de modification 
+					req.setAttribute("serie", serie.getSerie(Integer.valueOf(req.getParameter("id"))));
+					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SERIE).forward(req, resp);
+				}else if(req.getParameter("action").equals("supprimer")) {
+					this.doPost(req, resp);
 				}
 			}else {
 				req.setAttribute("liste", serie.getSeries());
@@ -49,14 +52,17 @@ public class SerieControleur extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
 	}
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		DAOSaison newSaison = new DAOSaison(bddMyNetflix);
-	}
+//	@Override
+//	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		DAOSerie serie = new DAOSerie(bddMyNetflix);
+//		if(req.getParameter("action").equals("supprimer")) {
+//			serie.supprimerSerie(Integer.valueOf(req.getParameter("id")));
+//		}else {
+//			serie.updateSerie(Integer.valueOf(req.getParameter("id")));
+//		}
+//	}
 
 }
 
