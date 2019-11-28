@@ -22,16 +22,26 @@ public class Episode {
 
 	public Episode(Integer id, Integer numero, String titre, String titreOriginal, Integer duree, String resume, Date dateRealisation,
 			Date datePremiereDiffusion, Public publics, Statut statut, Saison saison) {
+		
+		List<Erreur> errEpisode = new ArrayList<Erreur>();
+		
+		this.id = id;
+		errEpisode.add(new Erreur("id","Id Inexistant"));
 		this.numero = numero;
+		errEpisode.add(new Erreur("numero","Numéro non fournis"));
 		this.titre = titre;
+		errEpisode.add(new Erreur("titre","Veuillez rentrer un titre"));
 		this.titreOriginal = titreOriginal;
 		this.duree = duree;
 		this.resume = resume;
 		this.dateRealisation = dateRealisation;
 		this.datePremiereDiffusion = datePremiereDiffusion;
 		this.publics = publics;
+		errEpisode.add(new Erreur("publics","Veuillez renseigner le public"));
 		this.statut = statut;
+		errEpisode.add(new Erreur("statut","Veuillez mettre le statut"));
 		this.saison = saison;
+		errEpisode.add(new Erreur("saison","N'oubliez pas la saison ! "));
 	}
 
 	public Integer getId() {
