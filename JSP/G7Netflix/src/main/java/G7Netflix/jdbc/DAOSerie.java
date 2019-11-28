@@ -76,7 +76,11 @@ public class DAOSerie {
 		}
 	}
 
-
+	public void deleteSerie(Serie serie) throws SQLException {
+		String requeteDeleteSerie = "DELETE FROM serie "
+				+ "";
+	}
+	
 	private int extractPrimaryKey(Connection connexion, Statement stmt) throws SQLException {
 		try(ResultSet resultSet = stmt.getGeneratedKeys()) {
 			if(! resultSet.next()) {

@@ -10,9 +10,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import G7Netflix.modele.Affectation;
 import G7Netflix.modele.Public;
-import G7Netflix.modele.Statut;
 
 public class DAOPublic {
 

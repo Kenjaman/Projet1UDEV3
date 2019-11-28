@@ -1,7 +1,5 @@
 package G7Netflix.modele;
 
-import java.sql.Date;
-
 public class Serie {
 
 	private Integer id;
