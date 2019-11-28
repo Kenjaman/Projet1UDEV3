@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 import G7Netflix.jdbc.DAOSaison;
 import G7Netflix.modele.Saison;
 
-@WebServlet("/")
+@WebServlet("/accueil")
 public class AccueilControleurServlet extends HttpServlet {
 	private static final String VUE_CONNEXION = "/WEB-INF/jsp/accueil.jsp";
 
@@ -29,31 +29,11 @@ public class AccueilControleurServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
-		Context envContext;
-		try {
-			envContext = InitialContext.doLookup("java:/comp/env");
-			DataSource dataSource = (DataSource) envContext.lookup("BddMyNetflix");
-			
-			try (Connection connection = bddMyNetflix.getConnection()) {
-				System.out.println("ploppppp");
-				System.out.println("Connexion Reussie");
-				DAOSaison testDAO = new DAOSaison(dataSource);
-				for(Saison saison : testDAO.getSaisons()) {
-					System.out.println(saison.getNumero());
-				}
-				getServletContext().getRequestDispatcher(VUE_CONNEXION).forward(req, resp);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (NamingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		// On récupère la source de données dans le contexte java:/comp/env
 
-
+		getServletContext().getRequestDispatcher(VUE_CONNEXION).forward(req, resp);
 	}
+	// On récupère la source de données dans le contexte java:/comp/env
+
+
 
 }
