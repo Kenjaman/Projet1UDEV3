@@ -35,8 +35,15 @@ public class SerieControleur extends HttpServlet {
 		try {
 			req.setAttribute("entiteTraiter", "series");
 			DAOSerie serie = new DAOSerie(bddMyNetflix);
-			req.setAttribute("liste", serie.getSeries());
-			req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
+			
+			if(req.getParameter("action").equals("ajouter")) {
+				req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SERIE).forward(req, resp);
+			}else if(req.getParameter("action").equals("modifier")) {
+			
+			}else {
+				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
+				req.setAttribute("liste", serie.getSeries());
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
