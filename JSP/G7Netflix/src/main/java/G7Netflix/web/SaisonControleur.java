@@ -37,8 +37,8 @@ public class SaisonControleur extends HttpServlet {
 			
 			
 			
-			req.setAttribute("nomsSeries", serie.getSeries());
-			req.setAttribute("listSaison", saison.getSaisons());
+			req.setAttribute("nomsSeries", serie.getSerie((Integer) req.getAttribute("id")));
+			req.setAttribute("listSaison", saison.getSaisons(null));
 			req.getServletContext().getRequestDispatcher(VUE_AJOUT).forward(req, resp);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -4,16 +4,20 @@
 <html>
  <head>
   	<meta charset="UTF-8">
-    <title>Affichage Général/title>
+    <title>Affichage Général</title>
   </head>
   <body>
+  <div id="logo">
+  	<img alt="logo" src="<c:url value='/images/KenFlixIcon.svg'/>"/>
+  </div>
+  <h1>PLOOOOOOP</h1>
   	<a href='./<c:out value="${entiteTraiter}"/>?action=ajouter'>Ajouter</a>
  	<table>
 		<c:forEach items="${liste}" var="item">
 			<tr>
 				<td><a href='./<c:out value="${entiteTraiter}"/>?id=${item.id}'><c:out value="${item.nom}"/></a></td>
-				<td><a href='./<c:out value="${entiteTraiter}"/>?action=modifier'>Modifier</a></td>
-				<td><a href='./<c:out value="${entiteTraiter}"/>?action=supprimer'>Delete</a></td>
+				<td><a href='./<c:out value="${entiteTraiter}"/>?id=${item.id}&action=modifier'>Modifier</a></td>
+				<td><a href='./<c:out value="${entiteTraiter}"/>?id=${item.id}&action=supprimer'>Delete</a></td>
 			</tr>
 		</c:forEach>
 	</table> 
