@@ -5,14 +5,14 @@ public class Personne {
 	private Integer id;
 	private String nom;
 	private String prenom;
-	private Integer idCivilite;
+	private Civilite civilite;
 	
-	public Personne(Integer id, String nom, String prenom, Integer civilite) {
+	public Personne(Integer id, String nom, String prenom, Civilite civilite) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
-		this.idCivilite = civilite;
+		this.civilite = civilite;
 	}
 	
 	public Integer getId() {
@@ -33,11 +33,11 @@ public class Personne {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	public Integer getIdCivilite() {
-		return idCivilite;
+	public Civilite civilite() {
+		return civilite;
 	}
-	public void setIdCivilite(Integer civilite) {
-		this.idCivilite = civilite;
+	public void setCivilite(Civilite civilite) {
+		this.civilite = civilite;
 	}
 	
 	

@@ -11,11 +11,10 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import G7Netflix.modele.Affectation;
 import G7Netflix.modele.Episode;
-import G7Netflix.modele.Pays;
 import G7Netflix.modele.Public;
 import G7Netflix.modele.Saison;
-import G7Netflix.modele.Serie;
 import G7Netflix.modele.Statut;
 
 public class DAOEpisode {
@@ -27,18 +26,17 @@ public class DAOEpisode {
 		this.dataSource = dataSource;
 	}
 
-	public List<Episode> getEpisodes() throws SQLException {
+	public List<Episode> getEpisodes(Saison saison) throws SQLException {
 		List<Episode> episodes = new ArrayList<Episode>();
 		String requeteGetEpisode = "SELECT e.id, e.numero, e.titre, e.titreoriginal, "
 				+ "e.duree, e.resume, e.daterealisation, e.date_premiere_diffusion, "
-				+ "p.id, p.libelle, p.limiteage, s.id, s.libelle, sai.id, sai.numero, sai.resume"
+				+ "p.id, p.libelle, p.limiteage, s.id, s.libelle, a.id, a.libelle, sai.id, sai.numero, sai.resume"
 				+ "INNER JOIN public p ON e.idpublic = p.id"
 				+ "INNER JOIN statut s ON e.idstatut = s.id"
-				+ "INNER JOIN saison sai ON e.idsaison = sai.id";
+				+ "INNER JOIN saison sai ON e.idsaison = " + saison.getId();
 		try (Connection connexion = dataSource.getConnection();
 				Statement stmt = connexion.createStatement();
 				ResultSet result = stmt.executeQuery(requeteGetEpisode)) {
-			int i = 1;
 			while (result.next()) {
 				int id = result.getInt("e.id");
 				int numero = result.getInt("e.numero");
@@ -49,7 +47,8 @@ public class DAOEpisode {
 				Date dateRealisation = result.getDate("e.daterealisation");
 				Date datePremiereDiffusion = result.getDate("e.date_premiere_diffusion");
 				Public publics = new Public(result.getInt("p.id"), result.getString("p.libelle"), result.getInt("p.limiteage"));
-				Statut statut = new Statut(result.getInt("s.id"), result.getString("s.libelle"));
+				Statut statut = new Statut(result.getInt("s.id"), result.getString("s.libelle"),
+						new Affectation(result.getInt("a.id"), result.getString("a.libelle")));
 				episodes.add(new Episode(id, numero, titre, titreOriginal, duree, resume, dateRealisation,
 						datePremiereDiffusion, publics, statut, saison));
 			}

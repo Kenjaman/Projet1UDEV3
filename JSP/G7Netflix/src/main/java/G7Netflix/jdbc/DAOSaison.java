@@ -10,7 +10,10 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import G7Netflix.modele.Affectation;
 import G7Netflix.modele.Saison;
+import G7Netflix.modele.Serie;
+import G7Netflix.modele.Statut;
 
 public class DAOSaison {
 
@@ -21,21 +24,24 @@ public class DAOSaison {
 		this.dataSource=dataSource;
 	}
 	
-	public List<Saison> getSaisons() throws SQLException{
+	public List<Saison> getSaisons(Serie serie) throws SQLException{
 		List<Saison> saisons = new ArrayList<Saison>();	
-		String requeteGetSaison ="Select id,"
-				+ "numero,resume,annee_diffusion,idstatut,idserie from saison";
+		String requeteGetSaison ="SELECT sai.id, sai.numero, sai.resume, sai.annee_diffusion, "
+				+ "s.id, s.libelle, a.id, a.libelle, ser.id FROM saison "
+				+ "INNER JOIN statut s ON sai.idstatut = s.id "
+				+ "INNER JOIN affectation a ON s.idaffectation = a.id"
+				+ "WHERE sai.idserie = " + serie.getId();
 		try(Connection connexion = dataSource.getConnection();
 				Statement stmt = connexion.createStatement();
 				ResultSet result = stmt.executeQuery(requeteGetSaison)){
 			while(result.next()) {
-				int id = result.getInt("id");
-				int numero = result.getInt("numero");
-				String resume=result.getString("resume");
-				int anneeDiffusion = result.getInt("annee_diffusion");
-				int idStatut = result.getInt("idStatut");
-				int idSaison = result.getInt("idSerie");
-				saisons.add(new Saison(id,numero,resume,anneeDiffusion,idStatut,idSaison));
+				int id = result.getInt("sai.id");
+				int numero = result.getInt("sai.numero");
+				String resume=result.getString("sai.resume");
+				int anneeDiffusion = result.getInt("sai.annee_diffusion");
+				Statut statut = new Statut(result.getInt("s.id"), result.getString("s.libelle"), 
+						new Affectation(result.getInt("a.id"), result.getString("a.libelle")));
+				saisons.add(new Saison(id, numero, resume, anneeDiffusion, statut, serie));
 			}
 			return saisons;
 		}
@@ -43,15 +49,16 @@ public class DAOSaison {
 	}
 	
 	public void addSaison(Saison saison) throws SQLException {
-		String requeteInsertionSaison = "Insert into saison"
-				+ " (numero, idstatut, idserie, annee_diffusion) values (?,?,?,?)";
+		String requeteInsertionSaison = "INSERT INTO saison"
+				+ " (numero, resume, anneediffusion, idstatut, idserie) values (?,?,?,?)";
 		try(Connection connexion = dataSource.getConnection();
 				PreparedStatement stmt = connexion.prepareStatement(requeteInsertionSaison, 
 				PreparedStatement.RETURN_GENERATED_KEYS)){
 			stmt.setInt(1, saison.getNumero());
-			stmt.setInt(2, saison.getIdStatut());
-			stmt.setInt(3, saison.getIdSerie());
-			stmt.setInt(4, saison.getAnneeDiffusion());
+			stmt.setString(2, saison.getResume());
+			stmt.setInt(3, saison.getAnneeDiffusion());
+			stmt.setInt(4, saison.getStatut().getId());
+			stmt.setInt(5, saison.getSerie().getId());
 			stmt.executeUpdate(requeteInsertionSaison);
 			saison.setId(extractPrimaryKey(connexion,stmt));
 			
