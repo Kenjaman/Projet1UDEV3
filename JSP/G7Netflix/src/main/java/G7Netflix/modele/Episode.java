@@ -12,32 +12,26 @@ public class Episode {
 	private String titreOriginal;
 	private Integer duree;
 	private String resume;
-	private Date dateReal;
-	private Date primodiffusion;
-	private Integer idPublic;
-	private Integer idStatut;
-	private Integer idSaison;
+	private Date dateRealisation;
+	private Date datePremiereDiffusion;
+	private Public publics;
+	private Statut statut;
+	private Saison saison;
 
 
 
-	public Episode(Integer numero, String titre, String titreOriginal, Integer duree, String resume, Date dateReal,
-			Date primodiffusion, Integer idPublic, Integer idStatut, Integer idSaison) {
-		super();
+	public Episode(Integer id, Integer numero, String titre, String titreOriginal, Integer duree, String resume, Date dateRealisation,
+			Date datePremiereDiffusion, Public publics, Statut statut, Saison saison) {
 		this.numero = numero;
 		this.titre = titre;
 		this.titreOriginal = titreOriginal;
 		this.duree = duree;
 		this.resume = resume;
-		this.dateReal = dateReal;
-		this.primodiffusion = primodiffusion;
-		this.idPublic = idPublic;
-		this.idStatut = idStatut;
-		this.idSaison = idSaison;
-	}
-	public Episode(Integer id, Integer numero, String titre, String titreOriginal, Integer duree, String resume,
-			Date dateReal, Date primodiffusion, Integer idPublic, Integer idStatut, Integer idSaison) {
-		this(numero, titre, titreOriginal,duree,resume,dateReal,primodiffusion, idPublic, idStatut, idSaison);
-		this.id = id;
+		this.dateRealisation = dateRealisation;
+		this.datePremiereDiffusion = datePremiereDiffusion;
+		this.publics = publics;
+		this.statut = statut;
+		this.saison = saison;
 	}
 
 	public Integer getId() {
@@ -76,38 +70,34 @@ public class Episode {
 	public void setResume(String resume) {
 		this.resume = resume;
 	}
-	public Date getDateReal() {
-		return dateReal;
+	public Date getDateRealisation() {
+		return dateRealisation;
 	}
-	public void setDateReal(Date dateReal) {
-		this.dateReal = dateReal;
+	public void setDateRealisation(Date dateRealisation) {
+		this.dateRealisation = dateRealisation;
 	}
-	public Date getPrimodiffusion() {
-		return primodiffusion;
+	public Date getDatePremiereDiffusion() {
+		return datePremiereDiffusion;
 	}
-	public void setPrimodiffusion(Date primodiffusion) {
-		this.primodiffusion = primodiffusion;
+	public void setDatePremiereDiffusion(Date datePremiereDiffusion) {
+		this.datePremiereDiffusion = datePremiereDiffusion;
 	}
-	public Integer getIdPublic() {
-		return idPublic;
+	public Public getPublics() {
+		return publics;
 	}
-	public void setIdPublic(Integer idPublic) {
-		this.idPublic = idPublic;
+	public void setPublics(Public publics) {
+		this.publics = publics;
 	}
-	public Integer getIdStatut() {
-		return idStatut;
+	public Statut getStatut() {
+		return statut;
 	}
-	public void setIdStatut(Integer idStatut) {
-		this.idStatut = idStatut;
+	public void setStatut(Statut statut) {
+		this.statut = statut;
 	}
-	public Integer getIdSaison() {
-		return idSaison;
+	public Saison getSaison() {
+		return saison;
 	}
-	public void setIdSaison(Integer idSaison) {
-		this.idSaison = idSaison;
+	public void setSaison(Saison saison) {
+		this.saison = saison;
 	}
-
-
-
-
 }
