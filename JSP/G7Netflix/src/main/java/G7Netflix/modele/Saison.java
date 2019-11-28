@@ -1,5 +1,8 @@
 package G7Netflix.modele;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Saison {
 	
 	private Integer id;
@@ -9,12 +12,25 @@ public class Saison {
 	private Statut statut;
 	private Serie serie;
 	
-	public Saison(Integer id, Integer numero, String resume, Integer anneeDiffusion, Statut statut, Serie serie) {
+	public Saison(Integer id, Integer numero, String resume, Integer anneeDiffusion, Statut statut, Serie serie) throws DonneesInvalidesException {
+		
+		List<Erreur> errSaison = new ArrayList<Erreur>();
+		
+		this.id = id;
 		this.numero = numero;
+		if(statut.getId() ==0) {
+			errSaison.add(new Erreur("statut","Oubliez pas de renseigner un statut"));
+		}
+		this.serie = serie;
+		if(serie.getId() == 0 ) {
+			errSaison.add(new Erreur("serie","Veuillez rensigner la série que vous souhaitez ajouter"));
+		}
+		this.statut = statut;
+		if(statut.getId()==0) {
+			errSaison.add(new Erreur("Statut","Statut non renseigné"));
+		}
 		this.resume = resume;
 		this.anneeDiffusion = anneeDiffusion;
-		this.statut = statut;
-		this.serie = serie;
 	}
 
 	public Integer getId() {

@@ -26,22 +26,32 @@ public class Episode {
 		List<Erreur> errEpisode = new ArrayList<Erreur>();
 		
 		this.id = id;
-		errEpisode.add(new Erreur("id","Id Inexistant"));
 		this.numero = numero;
-		errEpisode.add(new Erreur("numero","Numéro non fournis"));
+		if(statut.getId() ==0) {
+			errEpisode.add(new Erreur("statut","Oubliez pas de renseigner un statut"));
+		}
 		this.titre = titre;
-		errEpisode.add(new Erreur("titre","Veuillez rentrer un titre"));
+		if (Utils.isBlank(titre)) {
+			errEpisode.add(new Erreur("titre","Le titre est vide !"));
+		}
 		this.titreOriginal = titreOriginal;
 		this.duree = duree;
 		this.resume = resume;
 		this.dateRealisation = dateRealisation;
 		this.datePremiereDiffusion = datePremiereDiffusion;
+		
 		this.publics = publics;
-		errEpisode.add(new Erreur("publics","Veuillez renseigner le public"));
+		if(publics.getId() ==0) {
+			errEpisode.add(new Erreur("publics","Votre champs est vide, n'oubliez pas la limite d'âge"));
+		}
 		this.statut = statut;
-		errEpisode.add(new Erreur("statut","Veuillez mettre le statut"));
+		if(statut.getId()==0) {
+			errEpisode.add(new Erreur("Statut","Statut non renseigné"));
+		}
 		this.saison = saison;
-		errEpisode.add(new Erreur("saison","N'oubliez pas la saison ! "));
+		if(saison.getId()==0) {
+			errEpisode.add(new Erreur("saison","N'oubliez pas la saison ! "));
+		}
 	}
 
 	public Integer getId() {
