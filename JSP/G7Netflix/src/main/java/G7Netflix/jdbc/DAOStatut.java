@@ -37,9 +37,23 @@ public class DAOStatut {
                 }
             return statuts;
         }
-            
     }
 	
+    public Statut getStatut(Integer idStatut) throws SQLException{ // A revoir !!
+        Statut statut;    
+        String requeteGetSerie ="SELECT s.id, s.libelle, s.idaffectation FROM statut s "
+        		+ "WHERE s.id = "+idStatut;
+        try(Connection connexion = dataSource.getConnection();
+        		Statement stmt = connexion.createStatement();
+            ResultSet result = stmt.executeQuery(requeteGetSerie)){
+                result.next();
+                    int id = result.getInt("s.id");
+                    String libelle = result.getString("s.libelle");
+                    statut =  new Statut(id, libelle);
+                
+            return statut;
+        }
+    }
 //	public void addSerie(Serie serie) throws SQLException {
 //		String requeteInsertionSerie = "INSERT INTO serie"
 //				+ " (nom, nomoriginal, anneeparution, synopsys, idstatut, idpaysorigine) values (?,?,?,?)";

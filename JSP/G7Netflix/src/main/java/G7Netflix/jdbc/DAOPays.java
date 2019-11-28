@@ -11,6 +11,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import G7Netflix.modele.Pays;
+import G7Netflix.modele.Statut;
 
 
 public class DAOPays {
@@ -39,6 +40,22 @@ public class DAOPays {
             
     }
 	
+	
+    public Pays getPays(Integer idPays) throws SQLException{
+        Pays pays;    
+        String requeteGetPays ="SELECT p.id, p.nom, p.code FROM Pays p "
+        		+ "WHERE p.id = "+idPays;
+        try(Connection connexion = dataSource.getConnection();
+        		Statement stmt = connexion.createStatement();
+            ResultSet result = stmt.executeQuery(requeteGetPays)){
+                result.next();
+                    int id = result.getInt("p.id");
+                    String libelle = result.getString("p.nom");
+                    String code = result.getString("p.code");
+                pays = new Pays(id,libelle,code);
+            return pays;
+        }
+    }
 //	public void addPays(Serie serie) throws SQLException {
 //		String requeteInsertionSerie = "INSERT INTO serie"
 //				+ " (nom, nomoriginal, anneeparution, synopsys, idstatut, idpaysorigine) values (?,?,?,?)";

@@ -22,23 +22,18 @@ public class DAOAffectation {
 		this.dataSource=dataSource;
 	}
 	
-    public List<Statut> getStatuts(Affectation affectation) throws SQLException{
-        List<Statut> statuts = new ArrayList<Statut>();    
-        String requeteGetSerie ="SELECT s.id, s.libelle FROM statut s "
-        		+ "INNER JOIN affectation a ON s.idaffectation = a.id "
-        		+ "WHERE a.id = " + affectation.getId();
-        try(Connection connexion = dataSource.getConnection();
-        		Statement stmt = connexion.createStatement();
-            ResultSet result = stmt.executeQuery(requeteGetSerie)){
-                while(result.next()) {
-                    int id = result.getInt("s.id");
-                    String libelle = result.getString("s.libelle");
-                    statuts.add(new Statut(id, libelle, affectation));
-                }
-            return statuts;
-        }
-            
-    }
+	 public Affectation getAffectation(String type) throws SQLException {
+	        String requeteAff="Select id, libelle from affectation where libelle='"+ type+"'";
+	        try(Connection co = dataSource.getConnection();
+	        		Statement stmt = co.createStatement();
+	        			ResultSet result = stmt.executeQuery(requeteAff)){
+	        	if(result.next()) {
+	        		return new Affectation(result.getInt(1),result.getString(2));
+	        	}
+	        	
+	        }
+	        return null;
+	    }
 	
 //	public void addSerie(Serie serie) throws SQLException {
 //		String requeteInsertionSerie = "INSERT INTO serie"

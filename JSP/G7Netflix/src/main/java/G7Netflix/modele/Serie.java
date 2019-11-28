@@ -17,7 +17,16 @@ public class Serie {
 	
 	public Serie(Integer id, String nom, String nomoriginal, Integer anneeparution, String synopsys, Statut statut,
 			Pays paysOrigine) {
-		super(); 
+		this(nom,nomoriginal,anneeparution,synopsys,statut,paysOrigine);
+		this.id=id;
+	}
+
+	public Serie() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Serie(String nom2, String nomOriginal2, Integer anneeParution2, String synopsys2, Statut statut2,
+			Pays paysOrigine2) {
 		List<Erreur> errSerie = new ArrayList<Erreur>();
 		this.id = id;
 		errSerie.add(new Erreur("id","Id Inexistant"));

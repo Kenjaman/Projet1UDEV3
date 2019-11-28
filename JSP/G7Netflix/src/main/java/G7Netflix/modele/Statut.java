@@ -9,6 +9,11 @@ public class Statut extends Correspondance{
 		this.affectation = affectation;
 	}
 	
+	public Statut(int id, String libelle) {
+		super(id,libelle);
+		// TODO Auto-generated constructor stub
+	}
+
 	public Affectation getAffectation() {
 		return affectation;
 	}

@@ -72,7 +72,7 @@ public class DAOSerie {
 			stmt.setInt(6, serie.getPaysOrigine().getId());
 			stmt.executeUpdate(requeteInsertionSerie);
 			serie.setId(extractPrimaryKey(connexion,stmt));
-			
+			connexion.commit();
 		}
 	}
 
