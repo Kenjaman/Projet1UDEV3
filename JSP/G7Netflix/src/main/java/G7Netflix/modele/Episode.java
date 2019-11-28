@@ -20,7 +20,7 @@ public class Episode {
 
 
 
-	public Episode(Integer numero, String titre, String titreOriginal, Integer duree, String resume, Date dateRealisation,
+	public Episode(Integer id, Integer numero, String titre, String titreOriginal, Integer duree, String resume, Date dateRealisation,
 			Date datePremiereDiffusion, Public publics, Statut statut, Saison saison) {
 		this.numero = numero;
 		this.titre = titre;
@@ -100,8 +100,4 @@ public class Episode {
 	public void setSaison(Saison saison) {
 		this.saison = saison;
 	}
-
-
-
-
 }
