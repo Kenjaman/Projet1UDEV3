@@ -9,7 +9,18 @@ public class Erreur {
 	private String message;
 	
 	public Erreur(String champs, String message){
-		
+		this.champs=champs;
+		this.message=message;
 	}
+
+	public String getChamps() {
+		return champs;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+	
+	
 	
 }

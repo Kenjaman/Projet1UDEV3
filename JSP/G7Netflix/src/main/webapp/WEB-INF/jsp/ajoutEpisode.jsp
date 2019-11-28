@@ -66,7 +66,7 @@
 		  <select name="public">
               <option value="0">--</option>
               <c:forEach items="${publics}" var="varPublic">
-                  <option ${param['"public"'] == varPublic ? "selected" : ""}><c:out value="${varPublic.nom}"/></option>
+                  <option ${param['"public"'] == varPublic ? "selected" : ""}><c:out value="${varPublic}"/></option>
               </c:forEach>
           </select>
        	</div>
@@ -74,7 +74,7 @@
 		  <select name="statut">
               <option value="0">--</option>
               <c:forEach items="${statuts}" var="varStatut">
-                  <option ${param['"statut"'] == varStatut ? "selected" : ""}><c:out value="${varStatut.nom}"/></option>
+                  <option ${param['"statut"'] == varStatut ? "selected" : ""}><c:out value="${varStatut}"/></option>
               </c:forEach>
           </select>
        	</div>
