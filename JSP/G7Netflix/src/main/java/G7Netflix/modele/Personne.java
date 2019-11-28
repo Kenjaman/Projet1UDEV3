@@ -1,5 +1,8 @@
 package G7Netflix.modele;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Personne {
 
 	private Integer id;
@@ -9,10 +12,15 @@ public class Personne {
 	
 	public Personne(Integer id, String nom, String prenom, Civilite civilite) {
 		super();
+		List<Erreur> errPersonne = new ArrayList<Erreur>();
 		this.id = id;
+		errPersonne.add(new Erreur("id","Id Inexistant"));
 		this.nom = nom;
+		errPersonne.add(new Erreur("nom","Veuillez rentrer un nom"));
 		this.prenom = prenom;
+		errPersonne.add(new Erreur("prenom","Veuillez rentrer un prenom"));
 		this.civilite = civilite;
+		errPersonne.add(new Erreur("civilite","Oubliez pas de rensigner une civilite"));
 	}
 	
 	public Integer getId() {

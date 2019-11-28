@@ -1,6 +1,8 @@
 package G7Netflix.modele;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Serie {
 
@@ -15,12 +17,17 @@ public class Serie {
 	public Serie(Integer id, String nom, String nomoriginal, Integer anneeparution, String synopsys, Statut statut,
 			Pays paysOrigine) {
 		super(); 
+		List<Erreur> errSerie = new ArrayList<Erreur>();
 		this.id = id;
+		errSerie.add(new Erreur("id","Id Inexistant"));
 		this.nom = nom;
+		errSerie.add(new Erreur("nom","Veuillez rensigner un nom"));
 		this.nomoriginal = nomoriginal;
 		this.anneeparution = anneeparution;
+		errSerie.add(new Erreur("anneeparution","Année de parution non renseigné"));
 		this.synopsys = synopsys;
 		this.statut =statut;
+		errSerie.add(new Erreur("statut","Veuillez rentrer un Statut"));
 		this.paysOrigine = paysOrigine;
 	}
 
