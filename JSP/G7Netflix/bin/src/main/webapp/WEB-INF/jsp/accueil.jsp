@@ -7,8 +7,8 @@
     <title>MyNetflixJSP</title>
   </head>
   <body>
-  	<a href="<c:url value="/serie"/>">Serie</a>  
-  	<a href="<c:url value="/saison"/>">Saison</a>  
-  	<a href="<c:url value="/episode"/>">Episode</a>  
+  	<a href="<c:url value="/series"/>">Series</a>  
+  	<a href="<c:url value="/saisons"/>">Saisons</a>  
+  	<a href="<c:url value="/episodes"/>">Episodes</a>  
   </body>
 </html>

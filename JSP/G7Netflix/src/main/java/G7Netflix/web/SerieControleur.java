@@ -20,9 +20,10 @@ import G7Netflix.jdbc.DAOSaison;
 import G7Netflix.jdbc.DAOSerie;
 import G7Netflix.modele.Saison;
 
-@WebServlet("/saison")
-public class SaisonControleur extends HttpServlet {
-	private static final String VUE_AJOUT = "/WEB-INF/jsp/ajoutSaison.jsp";
+@WebServlet("/series")
+public class SerieControleur extends HttpServlet {
+	private static final String VUE_FORMULAIRE_SERIE = "/WEB-INF/jsp/formulaireSerie.jsp";
+	private static final String VUE_AFFICHAGE = "/WEB-INF/jsp/affichageListe.jsp";
 
 	@Resource(name = "BddMyNetflix")
 	private DataSource bddMyNetflix;
@@ -32,14 +33,10 @@ public class SaisonControleur extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
-			DAOSaison saison = new DAOSaison(bddMyNetflix);
+			req.setAttribute("entiteTraiter", "series");
 			DAOSerie serie = new DAOSerie(bddMyNetflix);
-			
-			
-			
-			req.setAttribute("nomsSeries", serie.getSeries());
-			req.setAttribute("listSaison", saison.getSaisons());
-			req.getServletContext().getRequestDispatcher(VUE_AJOUT).forward(req, resp);
+			req.setAttribute("liste", serie.getSeries());
+			req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
