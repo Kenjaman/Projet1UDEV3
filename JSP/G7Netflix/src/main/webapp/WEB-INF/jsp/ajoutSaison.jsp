@@ -37,7 +37,7 @@
 		</div>
 		<div>
 			<label for="anneeDiffusion">Année de diffusion : </label>
-			<input id="anneeDiffusion" name="anneeDiffusion" type="number" min="1900" step="1900" value="<c:out value="${param['anneeDiffusion']}" />"> 
+			<input id="anneeDiffusion" name="anneeDiffusion" type="number" min="1900" step="1" value="<c:out value="${param['anneeDiffusion']}" />"> 
 		</div>
 		<div>
 			<label for="resume">Résumé :</label>

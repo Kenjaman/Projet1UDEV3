@@ -33,7 +33,7 @@
 		</div>
 		<div>
 			<label for="anneeParution">Année de Parution : </label>
-			<input id="anneeParution" name="anneeParution" type="number" min="1" step="1" value="<c:out value="${param['anneeParution']}" />"> 
+			<input id="anneeParution" name="anneeParution" type="number" min="1900" step="1" value="<c:out value="${param['anneeParution']}" />"> 
 		</div>
 		<div>
 			<label for="synopsys">Synopsys :</label>
