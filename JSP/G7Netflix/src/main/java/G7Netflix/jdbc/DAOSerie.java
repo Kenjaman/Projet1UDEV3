@@ -49,6 +49,14 @@ public class DAOSerie {
         }
             
     }
+    
+    public Serie getSerie(Integer id) throws SQLException {
+    	for(Serie serie : this.getSeries()) {
+    		if(serie.getId()==id)
+    			return serie;
+    	}
+		return null;
+    }
 	
 	public void addSerie(Serie serie) throws SQLException {
 		String requeteInsertionSerie = "INSERT INTO serie"
