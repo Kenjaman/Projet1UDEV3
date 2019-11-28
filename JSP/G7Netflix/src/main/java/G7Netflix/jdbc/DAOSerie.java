@@ -77,8 +77,15 @@ public class DAOSerie {
 	}
 
 	public void deleteSerie(Serie serie) throws SQLException {
-		String requeteDeleteSerie = "DELETE FROM serie "
-				+ "";
+		String requeteDeleteSerie = "DELETE FROM serie, saison, episode "
+				+ "INNER JOIN saison ON saison.idserie = serie.id "
+				+ "INNER JOIN episode ON episode.idsaison = saison.id "
+				+ "WHERE serie.id = " + serie.getId();
+		try(Connection connexion = dataSource.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(requeteDeleteSerie, 
+				PreparedStatement.RETURN_GENERATED_KEYS)){
+		stmt.executeUpdate(requeteDeleteSerie);
+		}
 	}
 	
 	private int extractPrimaryKey(Connection connexion, Statement stmt) throws SQLException {

@@ -80,6 +80,16 @@ public class DAOEpisode {
 		}
 	}
 
+	public void deleteEpisode(Episode episode) throws SQLException {
+		String requeteDeleteEpisode = "DELETE FROM episode "
+				+ "WHERE episode.id = " + episode.getId();
+		try(Connection connexion = dataSource.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(requeteDeleteEpisode, 
+				PreparedStatement.RETURN_GENERATED_KEYS)){
+		stmt.executeUpdate(requeteDeleteEpisode);
+		}
+	}
+	
 	private int extractPrimaryKey(Connection connexion, Statement stmt) throws SQLException {
 		try (ResultSet resultSet = stmt.getGeneratedKeys()) {
 			if (!resultSet.next()) {
