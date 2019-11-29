@@ -47,6 +47,7 @@ public class DAOSaison {
 			return saisons;
 		}		
 	}
+
 	public Saison getSaison(Integer id, Serie serie) throws SQLException, DonneesInvalidesException {
 		for(Saison saison : this.getSaisons(serie)) {
 			if(saison.getId()==id)
@@ -54,6 +55,7 @@ public class DAOSaison {
 		}
 		return null;
 	}
+
 	public void updateSaison(Saison saison) throws SQLException{
 		String requeteUpDateSaison = "UPDATE saison SET"
 				+ " numero = ?,"
@@ -82,7 +84,7 @@ public class DAOSaison {
 	}
 	public void addSaison(Saison saison) throws SQLException {
 		String requeteInsertionSaison = "INSERT INTO saison"
-				+ " (numero, resume, anneediffusion, idstatut, idserie) values (?,?,?,?)";
+				+ " (numero, resume, anneediffusion, idstatut, idserie) values (?,?,?,?,?)";
 		try(Connection connexion = dataSource.getConnection();
 				PreparedStatement stmt = connexion.prepareStatement(requeteInsertionSaison, 
 				PreparedStatement.RETURN_GENERATED_KEYS)){
