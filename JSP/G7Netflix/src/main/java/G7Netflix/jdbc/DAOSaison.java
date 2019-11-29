@@ -48,7 +48,7 @@ public class DAOSaison {
 		}		
 	}
 	public void updateSaison(Saison saison) throws SQLException{
-		String requeteUpDateSaison
+		String requeteUpDateSaison;
 	}
 	public void addSaison(Saison saison) throws SQLException {
 		String requeteInsertionSaison = "INSERT INTO saison"
