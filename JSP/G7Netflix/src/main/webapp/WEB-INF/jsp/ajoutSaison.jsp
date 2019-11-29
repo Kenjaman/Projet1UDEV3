@@ -23,7 +23,7 @@
 <section id="content">
 	<form action="" method="post">
 		<header>Fiche d'ajout/modification d'une saison</header>
-		<h3><c:out value="Id saison : ${saison.id}"/></h3>
+		<h3><c:out value="Serie : ${saison.serie.nom}"/></h3>
 		<div>
 		<input type='hidden' name="idSerie" value='<c:out value="${serie.id}"/>'/>
 		<input type='hidden' name="idSaison" value='<c:out value="${saison.id}"/>'/>
