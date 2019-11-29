@@ -12,28 +12,34 @@ public class Saison {
 	private Statut statut;
 	private Serie serie;
 	
-	public Saison(Integer id, Integer numero, String resume, Integer anneeDiffusion, Statut statut, Serie serie) throws DonneesInvalidesException {
-		
+	
+	public Saison(Integer numSaison, String resume, Integer anneDif,Statut statut, Serie serieSaison) throws DonneesInvalidesException {
 		List<Erreur> errSaison = new ArrayList<Erreur>();
-		
-		this.id = id;
-		this.numero = numero;
-		if(statut.getId() ==0) {
-			errSaison.add(new Erreur("statut","Oubliez pas de renseigner un statut"));
+		if(numSaison==0) {
+			errSaison.add(new Erreur("Numero Saison ","Oubliez pas de renseigner un numero de saison"));
 		}
-		this.serie = serie;
-		if(serie.getId() == 0 ) {
-			errSaison.add(new Erreur("serie","Veuillez rensigner la série que vous souhaitez ajouter"));
-		}
-		this.statut = statut;
 		if(statut.getId()==0) {
 			errSaison.add(new Erreur("Statut","Statut non renseigné"));
 		}
+		if(serieSaison.getId() == 0 ) {
+			errSaison.add(new Erreur("serie","Veuillez rensigner la série que vous souhaitez ajouter"));
+		}
+		this.serie = serieSaison;
+		this.statut = statut;
+		this.numero = numSaison;
 		this.resume = resume;
-		this.anneeDiffusion = anneeDiffusion;
+		this.anneeDiffusion = anneDif;
 		if(!errSaison.isEmpty())
 			throw new DonneesInvalidesException(errSaison);
+		}
+	
+	//Saison depuis BDD
+	public Saison(Integer id, Integer numero, String resume, Integer anneeDiffusion, Statut statut, Serie serie) throws DonneesInvalidesException {
+		this(numero,resume,anneeDiffusion,statut,serie);
+		this.id = id;
+		
 	}
+
 
 	public Integer getId() {
 		return id;

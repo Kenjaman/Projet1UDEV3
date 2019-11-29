@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import G7Netflix.jdbc.DAOAffectation;
 import G7Netflix.jdbc.DAOEpisode;
 import G7Netflix.jdbc.DAOPublic;
 import G7Netflix.jdbc.DAOSaison;
 import G7Netflix.jdbc.DAOSerie;
 import G7Netflix.jdbc.DAOStatut;
+
 import G7Netflix.modele.DonneesInvalidesException;
 import G7Netflix.modele.Episode;
 import G7Netflix.modele.Public;
@@ -28,6 +30,25 @@ public class EpisodeControleur extends HttpServlet {
 
 	@Resource(name = "BddMyNetflix")
 	private DataSource bddMyNetflix;
+	
+	private DAOSerie serieDAO;
+	private DAOSaison saisonDAO;
+	private DAOEpisode episodeDAO;
+	private DAOPublic publicDAO;
+	private DAOStatut statutDAO;
+	private DAOAffectation affDAO;
+
+	
+	@Override
+	public void init() throws ServletException {
+		// TODO Auto-generated method stub
+		serieDAO = new DAOSerie(bddMyNetflix);
+		saisonDAO = new DAOSaison(bddMyNetflix);
+		episodeDAO = new DAOEpisode(bddMyNetflix);
+		publicDAO = new DAOPublic(bddMyNetflix);
+		statutDAO = new DAOStatut(bddMyNetflix);
+		affDAO = new DAOAffectation(bddMyNetflix);
+	}
 
 	private DAOEpisode episodeDAO;
 	private DAOPublic publicDAO;

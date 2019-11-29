@@ -47,25 +47,15 @@ public class DAOSaison {
 			return saisons;
 		}		
 	}
-	
-	public Saison getSaison(Integer idEpisode) throws SQLException, DonneesInvalidesException {
-		Saison saison;
-		String requeteGetSaison = "SELECT sai.id, sai.numero, sai.resume, sai.annee_diffusion, "
-				+ "s.id, s.libelle, a.id, a.libelle FROM saison sai "
-				+ "INNER JOIN episode e ON e.idsaison = sai.id "
-				+ "WHERE e.id = " + idEpisode;
-        try(Connection connexion = dataSource.getConnection();
-        		Statement stmt = connexion.createStatement();
-            ResultSet result = stmt.executeQuery(requeteGetSaison)) {
-        		int id = result.getInt("id");
-        		int numero = result.getInt("numero");
-        		String resume = result.getString("resume");
-        		int anneeDiffusion = result.getInt("annee_diffusion");
-        		saison = new Saison(id, numero, resume, anneeDiffusion);
-        }
-        return saison;
+
+	public Saison getSaison(Integer id, Serie serie) throws SQLException, DonneesInvalidesException {
+		for(Saison saison : this.getSaisons(serie)) {
+			if(saison.getId()==id)
+				return saison;
+		}
+		return null;
 	}
-	
+
 	public void updateSaison(Saison saison) throws SQLException{
 		String requeteUpDateSaison = "UPDATE saison SET"
 				+ " numero = ?,"
