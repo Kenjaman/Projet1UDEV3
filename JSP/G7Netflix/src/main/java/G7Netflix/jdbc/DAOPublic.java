@@ -38,6 +38,24 @@ public class DAOPublic {
             
     }
 	
+    public Public getPublics(Integer idEpisode) throws SQLException{
+    	Public publics;
+        String requeteGetPublic ="SELECT p.id, p.libelle, p.limiteage FROM public p "
+        		+ "INNER JOIN episode e ON p.idpublic = p.id "
+        		+ "WHERE e.id = " + idEpisode;
+        try(Connection connexion = dataSource.getConnection();
+        		Statement stmt = connexion.createStatement();
+            ResultSet result = stmt.executeQuery(requeteGetPublic)){
+                int id = result.getInt("id");
+                String libelle = result.getString("libelle");
+                int limiteAge = result.getInt("limiteage");
+                publics = new Public(id, libelle, limiteAge);
+            return publics;
+        }
+            
+    }
+    
+    
 //	public void addSerie(Serie serie) throws SQLException {
 //		String requeteInsertionSerie = "INSERT INTO serie"
 //				+ " (nom, nomoriginal, anneeparution, synopsys, idstatut, idpaysorigine) values (?,?,?,?)";

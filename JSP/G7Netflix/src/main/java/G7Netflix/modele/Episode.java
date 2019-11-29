@@ -57,6 +57,21 @@ public class Episode {
 			throw new DonneesInvalidesException(errEpisode);
 	}
 
+	// VERIFICATION DES ERREURS A FAIRE
+	public Episode(String numero, String titre, String titreOriginal, String duree, String resume,
+			String dateRealisation, String datePremiereDiffusion, Public publics, Statut statut, Saison saison) {
+		this.numero = Integer.valueOf(numero);
+		this.titre = titre;
+		this.titreOriginal = titreOriginal;
+		this.duree = Integer.valueOf(duree);
+		this.resume = resume;
+		this.dateRealisation = Date.valueOf(dateRealisation);
+		this.datePremiereDiffusion = Date.valueOf(datePremiereDiffusion);
+		this.publics = publics;
+		this.statut = statut;
+		this.saison = saison;
+	}
+
 	public Integer getId() {
 		return id;
 	}
