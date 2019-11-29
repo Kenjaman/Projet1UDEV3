@@ -60,7 +60,7 @@ public class DAOSerie {
 
 	public void addSerie(Serie serie) throws SQLException {
 		String requeteInsertionSerie = "INSERT INTO serie"
-				+ " (nom, nomoriginal, anneeparution, synopsys, idstatut, idpaysorigine) values (?,?,?,?)";
+				+ " (nom, nomoriginal, anneeparution, synopsys, idstatut, idpaysorigine) values(?,?,?,?,?,?)";
 		try(Connection connexion = dataSource.getConnection();
 				PreparedStatement stmt = connexion.prepareStatement(requeteInsertionSerie, 
 						PreparedStatement.RETURN_GENERATED_KEYS)){
@@ -70,9 +70,8 @@ public class DAOSerie {
 			stmt.setString(4, serie.getSynopsys());
 			stmt.setInt(5, serie.getStatut().getId());
 			stmt.setInt(6, serie.getPaysOrigine().getId());
-			stmt.executeUpdate(requeteInsertionSerie);
+			stmt.executeUpdate();
 			serie.setId(extractPrimaryKey(connexion,stmt));
-			connexion.commit();
 			System.out.println(serie.getNom()+" ajoutée  à la bdd");
 		}
 	}
@@ -103,7 +102,6 @@ public class DAOSerie {
 		try(Connection connexion = dataSource.getConnection();
 				PreparedStatement stmt = connexion.prepareStatement(requeteDeleteSerie)){
 			stmt.executeUpdate(requeteDeleteSerie);
-			connexion.commit();
 			System.out.println(serie + " supprimée de la bdd");
 		}
 	}
