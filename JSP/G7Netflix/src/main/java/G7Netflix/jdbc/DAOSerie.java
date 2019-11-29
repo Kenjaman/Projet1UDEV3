@@ -59,8 +59,7 @@ public class DAOSerie {
 	}
 
 	public void addSerie(Serie serie) throws SQLException {
-		String requeteInsertionSerie = "INSERT INTO serie"
-				+ " (nom, nomoriginal, anneeparution, synopsys, idstatut, idpaysorigine) values(?,?,?,?,?,?)";
+		String requeteInsertionSerie = "INSERT INTO serie"+ " (nom, nomoriginal, anneeparution, synopsys, idstatut, idpaysorigine) values(?,?,?,?,?,?)";
 		try(Connection connexion = dataSource.getConnection();
 				PreparedStatement stmt = connexion.prepareStatement(requeteInsertionSerie, 
 						PreparedStatement.RETURN_GENERATED_KEYS)){
