@@ -11,6 +11,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import G7Netflix.modele.Affectation;
+import G7Netflix.modele.DonneesInvalidesException;
 import G7Netflix.modele.Saison;
 import G7Netflix.modele.Serie;
 import G7Netflix.modele.Statut;
@@ -24,7 +25,7 @@ public class DAOSaison {
 		this.dataSource=dataSource;
 	}
 	
-	public List<Saison> getSaisons(Serie serie) throws SQLException{
+	public List<Saison> getSaisons(Serie serie) throws SQLException, DonneesInvalidesException{
 		List<Saison> saisons = new ArrayList<Saison>();	
 		String requeteGetSaison ="SELECT sai.id, sai.numero, sai.resume, sai.annee_diffusion, "
 				+ "s.id, s.libelle, a.id, a.libelle, ser.id FROM saison "

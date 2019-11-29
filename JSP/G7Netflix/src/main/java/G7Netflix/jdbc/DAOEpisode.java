@@ -12,9 +12,11 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import G7Netflix.modele.Affectation;
+import G7Netflix.modele.DonneesInvalidesException;
 import G7Netflix.modele.Episode;
 import G7Netflix.modele.Public;
 import G7Netflix.modele.Saison;
+import G7Netflix.modele.Serie;
 import G7Netflix.modele.Statut;
 
 public class DAOEpisode {
@@ -26,7 +28,7 @@ public class DAOEpisode {
 		this.dataSource = dataSource;
 	}
 
-	public List<Episode> getEpisodes(Saison saison) throws SQLException {
+	public List<Episode> getEpisodes(Saison saison) throws SQLException, DonneesInvalidesException {
 		List<Episode> episodes = new ArrayList<Episode>();
 		String requeteGetEpisode = "SELECT e.id, e.numero, e.titre, e.titreoriginal, "
 				+ "e.duree, e.resume, e.daterealisation, e.date_premiere_diffusion, "
@@ -56,7 +58,7 @@ public class DAOEpisode {
 		}
 
 	}
-
+	
 	public void addEpisode(Episode episode) throws SQLException {
 		String requeteInsertionEpisode = "INSERT INTO episode"
 				+ " (numero, titre, titreOriginal, duree, resume, dateRealisation, " + 
@@ -77,6 +79,24 @@ public class DAOEpisode {
 			stmt.executeUpdate(requeteInsertionEpisode);
 			episode.setId(extractPrimaryKey(connexion, stmt));
 
+		}
+	}
+	
+	public void updateEpisode(Episode episode) throws SQLException{
+		String requeteUpdateEpisode = "UPDATE episode SET "
+				+"numero = "+episode.getNumero()+", titre = "+episode.getTitre()+", titreOriginal = "+episode.getTitreOriginal()+", " 
+				+"duree = "+episode.getDuree()+", resume = "+episode.getResume()+", dateRealisation = "+episode.getDateRealisation()+","
+				+"datePremiereDiffusion = "+episode.getDatePremiereDiffusion()+", idpublic = "+episode.getPublics().getId()+","
+				+"idstatut ="+episode.getStatut().getId()+", idsaison = "+episode.getSaison().getId()+","
+				+ " WHERE id ="+episode.getId();
+		try(Connection connexion = dataSource.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(requeteUpdateEpisode)){
+			if(stmt.executeUpdate()!=0) {
+				connexion.commit();
+				System.out.println(episode.getNumero() + "a bien été mise a jour");
+			}else {
+				connexion.rollback();
+			}
 		}
 	}
 
