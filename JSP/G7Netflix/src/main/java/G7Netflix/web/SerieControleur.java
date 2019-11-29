@@ -90,7 +90,7 @@ public class SerieControleur extends HttpServlet {
 				serieDAO.deleteSerie(serieAsupp);
 			}else {
 				Serie serie = new Serie(nom,nomOriginal,anneeParution,synopsys,statut,paysOrigine);
-				System.out.println(serie);
+				System.out.println("ajout "+serie);
 				serieDAO.addSerie(serie);
 			}
 		} catch (DonneesInvalidesException e) {

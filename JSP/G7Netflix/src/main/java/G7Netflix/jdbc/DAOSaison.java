@@ -28,7 +28,7 @@ public class DAOSaison {
 	public List<Saison> getSaisons(Serie serie) throws SQLException, DonneesInvalidesException{
 		List<Saison> saisons = new ArrayList<Saison>();	
 		String requeteGetSaison ="SELECT sai.id, sai.numero, sai.resume, sai.annee_diffusion, "
-				+ "s.id, s.libelle, a.id, a.libelle, ser.id FROM saison "
+				+ "s.id, s.libelle, a.id, a.libelle, ser.id FROM saison sai "
 				+ "INNER JOIN statut s ON sai.idstatut = s.id "
 				+ "INNER JOIN affectation a ON s.idaffectation = a.id"
 				+ "WHERE sai.idserie = " + serie.getId();
@@ -45,10 +45,11 @@ public class DAOSaison {
 				saisons.add(new Saison(id, numero, resume, anneeDiffusion, statut, serie));
 			}
 			return saisons;
-		}
-			
+		}		
 	}
-	
+	public void updateSaison(Saison saison) throws SQLException{
+		String requeteUpDateSaison
+	}
 	public void addSaison(Saison saison) throws SQLException {
 		String requeteInsertionSaison = "INSERT INTO saison"
 				+ " (numero, resume, anneediffusion, idstatut, idserie) values (?,?,?,?)";
