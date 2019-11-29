@@ -22,32 +22,35 @@
 </section>
 <section id="content">
 	<form action="" method="post">
-		<header>Fiche d'ajout d'une saison</header>
+		<header>Fiche d'ajout/modification d'une saison</header>
+		<h3><c:out value="Id saison : ${saison.id}"/></h3>
 		<div>
-		  <select name="nomSerie">
+		<input type='hidden' name="idSerie" value='<c:out value="${serie.id}"/>'/>
+		<input type='hidden' name="idSaison" value='<c:out value="${saison.id}"/>'/>
+		  <%-- <select name="nomSerie">
               <option value="0">--</option>
               <c:forEach items="${nomsSeries}" var="varnomSerie">
                   <option ${param['nomSerie'] == varnomSerie ? "selected" : ""}><c:out value="${varnomSerie.nom}"/></option>
               </c:forEach>
-          </select>
+          </select> --%>
        	</div>
        	<div>
 			<label for="numeroSaison">Numéro de Saison: </label>
-			<input id="numeroSaison" name="numeroSaison" type="number" min="1" step="1" value="<c:out value="${param['numeroSaison']}" />"> 
+			<input id="numeroSaison" name="numeroSaison" type="number" min="1" step="1" value="<c:out value="${saison.numero}" />"> 
 		</div>
 		<div>
 			<label for="anneeDiffusion">Année de diffusion : </label>
-			<input id="anneeDiffusion" name="anneeDiffusion" type="number" min="1900" step="1" value="<c:out value="${param['anneeDiffusion']}" />"> 
+			<input id="anneeDiffusion" name="anneeDiffusion" type="number" min="1900" step="1" value="<c:out value="${saison.anneeDiffusion}" />"> 
 		</div>
 		<div>
 			<label for="resume">Résumé :</label>
-			<input type="text" name="resume" id="resume" placeholder="Saisir le résumé de la saison" value="<c:out value="${param['resume']}"/>">
+			<input type="text" name="resume" id="resume" placeholder="Saisir le résumé de la saison" value="<c:out value="${saison.resume}"/>">
 		</div>
 		<div>
 		  <select name="statutSaison">
               <option value="0">--</option>
               <c:forEach items="${statutSaisons}" var="varStatutSaison">
-                  <option ${param['statutSaison'] == varStatutSaison ? "selected" : ""}><c:out value="${varStatutSaison}"/></option>
+                  <option ${saison.statut.id == varStatutSaison.id ? "selected" : ""}><c:out value="${varStatutSaison}"/></option>
               </c:forEach>
           </select>
        	</div>
