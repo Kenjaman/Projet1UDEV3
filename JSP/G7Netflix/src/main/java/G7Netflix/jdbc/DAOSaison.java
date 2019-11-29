@@ -28,10 +28,10 @@ public class DAOSaison {
 	public List<Saison> getSaisons(Serie serie) throws SQLException, DonneesInvalidesException{
 		List<Saison> saisons = new ArrayList<Saison>();	
 		String requeteGetSaison ="SELECT sai.id, sai.numero, sai.resume, sai.annee_diffusion, "
-				+ "s.id, s.libelle, a.id, a.libelle, ser.id FROM saison sai "
+				+ "s.id, s.libelle, a.id, a.libelle FROM saison sai "
 				+ "INNER JOIN statut s ON sai.idstatut = s.id "
-				+ "INNER JOIN affectation a ON s.idaffectation = a.id"
-				+ "WHERE sai.idserie = " + serie.getId();
+				+ "INNER JOIN affectation a ON s.idaffectation = a.id "
+				+ "WHERE idserie = " + serie.getId();
 		try(Connection connexion = dataSource.getConnection();
 				Statement stmt = connexion.createStatement();
 				ResultSet result = stmt.executeQuery(requeteGetSaison)){

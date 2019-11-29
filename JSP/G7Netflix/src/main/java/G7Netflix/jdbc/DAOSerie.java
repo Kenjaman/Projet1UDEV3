@@ -98,7 +98,7 @@ public class DAOSerie {
 	}
 
 	public void deleteSerie(Serie serie) throws SQLException {
-		String requeteDeleteSerie = "DELETE serie, saison, episode FROM " // tables à delete AVANT le from
+		String requeteDeleteSerie = "DELETE serie, saison, episode FROM serie " // tables à delete AVANT le from
 				+ "INNER JOIN saison ON saison.idserie = serie.id "
 				+ "INNER JOIN episode ON episode.idsaison = saison.id "
 				+ "WHERE serie.id = " + serie.getId();

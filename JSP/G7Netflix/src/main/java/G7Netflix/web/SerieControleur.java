@@ -26,7 +26,7 @@ import G7Netflix.modele.Statut;
 @WebServlet("/series")
 public class SerieControleur extends HttpServlet {
 	private static final String VUE_FORMULAIRE_SERIE = "/WEB-INF/jsp/ajoutSerie.jsp";
-	private static final String VUE_AFFICHAGE = "/WEB-INF/jsp/affichageListe.jsp";
+	private static final String VUE_AFFICHAGE = "/WEB-INF/jsp/affichageListeSerie.jsp";
 
 	@Resource(name = "BddMyNetflix")
 	private DataSource bddMyNetflix;
@@ -49,6 +49,7 @@ public class SerieControleur extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setAttribute("entiteeTraiter", "series");
 		try {
+			req.setAttribute("liste", serieDAO.getSeries());
 			if(req.getParameter("action")!=null) { // Si on a appuyer sur un bouton
 				req.getServletContext().setAttribute("series", serieDAO.getSeries()); //<----- POURQUOI j'ai fait ca ?? Où est ce que je m'en sert ??
 				req.getServletContext().setAttribute("statuts", statutDAO.getStatuts(affDAO.getAffectation("serie")));
@@ -60,10 +61,13 @@ public class SerieControleur extends HttpServlet {
 					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SERIE).forward(req, resp);
 				}else if(req.getParameter("action").equals("supprimer")) {// Appui sur supprimer
 					this.doDelete(req, resp);
+					req.setAttribute("liste", serieDAO.getSeries());
 					req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 				}
-			}else { //Si on arrive depuis une autre page
-				req.setAttribute("liste", serieDAO.getSeries());
+			}else if(req.getParameter("id")!=null) {
+				req.getServletContext().setAttribute("idSerie", req.getParameter("id"));
+				req.getServletContext().getRequestDispatcher("/saisons").forward(req, resp);
+			}else {
 				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 			}
 		} catch (SQLException e) {
@@ -93,7 +97,7 @@ public class SerieControleur extends HttpServlet {
 			}
 		} catch (DonneesInvalidesException e) {
 			req.setAttribute("erreursSerie", e.getErreurs());
-			req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SERIE).forward(req, resp);
+//			req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SERIE).forward(req, resp);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -112,7 +116,6 @@ public class SerieControleur extends HttpServlet {
 		} catch (NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 		}
 		
 	}
