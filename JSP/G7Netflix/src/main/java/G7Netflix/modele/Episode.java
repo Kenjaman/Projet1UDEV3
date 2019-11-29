@@ -21,7 +21,7 @@ public class Episode {
 
 
 	public Episode(Integer id, Integer numero, String titre, String titreOriginal, Integer duree, String resume, Date dateRealisation,
-			Date datePremiereDiffusion, Public publics, Statut statut, Saison saison) {
+			Date datePremiereDiffusion, Public publics, Statut statut, Saison saison) throws DonneesInvalidesException {
 		
 		List<Erreur> errEpisode = new ArrayList<Erreur>();
 		
@@ -52,6 +52,8 @@ public class Episode {
 		if(saison.getId()==0) {
 			errEpisode.add(new Erreur("saison","N'oubliez pas la saison ! "));
 		}
+		if(!errEpisode.isEmpty())
+			throw new DonneesInvalidesException(errEpisode);
 	}
 
 	public Integer getId() {
