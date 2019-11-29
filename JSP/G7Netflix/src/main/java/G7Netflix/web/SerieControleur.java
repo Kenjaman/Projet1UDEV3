@@ -70,7 +70,7 @@ public class SerieControleur extends HttpServlet {
 			}else {
 				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | NumberFormatException | DonneesInvalidesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -113,7 +113,7 @@ public class SerieControleur extends HttpServlet {
 		try {
 			serieAsupp = serieDAO.getSerie(Integer.valueOf(req.getParameter("id")));
 			serieDAO.deleteSerie(serieAsupp);
-		} catch (NumberFormatException | SQLException e) {
+		} catch (NumberFormatException | SQLException | DonneesInvalidesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

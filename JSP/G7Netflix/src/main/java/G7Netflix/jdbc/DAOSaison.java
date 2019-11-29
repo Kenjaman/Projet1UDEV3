@@ -47,6 +47,13 @@ public class DAOSaison {
 			return saisons;
 		}		
 	}
+	public Saison getSaison(Integer id, Serie serie) throws SQLException, DonneesInvalidesException {
+		for(Saison saison : this.getSaisons(serie)) {
+			if(saison.getId()==id)
+				return saison;
+		}
+		return null;
+	}
 	public void updateSaison(Saison saison) throws SQLException{
 		String requeteUpDateSaison = "UPDATE saison SET"
 				+ " numero = ?,"
