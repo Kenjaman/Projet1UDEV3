@@ -64,13 +64,13 @@ public class SerieControleur extends HttpServlet {
 					req.setAttribute("liste", serieDAO.getSeries());
 					req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 				}
-			}else if(req.getParameter("id")!=null) { // Si on clique sur une serie
+			}else if(req.getParameter("id")!=null) {
 				req.getServletContext().setAttribute("idSerie", req.getParameter("id"));
 				req.getServletContext().getRequestDispatcher("/saisons").forward(req, resp);
 			}else {
 				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | NumberFormatException | DonneesInvalidesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -94,7 +94,6 @@ public class SerieControleur extends HttpServlet {
 				Serie serie = new Serie(nom,nomOriginal,anneeParution,synopsys,statut,paysOrigine);
 				System.out.println("ajout "+serie);
 				serieDAO.addSerie(serie);
-				resp.sendRedirect("series");
 			}
 		} catch (DonneesInvalidesException e) {
 			req.setAttribute("erreursSerie", e.getErreurs());
@@ -114,7 +113,7 @@ public class SerieControleur extends HttpServlet {
 		try {
 			serieAsupp = serieDAO.getSerie(Integer.valueOf(req.getParameter("id")));
 			serieDAO.deleteSerie(serieAsupp);
-		} catch (NumberFormatException | SQLException e) {
+		} catch (NumberFormatException | SQLException | DonneesInvalidesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

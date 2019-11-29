@@ -11,6 +11,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import G7Netflix.modele.Affectation;
+import G7Netflix.modele.DonneesInvalidesException;
 import G7Netflix.modele.Pays;
 import G7Netflix.modele.Serie;
 import G7Netflix.modele.Statut;
@@ -24,7 +25,7 @@ public class DAOSerie {
 		this.dataSource=dataSource;
 	}
 
-	public List<Serie> getSeries() throws SQLException{
+	public List<Serie> getSeries() throws SQLException, DonneesInvalidesException{
 		List<Serie> series = new ArrayList<Serie>();    
 		String requeteGetSerie ="SELECT ser.id, ser.nom, ser.nomoriginal, ser.anneeparution, ser.synopsys, "
 				+ "s.id, s.libelle, a.id, a.libelle, p.id, p.nom, p.code FROM serie ser "
@@ -50,7 +51,7 @@ public class DAOSerie {
 
 	}
 
-	public Serie getSerie(Integer id) throws SQLException {
+	public Serie getSerie(Integer id) throws SQLException, DonneesInvalidesException {
 		for(Serie serie : this.getSeries()) {
 			if(serie.getId()==id)
 				return serie;
