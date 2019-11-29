@@ -71,7 +71,9 @@ public class SaisonControleur extends HttpServlet {
 					req.setAttribute("liste", serieDAO.getSeries());
 					req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 				}
-			}else{ //Si on arrive depuis une autre page
+			}else if(req.getParameter("id")!=null) { //Si on clique sur une saison
+				req.getServletContext().getRequestDispatcher("/episode").forward(req, resp);
+			}else {
 				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 			}
 		} catch (SQLException e) {

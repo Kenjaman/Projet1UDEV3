@@ -64,7 +64,7 @@ public class SerieControleur extends HttpServlet {
 					req.setAttribute("liste", serieDAO.getSeries());
 					req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 				}
-			}else if(req.getParameter("id")!=null) {
+			}else if(req.getParameter("id")!=null) { // Si on clique sur une serie
 				req.getServletContext().setAttribute("idSerie", req.getParameter("id"));
 				req.getServletContext().getRequestDispatcher("/saisons").forward(req, resp);
 			}else {

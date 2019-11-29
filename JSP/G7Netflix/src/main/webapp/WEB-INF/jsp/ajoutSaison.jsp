@@ -45,10 +45,12 @@
 		</div>
 		<div>
 		  <select name="statutSaison">
-              <option value="0">--</option>
-              <c:forEach items="${statutSaisons}" var="varStatutSaison">
-                  <option ${param['statutSaison'] == varStatutSaison ? "selected" : ""}><c:out value="${varStatutSaison}"/></option>
-              </c:forEach>
+              <c:forEach items='${statuts}' var='varStatut'>
+						<option value='${varStatut.id}'
+							${saison.statut.id == varStatut.id ? "selected" : ""}>
+							<c:out value='${varStatut.libelle}' />
+						</option>
+				</c:forEach>
           </select>
        	</div>
 		<div>
