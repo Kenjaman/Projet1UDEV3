@@ -31,6 +31,8 @@ public class Saison {
 		}
 		this.resume = resume;
 		this.anneeDiffusion = anneeDiffusion;
+		if(!errSaison.isEmpty())
+			throw new DonneesInvalidesException(errSaison);
 	}
 
 	public Integer getId() {

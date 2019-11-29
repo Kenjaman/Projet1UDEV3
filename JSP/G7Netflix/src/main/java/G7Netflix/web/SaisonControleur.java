@@ -53,7 +53,8 @@ public class SaisonControleur extends HttpServlet {
 				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DonneesInvalidesException e) {
 			e.printStackTrace();
 		} catch (DonneesInvalidesException e) {
 			// TODO Auto-generated catch block

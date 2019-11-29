@@ -10,7 +10,7 @@ public class Serie {
 	private Integer id;
 	private String nom;
 	private String nomoriginal;
-	private Integer anneeparution;	
+	private Integer anneeparution;	 
 	private String synopsys;
 	private Statut statut;
 	private Pays paysOrigine;
