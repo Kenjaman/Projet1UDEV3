@@ -94,6 +94,7 @@ public class SerieControleur extends HttpServlet {
 				Serie serie = new Serie(nom,nomOriginal,anneeParution,synopsys,statut,paysOrigine);
 				System.out.println("ajout "+serie);
 				serieDAO.addSerie(serie);
+				resp.sendRedirect("series");
 			}
 		} catch (DonneesInvalidesException e) {
 			req.setAttribute("erreursSerie", e.getErreurs());
