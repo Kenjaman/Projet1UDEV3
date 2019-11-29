@@ -25,7 +25,7 @@ public class EpisodeControleur extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
-			req.setAttribute("entiteTraiter", "saisons");
+			req.setAttribute("entiteTraiter", "episodes");
 			DAOSerie serieDAO = new DAOSerie(bddMyNetflix);
 			Serie serie = serieDAO.getSerie(Integer.valueOf(req.getParameter("id")));
 			if(req.getParameter("action")!=null) {
