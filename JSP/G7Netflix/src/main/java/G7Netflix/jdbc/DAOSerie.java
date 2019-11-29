@@ -76,15 +76,19 @@ public class DAOSerie {
 	}
 	
 	public void updateSerie(Serie serie) throws SQLException{
-		String requeteUpdateSerie = "UPDATE serie SET "
-				+"nom = "+serie.getNom()+", nomoriginal = "+serie.getNomOriginal()+", anneeparution = "+serie.getAnneeParution()+", " 
-				+"synopsys = "+serie.getSynopsys()+", idstatut = "+serie.getStatut().getId()+", "
-				+"idpaysorigine = "+serie.getPaysOrigine().getId()
-				+ " WHERE id ="+serie.getId();
+		
+		String requeteUpdateSerie ="UPDATE serie SET nom = ?, nomoriginal = ?, anneeparution = ?, synopsys = ?, idstatut = ?, idpaysorigine = ?"
+				+" WHERE id = ?";
 		try(Connection connexion = dataSource.getConnection();
-				PreparedStatement stmt = connexion.prepareStatement(requeteUpdateSerie)){
-			if(stmt.executeUpdate()!=0) {
-				connexion.commit();
+				PreparedStatement pstmt = connexion.prepareStatement(requeteUpdateSerie)){
+			pstmt.setString(1,serie.getNom());
+			pstmt.setString(2, serie.getNomOriginal());
+			pstmt.setInt(3, serie.getAnneeParution());
+			pstmt.setString(4,serie.getSynopsys());
+			pstmt.setInt(5, serie.getStatut().getId());
+			pstmt.setInt(6, serie.getPaysOrigine().getId());
+			pstmt.setInt(7, serie.getId());
+			if(pstmt.executeUpdate()!=0) {
 				System.out.println(serie.getNom() + "a bien été mise a jour");
 			}else {
 				connexion.rollback();
@@ -94,7 +98,7 @@ public class DAOSerie {
 	}
 
 	public void deleteSerie(Serie serie) throws SQLException {
-		String requeteDeleteSerie = "DELETE FROM serie, saison, episode "
+		String requeteDeleteSerie = "DELETE serie, saison, episode FROM " // tables à delete AVANT le from
 				+ "INNER JOIN saison ON saison.idserie = serie.id "
 				+ "INNER JOIN episode ON episode.idsaison = saison.id "
 				+ "WHERE serie.id = " + serie.getId();

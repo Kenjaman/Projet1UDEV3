@@ -48,7 +48,30 @@ public class DAOSaison {
 		}		
 	}
 	public void updateSaison(Saison saison) throws SQLException{
-		String requeteUpDateSaison
+		String requeteUpDateSaison = "UPDATE saison SET"
+				+ " numero = ?,"
+				+ " resumer = ?,"
+				+ " annee_diffusion = ?,"
+				+ " idstatut = ?,"
+				+ " idserie = ?"
+				+ " WHERE id = ?";
+		try(Connection connexion = dataSource.getConnection();
+				PreparedStatement pstmt = connexion.prepareStatement(requeteUpDateSaison)){
+			pstmt.setInt(1, saison.getNumero());
+			pstmt.setString(2,saison.getResume());
+			pstmt.setInt(3, saison.getAnneeDiffusion());
+			pstmt.setInt(4, saison.getStatut().getId());
+			pstmt.setInt(5, saison.getSerie().getId());
+			pstmt.setInt(6, saison.getId());
+			if(pstmt.executeUpdate()!=0)
+				System.out.println(saison.getNumero() + "a bien été mise a jour");
+			else {
+				connexion.rollback();
+				System.out.println("ca n'a pas marcher");
+			}
+				
+			
+		}
 	}
 	public void addSaison(Saison saison) throws SQLException {
 		String requeteInsertionSaison = "INSERT INTO saison"
@@ -72,8 +95,7 @@ public class DAOSaison {
 				+ "INNER JOIN episode ON episode.idsaison = saison.id "
 				+ "WHERE saison.id = " + saison.getId();
 		try(Connection connexion = dataSource.getConnection();
-				PreparedStatement stmt = connexion.prepareStatement(requeteDeleteSaison, 
-				PreparedStatement.RETURN_GENERATED_KEYS)){
+				PreparedStatement stmt = connexion.prepareStatement(requeteDeleteSaison)){
 		stmt.executeUpdate(requeteDeleteSaison);
 		}
 	}

@@ -20,7 +20,8 @@ public class Episode {
 
 
 
-	public Episode(Integer id, Integer numero, String titre, String titreOriginal, Integer duree, String resume, Date dateRealisation,
+	public Episode(Integer id, Integer numero, String titre, String titreOriginal,
+			Integer duree, String resume, Date dateRealisation,
 			Date datePremiereDiffusion, Public publics, Statut statut, Saison saison) throws DonneesInvalidesException {
 		
 		List<Erreur> errEpisode = new ArrayList<Erreur>();

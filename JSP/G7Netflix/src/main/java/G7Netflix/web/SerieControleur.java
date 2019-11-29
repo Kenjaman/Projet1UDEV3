@@ -59,7 +59,8 @@ public class SerieControleur extends HttpServlet {
 					req.setAttribute("serie", serieDAO.getSerie(Integer.valueOf(req.getParameter("id"))));
 					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SERIE).forward(req, resp);
 				}else if(req.getParameter("action").equals("supprimer")) {// Appui sur supprimer
-					this.doPost(req, resp);
+					this.doDelete(req, resp);
+					req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 				}
 			}else { //Si on arrive depuis une autre page
 				req.setAttribute("liste", serieDAO.getSeries());
@@ -85,9 +86,6 @@ public class SerieControleur extends HttpServlet {
 				Serie serieAupdate =new Serie(nom,nomOriginal,anneeParution,synopsys,statut,paysOrigine);
 				serieAupdate.setId(idSerie);
 				serieDAO.updateSerie(serieAupdate);
-			}else if(req.getParameter("action").equals("supprimer")) {
-				Serie serieAsupp = serieDAO.getSerie(Integer.valueOf(req.getParameter("id")));
-				serieDAO.deleteSerie(serieAsupp);
 			}else {
 				Serie serie = new Serie(nom,nomOriginal,anneeParution,synopsys,statut,paysOrigine);
 				System.out.println("ajout "+serie);
@@ -103,6 +101,22 @@ public class SerieControleur extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		Serie serieAsupp;
+		try {
+			serieAsupp = serieDAO.getSerie(Integer.valueOf(req.getParameter("id")));
+			serieDAO.deleteSerie(serieAsupp);
+		} catch (NumberFormatException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
+		}
+		
+	}
+	
 
 }
 
