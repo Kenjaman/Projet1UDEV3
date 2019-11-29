@@ -44,13 +44,14 @@
 		</div>
 		<div>
 			<label for="resume">Résumé :</label>
-			<input type="text" name="resume" id="resume" placeholder="Saisir le résumé de la saison" value="<c:out value="${saison.resume}"/>">
+			<textarea rows='5' cols='50' type="text" name="resume" id="resume" placeholder="Saisir le résumé de la saison"><c:out value="${saison.resume}"/></textarea>
 		</div>
 		<div>
+		<label for='resume'>Statut de la saison</label>
 		  <select name="statutSaison">
               <option value="0">--</option>
-              <c:forEach items="${statutSaisons}" var="varStatutSaison">
-                  <option ${saison.statut.id == varStatutSaison.id ? "selected" : ""}><c:out value="${varStatutSaison}"/></option>
+              <c:forEach items="${statuts}" var="varStatutSaison">
+                  <option ${statut.id == varStatutSaison.id ? "selected" : ""}><c:out value="${varStatutSaison.libelle}"/></option>
               </c:forEach>
           </select>
        	</div>
