@@ -30,7 +30,7 @@ public class EpisodeControleur extends HttpServlet {
 
 	@Resource(name = "BddMyNetflix")
 	private DataSource bddMyNetflix;
-	
+
 	private DAOSerie serieDAO;
 	private DAOSaison saisonDAO;
 	private DAOEpisode episodeDAO;
@@ -38,7 +38,7 @@ public class EpisodeControleur extends HttpServlet {
 	private DAOStatut statutDAO;
 	private DAOAffectation affDAO;
 
-	
+
 	@Override
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
@@ -50,18 +50,6 @@ public class EpisodeControleur extends HttpServlet {
 		affDAO = new DAOAffectation(bddMyNetflix);
 	}
 
-	private DAOEpisode episodeDAO;
-	private DAOPublic publicDAO;
-	private DAOStatut statutDAO;
-	private DAOSaison saisonDAO;
-	
-	@Override
-	public void init() throws ServletException {
-		episodeDAO = new DAOEpisode(bddMyNetflix);
-		publicDAO = new DAOPublic(bddMyNetflix);
-		statutDAO = new DAOStatut(bddMyNetflix);
-		saisonDAO = new DAOSaison(bddMyNetflix);
-	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -86,6 +74,12 @@ public class EpisodeControleur extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DonneesInvalidesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 
@@ -103,20 +97,19 @@ public class EpisodeControleur extends HttpServlet {
 			String datePremiereDiffusion = req.getParameter("date_premiere_diffusion");
 			Public publics = publicDAO.getPublics(Integer.valueOf(req.getParameter("public")));
 			Statut statut = statutDAO.getStatut(Integer.valueOf(req.getParameter("statut")));
-			Saison saison = saisonDAO.getSaison(Integer.valueOf(req.getParameter("saison")));
-			if(req.getParameter("action").equals("modifier")) {
-				Integer idEpisode = Integer.valueOf(req.getParameter("id"));
-				Episode episodeAUpdate = new Episode(numero, titre, titreOriginal, duree, resume, dateRealisation, datePremiereDiffusion, publics, statut, saison);
-				episodeAUpdate.setId(idEpisode);
-				episodeDAO.updateEpisode(episodeAUpdate);
-			}
-			else {
-				Episode episode = new Episode(numero, titre, titreOriginal, duree, resume, dateRealisation, datePremiereDiffusion, publics, statut, saison);
-				System.out.println(episode + " ajouté");
-				episodeDAO.addEpisode(episode);
-			}
+			Saison saison = saisonDAO.getSaison(Integer.valueOf(req.getParameter("saison")),serieDAO.getSerie(Integer.valueOf(req.getParameter("idSerie"))));
+			Integer idEpisode = Integer.valueOf(req.getParameter("id"));
+			Episode episodeAUpdate = new Episode(numero, titre, titreOriginal, duree, resume, dateRealisation, datePremiereDiffusion, publics, statut, saison);
+			episodeAUpdate.setId(idEpisode);
+			episodeDAO.updateEpisode(episodeAUpdate);
 		}
 		catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DonneesInvalidesException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
