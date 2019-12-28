@@ -65,6 +65,12 @@ public class EpisodeControleur extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DonneesInvalidesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 
