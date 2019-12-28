@@ -28,12 +28,12 @@
 		<c:forEach items="${liste}" var="item">
 			<tr>
 				<td><a
-					href='./<c:out value="${entiteeTraiter}"/>?idSaison=${item.id}'><c:out
+					href='./<c:out value="${entiteeTraiter}"/>?id=${item.id}'><c:out
 							value="${item.numero}" /></a></td>
 				<td><a
-					href='./<c:out value="${entiteeTraiter}"/>?idSaison=${item.id}&action=modifier'>Modifier</a></td>
+					href='./<c:out value="${entiteeTraiter}"/>?id=${item.id}&action=modifier'>Modifier</a></td>
 				<td><a
-					href='./<c:out value="${entiteeTraiter}"/>?idSaison=${item.id}&action=supprimer'>Delete</a></td>
+					href='./<c:out value="${entiteeTraiter}"/>?id=${item.id}&action=supprimer'>Delete</a></td>
 			</tr>
 		</c:forEach>
 	</table>

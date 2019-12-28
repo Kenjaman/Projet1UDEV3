@@ -114,7 +114,7 @@ public class DAOEpisode {
 		try (ResultSet resultSet = stmt.getGeneratedKeys()) {
 			if (!resultSet.next()) {
 				connexion.rollback();
-				throw new SQLException("Aucune série insérée !");
+				throw new SQLException("Aucune épisode insérée !");
 			}
 			return resultSet.getInt(1);
 		}
