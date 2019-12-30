@@ -32,10 +32,13 @@ public class DAOEpisode {
 		List<Episode> episodes = new ArrayList<Episode>();
 		String requeteGetEpisode = "SELECT e.id, e.numero, e.titre, e.titreoriginal, "
 				+ "e.duree, e.resume, e.daterealisation, e.date_premiere_diffusion, "
-				+ "p.id, p.libelle, p.limiteage, s.id, s.libelle, a.id, a.libelle, sai.id, sai.numero, sai.resume"
-				+ "INNER JOIN public p ON e.idpublic = p.id"
-				+ "INNER JOIN statut s ON e.idstatut = s.id"
-				+ "INNER JOIN saison sai ON e.idsaison = " + saison.getId();
+				+ "p.id, p.libelle, p.limiteage, s.id, s.libelle, a.id, a.libelle, sai.id, sai.numero, sai.resume "
+				+ "FROM episode e "
+				+ "INNER JOIN public p ON e.idpublic = p.id "
+				+ "INNER JOIN statut s ON e.idstatut = s.id "
+				+ "INNER JOIN affectation a ON s.idaffectation = a.id "
+				+ "INNER JOIN saison sai ON e.idsaison = sai.id "
+				+ "WHERE idsaison = " + saison.getId();
 		try (Connection connexion = dataSource.getConnection();
 				Statement stmt = connexion.createStatement();
 				ResultSet result = stmt.executeQuery(requeteGetEpisode)) {

@@ -16,9 +16,9 @@
 		<ul>
 
 			<li>Série : <c:out value="${serie.nom}" /></li>
-			<li>Numéro : <c:out value="${saison.numero}" /></li>
+			<li>Saison : <c:out value="${saison.numero}" /></li>
 			<li>Résumé : <c:out value="${saison.resume}" /></li>
-			<li>Année de diffusion : <c:out value="${saison.anneediffusion}" /></li>
+			<li>Année de diffusion : <c:out value="${saison.anneeDiffusion}" /></li>
 			<li>Statut : <c:out value="${saison.statut.libelle}" /></li>
 		</ul>
 	</div>
@@ -26,7 +26,7 @@
 	<table>
 		<c:forEach items="${liste}" var="item">
 			<tr>
-				<td><c:out value="${item.numero}" /></td>
+				<td><c:out value="${item.id}" /></td>
 				<td><a
 					href='./<c:out value="${entiteeTraiter}"/>?id=${item.id}&action=modifier'>Modifier</a></td>
 				<td><a

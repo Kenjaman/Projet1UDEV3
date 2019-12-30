@@ -56,8 +56,10 @@ public class EpisodeControleur extends HttpServlet {
 		try {
 			Integer idSerie = Integer.valueOf(req.getServletContext().getAttribute("idSerie").toString());
 			Serie serieSaison = serieDAO.getSerie(idSerie);
+			req.setAttribute("serie", serieSaison);
 			Integer idSaison = Integer.valueOf(req.getServletContext().getAttribute("idSaison").toString());
 			Saison saisonEpisode = saisonDAO.getSaison(idSaison, serieSaison);
+			req.setAttribute("saison", saisonEpisode);
 			List<Episode> episodes = new ArrayList<Episode>();
 			episodes = episodeDAO.getEpisodes(saisonEpisode);
 			req.setAttribute("liste", episodes);
