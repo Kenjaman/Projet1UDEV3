@@ -18,12 +18,13 @@ import G7Netflix.jdbc.DAOPublic;
 import G7Netflix.jdbc.DAOSaison;
 import G7Netflix.jdbc.DAOSerie;
 import G7Netflix.jdbc.DAOStatut;
+import G7Netflix.modele.DonneesInvalidesException;
 import G7Netflix.modele.Serie;
 
 @WebServlet("/episodes")
 public class EpisodeControleur extends HttpServlet {
 	private static final String VUE_FORMULAIRE_EPISODE = "/WEB-INF/jsp/ajoutEpisode.jsp";
-	private static final String VUE_AFFICHAGE = "/WEB-INF/jsp/affichageListe.jsp";
+	private static final String VUE_AFFICHAGE = "/WEB-INF/jsp/affichageListeEpisodes.jsp";
 
 	@Resource(name = "BddMyNetflix")
 	private DataSource bddMyNetflix;
@@ -32,6 +33,7 @@ public class EpisodeControleur extends HttpServlet {
 	private DAOSaison saisonDAO;
 	private DAOPublic publicDAO;
 	private DAOStatut statutDAO;
+	private DAOSerie serieDAO;
 
 	@Override
 	public void init() throws ServletException {
@@ -40,6 +42,7 @@ public class EpisodeControleur extends HttpServlet {
 		saisonDAO = new DAOSaison(bddMyNetflix);
 		publicDAO = new DAOPublic(bddMyNetflix);
 		statutDAO = new DAOStatut(bddMyNetflix);
+		serieDAO = new DAOSerie(bddMyNetflix);
 	}
 	
 	
@@ -48,8 +51,8 @@ public class EpisodeControleur extends HttpServlet {
 		req.setAttribute("entiteTraiter", "episodes");
 		try {
 			if(req.getParameter("action")!=null) {
-				req.getServletContext().setAttribute("episodes", episodeDAO.getepisode(saisonDAO.getSerie()));
-				req.getServletContext().setAttribute("saisons", saisonDAO.getSaisons());
+				//req.getServletContext().setAttribute("episodes", episodeDAO.getepisode(saisonDAO.getSerie()));
+				//req.getServletContext().setAttribute("saisons", saisonDAO.getSaisons());
 				if(req.getParameter("action").equals("ajouter")) {
 					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_EPISODE).forward(req, resp);
 				}else if(req.getParameter("action").equals("modifier")) {//Transfere vers la page de modification 
@@ -62,18 +65,10 @@ public class EpisodeControleur extends HttpServlet {
 				req.setAttribute("liste", serieDAO.getSeries());
 				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DonneesInvalidesException e) {
+		} catch (SQLException | NumberFormatException | DonneesInvalidesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
 	}
 
 //	@Override
