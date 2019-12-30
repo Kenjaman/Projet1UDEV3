@@ -26,9 +26,7 @@
 	<table>
 		<c:forEach items="${liste}" var="item">
 			<tr>
-				<td><a
-					href='./<c:out value="${entiteeTraiter}"/>?id=${item.id}'><c:out
-							value="${item.numero}" /></a></td>
+				<td><c:out value="${item.numero}" /></td>
 				<td><a
 					href='./<c:out value="${entiteeTraiter}"/>?id=${item.id}&action=modifier'>Modifier</a></td>
 				<td><a

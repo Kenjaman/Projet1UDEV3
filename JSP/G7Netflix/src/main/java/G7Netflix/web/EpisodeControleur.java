@@ -2,6 +2,8 @@ package G7Netflix.web;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -19,6 +21,8 @@ import G7Netflix.jdbc.DAOSaison;
 import G7Netflix.jdbc.DAOSerie;
 import G7Netflix.jdbc.DAOStatut;
 import G7Netflix.modele.DonneesInvalidesException;
+import G7Netflix.modele.Episode;
+import G7Netflix.modele.Saison;
 import G7Netflix.modele.Serie;
 
 @WebServlet("/episodes")
@@ -50,6 +54,13 @@ public class EpisodeControleur extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setAttribute("entiteTraiter", "episodes");
 		try {
+			Integer idSerie = Integer.valueOf(req.getServletContext().getAttribute("idSerie").toString());
+			Serie serieSaison = serieDAO.getSerie(idSerie);
+			Integer idSaison = Integer.valueOf(req.getServletContext().getAttribute("idSaison").toString());
+			Saison saisonEpisode = saisonDAO.getSaison(idSaison, serieSaison);
+			List<Episode> episodes = new ArrayList<Episode>();
+			episodes = episodeDAO.getEpisodes(saisonEpisode);
+			req.setAttribute("liste", episodes);
 			if(req.getParameter("action")!=null) {
 				//req.getServletContext().setAttribute("episodes", episodeDAO.getepisode(saisonDAO.getSerie()));
 				//req.getServletContext().setAttribute("saisons", saisonDAO.getSaisons());
