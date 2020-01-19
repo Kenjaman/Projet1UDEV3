@@ -25,17 +25,16 @@ public class DAOPublic {
         List<Public> publics = new ArrayList<Public>();    
         String requeteGetPublic ="SELECT id, libelle, limiteage FROM public";
         try(Connection connexion = dataSource.getConnection();
-        		Statement stmt = connexion.createStatement();
-            ResultSet result = stmt.executeQuery(requeteGetPublic)){
-                while(result.next()) {
-                    int id = result.getInt("id");
-                    String libelle = result.getString("libelle");
-                    int limiteAge = result.getInt("limiteage");
-                    publics.add(new Public(id, libelle, limiteAge));
-                }
+        Statement stmt = connexion.createStatement();
+        ResultSet result = stmt.executeQuery(requeteGetPublic)) {
+	        while(result.next()) {
+	            int id = result.getInt("id");
+	            String libelle = result.getString("libelle");
+	            int limiteAge = result.getInt("limiteage");
+	            publics.add(new Public(id, libelle, limiteAge));
+	        }
             return publics;
         }
-            
     }
 	
     public Public getPublics(Integer idEpisode) throws SQLException{
@@ -53,6 +52,20 @@ public class DAOPublic {
             return publics;
         }
             
+    }
+    
+    public Public getPublic(String publicName) throws SQLException {
+    	Public publics;
+    	String requeteGetPublic = "SELECT p.id, p.libelle, p.limiteage FROM public p WHERE p.libelle = " + publicName;
+    	try (Connection connexion = dataSource.getConnection();
+    		Statement stmt = connexion.createStatement();
+    		ResultSet result = stmt.executeQuery(requeteGetPublic)) {
+    			Integer id = result.getInt("id");
+    			String libelle = result.getString("libelle");
+    			Integer limiteAge = result.getInt("limiteage");
+    			publics = new Public(id, libelle, limiteAge);
+    		}
+    	return publics;
     }
     
     

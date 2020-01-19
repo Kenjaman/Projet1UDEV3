@@ -52,14 +52,14 @@ public class SaisonControleur extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setAttribute("entiteeTraiter", "saisons");
 		try {
-			Integer idSerie =Integer.valueOf(req.getServletContext().getAttribute("idSerie").toString());
+			Integer idSerie = Integer.valueOf(req.getServletContext().getAttribute("idSerie").toString());
 			Serie serieSaison = serieDAO.getSerie(idSerie);
 			req.setAttribute("serie", serieSaison);
 			List<Saison> saisons = new ArrayList<Saison>();
 			saisons = saisonDAO.getSaisons(serieSaison);
 			req.setAttribute("liste", saisons);
 			if(req.getParameter("action")!=null) { // Si on a appuyer sur un bouton
-				//				req.getServletContext().setAttribute("serie", serieDAO.getSerie(Integer.valueOf(req.getParameter("id")))); //<----- POURQUOI j'ai fait ca ?? Où est ce que je m'en sert ??
+				//	req.getServletContext().setAttribute("serie", serieDAO.getSerie(Integer.valueOf(req.getParameter("id")))); //<----- POURQUOI j'ai fait ca ?? Où est ce que je m'en sert ??
 				req.getServletContext().setAttribute("statuts", statutDAO.getStatuts(affDAO.getAffectation("saison")));
 				if(req.getParameter("action").equals("ajouter")) { // Appui sur ajouter
 					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SAISON).forward(req, resp);
@@ -77,11 +77,7 @@ public class SaisonControleur extends HttpServlet {
 			}else {
 				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DonneesInvalidesException e) {
-			// TODO Auto-generated catch block
+		} catch (SQLException | NumberFormatException | DonneesInvalidesException e) {
 			e.printStackTrace();
 		}
 	}
@@ -94,28 +90,29 @@ public class SaisonControleur extends HttpServlet {
 			Integer numSaison = Integer.valueOf(req.getParameter("numeroSaison"));
 			Integer anneDif = Integer.valueOf(req.getParameter("anneeDiffusion"));
 			String resume = req.getParameter("resume");
-			Statut statut = statutDAO.getStatut((Integer.valueOf(req.getParameter("statutSaison"))));
+			// BESOIN DE RECUPERER LE STATUT
+			Statut statut = statutDAO.getStatut(req.getParameter("statutSaison"));
 			Saison saison = new Saison(numSaison, resume,anneDif,statut,serieSaison);
-			if(req.getParameter("action").equals("modifier")){
+			if (req.getParameter("action").equals("modifier")) {
 				Integer id = Integer.valueOf(req.getParameter("idSaison"));
 				Saison saisonMaj =new Saison (numSaison, resume,anneDif,statut,serieSaison);
 				saisonMaj.setId(id);
 				saisonDAO.updateSaison(saisonMaj);
-			}else {
-				Saison saisonAj = new Saison(numSaison,resume,anneDif,statut,serieSaison);
+				resp.sendRedirect("saisons");
+			}
+			else {
+				Saison saisonAj = new Saison(numSaison, resume, anneDif, statut, serieSaison);
 				System.out.println("ajout "+ saisonAj );
 				saisonDAO.addSaison(saisonAj);
 				resp.sendRedirect("saisons");
 			}
-		} catch (DonneesInvalidesException err) {
+		}
+		catch (DonneesInvalidesException err) {
 			req.setAttribute("erreurs", err.getErreurs());
 			req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SAISON).forward(req, resp);			
 			err.printStackTrace();
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		}
+		catch (SQLException | NumberFormatException e) {
 			e.printStackTrace();
 		}
 	}

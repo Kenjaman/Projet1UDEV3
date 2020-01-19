@@ -49,8 +49,21 @@ public class DAOStatut {
 			int id = result.getInt("s.id");
 			String libelle = result.getString("s.libelle");
 			Statut statut =  new Statut(id, libelle);
-
 			return statut;
+		}
+	}
+	
+	public Statut getStatut(String libelleStatut) throws SQLException {
+		String requeteGetSerie = "SELECT s.id, s.libelle, s.idaffectation FROM statut s "
+				+ "WHERE s.libelle = '" + libelleStatut + "'";
+		try (Connection connexion = dataSource.getConnection();
+			Statement stmt = connexion.createStatement();
+			ResultSet result = stmt.executeQuery(requeteGetSerie)) {
+				result.next();
+				int id = result.getInt("s.id");
+				String libelle = result.getString("s.libelle");
+				Statut statut =  new Statut(id, libelle);
+				return statut;
 		}
 	}
 	//	public void addSerie(Serie serie) throws SQLException {

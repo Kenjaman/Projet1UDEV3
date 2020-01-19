@@ -26,7 +26,9 @@
 	<table>
 		<c:forEach items="${liste}" var="item">
 			<tr>
-				<td><c:out value="${item.id}" /></td>
+				<td><a
+					href='./<c:out value="${entiteeTraiter}"/>?idserie=${serie.id}&idsaison=${saison.id}&idepisode=${item.id}'><c:out
+							value="${item.id}" /></a></td>
 				<td><a
 					href='./<c:out value="${entiteeTraiter}"/>?id=${item.id}&action=modifier'>Modifier</a></td>
 				<td><a

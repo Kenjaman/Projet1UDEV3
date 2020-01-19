@@ -59,7 +59,7 @@ public class DAOSaison {
 	public void updateSaison(Saison saison) throws SQLException{
 		String requeteUpDateSaison = "UPDATE saison SET"
 				+ " numero = ?,"
-				+ " resumer = ?,"
+				+ " resume = ?,"
 				+ " annee_diffusion = ?,"
 				+ " idstatut = ?,"
 				+ " idserie = ?"
@@ -78,24 +78,21 @@ public class DAOSaison {
 				connexion.rollback();
 				System.out.println("ca n'a pas marcher");
 			}
-				
-			
 		}
 	}
 	public void addSaison(Saison saison) throws SQLException {
 		String requeteInsertionSaison = "INSERT INTO saison"
-				+ " (numero, resume, anneediffusion, idstatut, idserie) values (?,?,?,?,?)";
+				+ " (numero, resume, annee_diffusion, idstatut, idserie) VALUES (?,?,?,?,?)";
 		try(Connection connexion = dataSource.getConnection();
 				PreparedStatement stmt = connexion.prepareStatement(requeteInsertionSaison, 
-				PreparedStatement.RETURN_GENERATED_KEYS)){
+				PreparedStatement.RETURN_GENERATED_KEYS)) {
 			stmt.setInt(1, saison.getNumero());
 			stmt.setString(2, saison.getResume());
 			stmt.setInt(3, saison.getAnneeDiffusion());
 			stmt.setInt(4, saison.getStatut().getId());
 			stmt.setInt(5, saison.getSerie().getId());
-			stmt.executeUpdate(requeteInsertionSaison);
+			stmt.executeUpdate();
 			saison.setId(extractPrimaryKey(connexion,stmt));
-			
 		}
 	}
 

@@ -25,13 +25,13 @@ public class DAOSerie {
 		this.dataSource=dataSource;
 	}
 
-	public List<Serie> getSeries() throws SQLException, DonneesInvalidesException{
+	public List<Serie> getSeries() throws SQLException, DonneesInvalidesException {
 		List<Serie> series = new ArrayList<Serie>();    
 		String requeteGetSerie ="SELECT ser.id, ser.nom, ser.nomoriginal, ser.anneeparution, ser.synopsys, "
 				+ "s.id, s.libelle, a.id, a.libelle, p.id, p.nom, p.code FROM serie ser "
 				+ "INNER JOIN statut s ON ser.idstatut = s.id "
 				+ "INNER JOIN affectation a ON s.idaffectation = a.id "
-				+ "INNER JOIN pays p ON ser.idpaysorigine = p.id ";
+				+ "INNER JOIN pays p ON ser.idpaysorigine = p.id";
 		try(Connection connexion = dataSource.getConnection();
 				Statement stmt = connexion.createStatement();
 				ResultSet result = stmt.executeQuery(requeteGetSerie)){
@@ -72,7 +72,6 @@ public class DAOSerie {
 			stmt.setInt(6, serie.getPaysOrigine().getId());
 			stmt.executeUpdate();
 			serie.setId(extractPrimaryKey(connexion,stmt));
-			System.out.println(serie.getNom()+" ajoutée  à la bdd");
 		}
 	}
 	

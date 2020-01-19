@@ -23,7 +23,7 @@ public class DAOAffectation {
 	}
 	
 	 public Affectation getAffectation(String type) throws SQLException {
-	        String requeteAff="Select id, libelle from affectation where libelle='"+ type+"'";
+	        String requeteAff="SELECT id, libelle FROM affectation WHERE libelle='" + type + "'";
 	        try(Connection co = dataSource.getConnection();
 	        		Statement stmt = co.createStatement();
 	        			ResultSet result = stmt.executeQuery(requeteAff)){
