@@ -1,5 +1,3 @@
-<%@page pageEncoding="UTF-8" isErrorPage="true" contentType="text/html"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,18 +5,15 @@
 <title>Affichage</title>
 </head>
 <body>
-	<div id="logo">
-		<img alt="logo" src="<c:url value='/images/KenFlixIcon.svg'/>" />
-	</div>
-	<h1>Episodes de la Saison ${saison.numero} de ${serie.nom}</h1>
+	<%@ include file="header.jsp"%>
+	<h2>Episodes de la Saison ${saison.numero} de ${serie.nom}</h2>
 	<div id="infoSerie">
-		<h2>Infos sur la saison</h2>
+		<h3>Infos sur la saison</h3>
 		<ul>
-
-			<li>SÃ©rie : <c:out value="${serie.nom}" /></li>
+			<li>Série : <c:out value="${serie.nom}" /></li>
 			<li>Saison : <c:out value="${saison.numero}" /></li>
-			<li>RÃ©sumÃ© : <c:out value="${saison.resume}" /></li>
-			<li>AnnÃ©e de diffusion : <c:out value="${saison.anneeDiffusion}" /></li>
+			<li>Résumé : <c:out value="${saison.resume}" /></li>
+			<li>Année de diffusion : <c:out value="${saison.anneeDiffusion}" /></li>
 			<li>Statut : <c:out value="${saison.statut.libelle}" /></li>
 		</ul>
 	</div>

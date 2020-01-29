@@ -1,16 +1,12 @@
-<%@page pageEncoding="UTF-8" isErrorPage="true" contentType="text/html"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Affichage GÃ©nÃ©ral</title>
+<title>Affichage Général</title>
 </head>
 <body>
-	<div id="logo">
-		<img alt="logo" src="<c:url value='/images/KenFlixIcon.svg'/>" />
-	</div>
-	<h1>LES SERIES</h1>
+	<%@ include file="header.jsp"%>
+	<h2>LES SERIES</h2>
 	<a href='./<c:out value="${entiteeTraiter}"/>?action=ajouter'>Ajouter</a>
 	<table>
 		<c:forEach items="${liste}" var="item">
@@ -24,5 +20,8 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<div class="liens">
+		<a href='./accueil'>Retour</a>
+	</div>
 </body>
 </html>

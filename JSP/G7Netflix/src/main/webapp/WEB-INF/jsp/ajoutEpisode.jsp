@@ -1,28 +1,14 @@
-<%@page pageEncoding="UTF-8" isErrorPage="true" contentType="text/html" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
   	<meta charset="UTF-8">
-    <title>Ajout d'un √âpisode</title>
+    <title>Ajout d'un …pisode</title>
   </head>
   <body>
-  	<section id="topheader">
-	<header>
-		<div><img src="includes/images/logo.png" alt="logo" /></div>
-		<div><p id="titre">MyNetflix</p></div>
-	</header>
-	<nav>
-		<ul>
-			<li><a href="index.html">Accueil</a></li>
-			<li><a href="liste.html">Liste</a></li>
-			<li><a href="fiche.html">Fiche</a></li>
-		</ul>
-	</nav>
-</section>
+  	<%@ include file="header.jsp"%>
 <section id="content">
 	<form action="" method="post">
-		<header>Fiche d'ajout d'un √âpisode</header>
+		<header>Fiche d'ajout d'un …pisode</header>
 		<div>
 			<label for="numeroEpisode">Num√©ro d'√©pisode: </label>
 			<input id="numeroEpisode" name="numeroEpisode" type="number" min="1" step="1" value="<c:out value="${param['numeroEpisode']}" />"> 
@@ -40,16 +26,16 @@
 			<input id="dureeEpisode" name="dureeEpisode" type="number" step="1" value="<c:out value="${param['dureeEpisode']}" />"> 
 		</div>
 		<div>
-			<label for="resume">R√©sum√© :</label>
-			<input type="text" name="resume" id="resume" placeholder="Saisir le r√©sum√© de la saison" value="<c:out value="${param['resume']}"/>">
+			<label for="resume">RÈsumÈ :</label>
+			<input type="text" name="resume" id="resume" placeholder="Saisir le rÈsumÈ de la saison" value="<c:out value="${param['resume']}"/>">
 		</div>
 		<div>
-			<label for="dateRealisation">Date de r√©alisation :</label>
-			<input type="date" name="dateRealisation" id="dateRealisation" placeholder="Saisir la date de r√©alisation" value="<c:out value="${param['dateRealisation']}"/>">
+			<label for="dateRealisation">Date de rÈalisation :</label>
+			<input type="text" name="dateRealisation" id="dateRealisation" placeholder="Saisir la date de rÈalisation" value="<c:out value="${param['dateRealisation']}"/>">
 		</div>
 		<div>
-			<label for="datePremiereDiffusion">Date 1√®re diffusion :</label>
-			<input type="date" name="datePremiereDiffusion" id="datePremiereDiffusion" placeholder="Saisir la date de premi√®re diffusion" value="<c:out value="${param['datePremiereDiffusion']}"/>">
+			<label for="datePremiereDiffusion">Date 1Ëre diffusion :</label>
+			<input type="text" name="datePremiereDiffusion" id="datePremiereDiffusion" placeholder="Saisir la date de premiËre diffusion" value="<c:out value="${param['datePremiereDiffusion']}"/>">
 		</div>
 		<div>
 		  <select name="public">
@@ -75,11 +61,4 @@
               </c:forEach>
           </select>
        	</div>
-		<div id="actions">
-			<button type="submit">Valider</button>
-			<button type="reset">Annuler</button>
-		</div>
-	</form>
-</section>  
-  </body>
-</html>
+		<%@ include file="footer.jsp"%>
