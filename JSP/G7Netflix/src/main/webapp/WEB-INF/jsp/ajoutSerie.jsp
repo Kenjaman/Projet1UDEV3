@@ -1,45 +1,27 @@
-<%@page pageEncoding="UTF-8" isErrorPage="true" contentType="text/html"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Ajout/Modification d'une SÃ©rie</title>
+<title>Ajout/Modification d'une Série</title>
 </head>
 <body>
-	<section id="topheader">
-		<header>
-			<div>
-				<img src="includes/images/logo.png" alt="logo" />
-			</div>
-			<div>
-				<p id="titre">MyNetflix</p>
-			</div>
-		</header>
-		<nav>
-			<ul>
-				<li><a href='index.jsp'>Accueil</a></li>
-				<li><a href='./<c:out value="${entiteeTraiter}"/>'>Liste</a></li>
-			</ul>
-		</nav>
-	</section>
+	<%@ include file="header.jsp"%>
 	<section id="content">
 		<form action="" method="post">
-			<header>Fiche d'ajout/modification d'une sÃ©rie</header>
+			<header>Fiche d'ajout/modification d'une série</header>
 			<div>
-				<label for="nom">Nom :</label>
-				 <input type="text" name="nom"
-					id="nom" placeholder="Saisir le nom de la sÃ©rie"
+				<label for="nom">Nom :</label> <input type="text" name="nom"
+					id="nom" placeholder="Saisir le nom de la série"
 					value="<c:out value="${serie.nom}"/>">
 			</div>
 			<div>
 				<label for="nomOriginal">Nom Original :</label> <input type="text"
 					name="nomOriginal" id="nomOriginal"
-					placeholder="Saisir le nom Original de la sÃ©rie"
+					placeholder="Saisir le nom Original de la série"
 					value="<c:out value="${serie.nomOriginal}"/>">
 			</div>
 			<div>
-				<label for="anneeParution">AnnÃ©e de Parution : </label> <input
+				<label for="anneeParution">Année de Parution : </label> <input
 					id="anneeParution" name="anneeParution" type="number" min="1900"
 					step="1" value="<c:out value="${serie.anneeParution}" />">
 			</div>
@@ -50,8 +32,7 @@
 						value="${serie.synopsys}" /></textarea>
 			</div>
 			<div>
-				<label for='statut'>Statut </label> 
-				<select name='statut'>
+				<label for='statut'>Statut </label> <select name='statut'>
 					<option value="0">--</option>
 					<c:forEach items='${statuts}' var='varStatut'>
 						<option value='${varStatut.id}'
@@ -62,8 +43,7 @@
 				</select>
 			</div>
 			<div>
-				<label for='paysOrigine'>Pays d'origine </label> 
-				<select
+				<label for='paysOrigine'>Pays d'origine </label> <select
 					name='paysOrigine'>
 					<option value='0'>--</option>
 					<c:forEach items='${paysOrigines}' var="varPaysOrigine">
@@ -73,12 +53,4 @@
 					</c:forEach>
 				</select>
 			</div>
-			<div id="actions">
-				<button type="submit">Valider</button>
-				<button type="reset">Annuler</button>
-				<a href="./accueil"><button>Retour</button></a>
-			</div>
-		</form>
-	</section>
-</body>
-</html>
+			<%@ include file="footer.jsp"%>
