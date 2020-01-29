@@ -5,7 +5,7 @@
 <div id="actions">
 				<button type="submit">Valider</button>
 				<button type="reset">Effacer</button>
-				<input type="button" value="Retour" onclick="history.go(-1)">
+				<button onclick="history.go(-1)">Retour</button>
 			</div>
 		</form>
 	</section>

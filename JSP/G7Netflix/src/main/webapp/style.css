@@ -1,0 +1,41 @@
+body{
+	background-color: #ff8080;
+}
+
+.erreur{
+	background-color:light-red;
+	border : 1px solid red;
+}
+
+.menu ul li{
+	display:inline-block;
+	margin: 5px 10px 5px 10px;
+}
+
+.content{
+	width : 50vmax;
+	margin:auto;
+}
+
+.content form{
+	width: 80%;
+	border:1px solid black ;
+}
+
+form input{
+	width:100%;
+}
+
+.content table{
+	margin:auto;
+	border-collapse:collapse;
+}
+
+.name{
+	width:80%;
+}
+
+.content table td{
+	border:1px solid;
+	padding: 10px;
+}

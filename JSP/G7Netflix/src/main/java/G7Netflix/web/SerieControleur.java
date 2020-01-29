@@ -72,6 +72,7 @@ public class SerieControleur extends HttpServlet {
 			}
 		} catch (SQLException | NumberFormatException | DonneesInvalidesException e) {
 			// TODO Auto-generated catch block
+			req.setAttribute("erreurs", ((SQLException)e).getMessage());
 			e.printStackTrace();
 		}
 	}

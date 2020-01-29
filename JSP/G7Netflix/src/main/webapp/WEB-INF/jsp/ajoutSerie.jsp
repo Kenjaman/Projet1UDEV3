@@ -6,7 +6,7 @@
 </head>
 <body>
 	<%@ include file="header.jsp"%>
-	<section id="content">
+	<section class="content">
 		<form action="" method="post">
 			<header>Fiche d'ajout/modification d'une série</header>
 			<div>
