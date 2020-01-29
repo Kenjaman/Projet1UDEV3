@@ -2,27 +2,27 @@
 <html>
   <head>
   	<meta charset="UTF-8">
-    <title>Ajout d'un ï¿½pisode</title>
+    <title>Ajout d'un Épisode</title>
   </head>
   <body>
   	<%@ include file="header.jsp"%>
 <section id="content">
 	<form action="" method="post">
-		<header>Fiche d'ajout d'un ï¿½pisode</header>
+		<header>Fiche d'ajout d'un Épisode</header>
 		<div>
-			<label for="titreEpisode">Titre ï¿½pisode :</label>
-			<input type="text" name="titreEpisode" id="titreEpisode" placeholder="Saisir le titre de l'ï¿½pisode" value="<c:out value="${param['titreEpisode']}"/>">
+			<label for="titreEpisode">Titre épisode :</label>
+			<input type="text" name="titreEpisode" id="titreEpisode" placeholder="Saisir le titre de l'épisode" value="<c:out value="${param['titreEpisode']}"/>">
 		</div>
 		<div>
-			<label for="numeroEpisode">Numï¿½ro d'ï¿½pisode: </label>
+			<label for="numeroEpisode">Numéro d'épisode: </label>
 			<input id="numeroEpisode" name="numeroEpisode" type="number" min="1" step="1" value="<c:out value="${param['numeroEpisode']}" />"> 
 		</div>
 		<div>
-			<label for="titreEpisodeOriginal">Titre ï¿½pisode Original:</label>
-			<input type="text" name="titreEpisodeOriginal" id="titreEpisodeOriginal" placeholder="Saisir le titre Original de l'ï¿½pisode" value="<c:out value="${param['titreEpisodeOriginal']}"/>">
+			<label for="titreEpisodeOriginal">Titre épisode Original:</label>
+			<input type="text" name="titreEpisodeOriginal" id="titreEpisodeOriginal" placeholder="Saisir le titre Original de l'épisode" value="<c:out value="${param['titreEpisodeOriginal']}"/>">
 		</div>
 		<div>
-			<label for="dureeEpisode">Durï¿½e ï¿½pisode :</label>
+			<label for="dureeEpisode">Durée Épisode :</label>
 		</div>
 		<div>
 			<label for="dureeEpisodeHeure">Heures: </label>
@@ -37,16 +37,16 @@
 			<input id="dureeEpisodeSeconde" name="dureeEpisodeSeconde" type="number" step="1" value="<c:out value="${param['dureeEpisodeSeconde']}" />"> 
 		</div>
 		<div>
-			<label for="resume">Rï¿½sumï¿½ :</label>
-			<input type="text" name="resume" id="resume" placeholder="Saisir le rï¿½sumï¿½ de la saison" value="<c:out value="${param['resume']}"/>">
+			<label for="resume">Résumé :</label>
+			<input type="text" name="resume" id="resume" placeholder="Saisir le résumé de la saison" value="<c:out value="${param['resume']}"/>">
 		</div>
 		<div>
-			<label for="dateRealisation">Date de rï¿½alisation :</label>
-			<input type="text" name="dateRealisation" id="dateRealisation" placeholder="Saisir la date de rï¿½alisation" value="<c:out value="${param['dateRealisation']}"/>">
+			<label for="dateRealisation">Date de réalisation :</label>
+			<input type="text" name="dateRealisation" id="dateRealisation" placeholder="Saisir la date de réalisation" value="<c:out value="${param['dateRealisation']}"/>">
 		</div>
 		<div>
-			<label for="datePremiereDiffusion">Date 1ï¿½re diffusion :</label>
-			<input type="text" name="datePremiereDiffusion" id="datePremiereDiffusion" placeholder="Saisir la date de premiï¿½re diffusion" value="<c:out value="${param['datePremiereDiffusion']}"/>">
+			<label for="datePremiereDiffusion">Date 1ère diffusion :</label>
+			<input type="text" name="datePremiereDiffusion" id="datePremiereDiffusion" placeholder="Saisir la date de première diffusion" value="<c:out value="${param['datePremiereDiffusion']}"/>">
 		</div>
 		<div>
 		  <select name="public">
