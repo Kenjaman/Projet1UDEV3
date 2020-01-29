@@ -2,7 +2,7 @@
 <html>
   <head>
   	<meta charset="UTF-8">
-    <title>Ajout d'un Épisode</title>
+    <title>Ajout d'un �pisode</title>
   </head>
   <body>
   	<%@ include file="header.jsp"%>
