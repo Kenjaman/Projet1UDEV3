@@ -91,6 +91,7 @@ public class SerieControleur extends HttpServlet {
 				Serie serieAupdate =new Serie(nom,nomOriginal,anneeParution,synopsys,statut,paysOrigine);
 				serieAupdate.setId(idSerie);
 				serieDAO.updateSerie(serieAupdate);
+				resp.sendRedirect("series");
 			}else {
 				Serie serie = new Serie(nom,nomOriginal,anneeParution,synopsys,statut,paysOrigine);
 				System.out.println("ajout "+serie);

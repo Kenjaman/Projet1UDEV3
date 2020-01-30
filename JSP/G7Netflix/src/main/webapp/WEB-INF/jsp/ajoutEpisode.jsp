@@ -10,19 +10,19 @@
 	<form action="" method="post">
 		<header>Fiche d'ajout d'un Épisode</header>
 		<div>
-			<label for="numeroEpisode">NumÃ©ro d'Ã©pisode: </label>
+			<label for="numeroEpisode">Numéro d'Épisode: </label>
 			<input id="numeroEpisode" name="numeroEpisode" type="number" min="1" step="1" value="<c:out value="${param['numeroEpisode']}" />"> 
 		</div>
 		<div>
-			<label for="titreEpisode">Titre Ã©pisode :</label>
+			<label for="titreEpisode">Titre Épisode :</label>
 			<input type="text" name="titreEpisode" id="titreEpisode" placeholder="Saisir le titre de l'Ã©pisode" value="<c:out value="${param['titreEpisode']}"/>">
 		</div>
 		<div>
-			<label for="titreEpisodeOriginal">Titre Ã©pisode Original:</label>
+			<label for="titreEpisodeOriginal">Titre Épisode Original:</label>
 			<input type="text" name="titreEpisodeOriginal" id="titreEpisodeOriginal" placeholder="Saisir le titre Original de l'Ã©pisode" value="<c:out value="${param['titreEpisodeOriginal']}"/>">
 		</div>
 		<div>
-			<label for="dureeEpisode">DurÃ©e Ã‰pisode en Minutes :</label>
+			<label for="dureeEpisode">Durée épisode en Minutes :</label>
 			<input id="dureeEpisode" name="dureeEpisode" type="number" step="1" value="<c:out value="${param['dureeEpisode']}" />"> 
 		</div>
 		<div>
