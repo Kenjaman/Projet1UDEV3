@@ -6,7 +6,6 @@
 </head>
 <body>
 	<%@ include file="header.jsp"%>
-	<c:if test="${serie.id != 0} ">
 		<h2>Saisons de ${serie.nom}</h2>
 		<div id="infoSerie">
 			<h3>Infos sur la série</h3>
@@ -19,7 +18,6 @@
 				<li>Pays d'origine : <c:out value="${serie.paysOrigine.nom}" /></li>
 			</ul>
 		</div>
-	</c:if>
 	<a href='./<c:out value="${entiteeTraiter}"/>?action=ajouter'>Ajouter</a>
 	<table>
 		<c:forEach items="${liste}" var="item">
