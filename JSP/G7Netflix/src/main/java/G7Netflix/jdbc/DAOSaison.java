@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 
 import G7Netflix.modele.Affectation;
 import G7Netflix.modele.DonneesInvalidesException;
+import G7Netflix.modele.Episode;
 import G7Netflix.modele.Saison;
 import G7Netflix.modele.Serie;
 import G7Netflix.modele.Statut;
@@ -97,12 +98,23 @@ public class DAOSaison {
 	}
 
 	public void deleteSaison(Saison saison) throws SQLException {
-		String requeteDeleteSaison = "DELETE FROM saison, episode "
-				+ "INNER JOIN episode ON episode.idsaison = saison.id "
+		String requeteDeleteSaison = "DELETE saison FROM saison "
 				+ "WHERE saison.id = " + saison.getId();
-		try(Connection connexion = dataSource.getConnection();
-				PreparedStatement stmt = connexion.prepareStatement(requeteDeleteSaison)){
-		stmt.executeUpdate(requeteDeleteSaison);
+		try (Connection connexion = dataSource.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(requeteDeleteSaison, 
+				PreparedStatement.RETURN_GENERATED_KEYS)) {
+			stmt.executeUpdate(requeteDeleteSaison);
+		}
+	}
+	
+	public void deleteSaison(Serie serie) throws SQLException {
+		String requeteDeleteSaison = "DELETE saison FROM saison "
+				+ "INNER JOIN serie ON saison.idserie = serie.id "
+				+ "WHERE saison.idserie = " + serie.getId();
+		try (Connection connexion = dataSource.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(requeteDeleteSaison, 
+				PreparedStatement.RETURN_GENERATED_KEYS)) {
+			stmt.executeUpdate(requeteDeleteSaison);
 		}
 	}
 

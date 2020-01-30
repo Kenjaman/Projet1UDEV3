@@ -104,12 +104,23 @@ public class DAOEpisode {
 	}
 
 	public void deleteEpisode(Episode episode) throws SQLException {
-		String requeteDeleteEpisode = "DELETE FROM episode "
+		String requeteDeleteEpisode = "DELETE episode FROM episode "
 				+ "WHERE episode.id = " + episode.getId();
-		try(Connection connexion = dataSource.getConnection();
+		try (Connection connexion = dataSource.getConnection();
 				PreparedStatement stmt = connexion.prepareStatement(requeteDeleteEpisode, 
-				PreparedStatement.RETURN_GENERATED_KEYS)){
-		stmt.executeUpdate(requeteDeleteEpisode);
+				PreparedStatement.RETURN_GENERATED_KEYS)) {
+			stmt.executeUpdate(requeteDeleteEpisode);
+		}
+	}
+	
+	public void deleteEpisode(Saison saison) throws SQLException {
+		String requeteDeleteEpisode = "DELETE episode FROM episode "
+				+ "INNER JOIN saison ON episode.idsaison = saison.id "
+				+ "WHERE episode.idsaison = " + saison.getId();
+		try (Connection connexion = dataSource.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(requeteDeleteEpisode, 
+				PreparedStatement.RETURN_GENERATED_KEYS)) {
+			stmt.executeUpdate(requeteDeleteEpisode);
 		}
 	}
 	
