@@ -53,6 +53,12 @@ public class Serie {
 		this.statut = statut;
 		this.paysOrigine = paysOrigine;
 	}
+	
+
+	public Serie(Integer id, String nom) {
+		this(id,nom,null,0,null,null,null);
+		
+	}
 	public Integer getId() {
 		return id;
 	}

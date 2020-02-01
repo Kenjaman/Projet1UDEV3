@@ -6,18 +6,23 @@
 </head>
 <body>
 	<%@ include file="header.jsp"%>
-		<h2>Saisons de ${serie.nom}</h2>
-		<div id="infoSerie">
-			<h3>Infos sur la série</h3>
-			<ul>
-				<li>Nom : <c:out value="${serie.nom}" /></li>
-				<li>Original : <c:out value="${serie.nomOriginal}" /></li>
-				<li>Année de parution : <c:out value="${serie.anneeParution}" /></li>
-				<li>Synopsys : <c:out value="${serie.synopsys}" /></li>
-				<li>Statut : <c:out value="${serie.statut.libelle}" /></li>
-				<li>Pays d'origine : <c:out value="${serie.paysOrigine.nom}" /></li>
-			</ul>
-		</div>
+<c:if test="${serie != null}">
+	<h2>Saisons de ${serie.nom}</h2>
+	<div id="infoSerie">
+		<h3>Infos sur la série</h3>
+		<ul>
+			<li>Nom : <c:out value="${serie.nom}" /></li>
+			<li>Original : <c:out value="${serie.nomOriginal}"
+					default="Non renseigné" /></li>
+			<li>Année de parution : <c:out value="${serie.anneeParution}"
+					default="Non renseigné" /></li>
+			<li>Synopsys : <c:out value="${serie.synopsys}"
+					default="Non renseigné" /></li>
+			<li>Statut : <c:out value="${serie.statut.libelle}" /></li>
+			<li>Pays d'origine : <c:out value="${serie.paysOrigine.nom}" /></li>
+		</ul>
+	</div>
+</c:if>
 	<a href='./<c:out value="${entiteeTraiter}"/>?action=ajouter'>Ajouter</a>
 	<table>
 		<c:forEach items="${liste}" var="item">
@@ -32,5 +37,10 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<div class="liens">
+		<button onclick="history.go(-1)">Retour</button>
+
+	</div>
+
 </body>
 </html>

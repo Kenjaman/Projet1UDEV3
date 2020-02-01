@@ -16,7 +16,7 @@ public class Saison {
 	public Saison(Integer numSaison, String resume, Integer anneDif,Statut statut, Serie serieSaison) throws DonneesInvalidesException {
 		List<Erreur> errSaison = new ArrayList<Erreur>();
 		if(numSaison==0) {
-			errSaison.add(new Erreur("Numero Saison ","Oubliez pas de renseigner un numero de saison"));
+			errSaison.add(new Erreur("Numero Saison ","N'oubliez pas de renseigner un numero de saison"));
 		}
 		if(statut.getId()==0) {
 			errSaison.add(new Erreur("Statut","Statut non renseigné"));
@@ -38,6 +38,13 @@ public class Saison {
 		this(numero,resume,anneeDiffusion,statut,serie);
 		this.id = id;
 		
+	}
+	
+	//Saison pour affichage de toute les saisons
+	public Saison(Integer id, Integer numero,Serie serie) throws DonneesInvalidesException{
+		this.id=id;
+		this.numero=numero;
+		this.serie=serie;
 	}
 
 

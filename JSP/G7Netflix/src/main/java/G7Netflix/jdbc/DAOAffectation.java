@@ -28,41 +28,14 @@ public class DAOAffectation {
 	        		Statement stmt = co.createStatement();
 	        			ResultSet result = stmt.executeQuery(requeteAff)){
 	        	if(result.next()) {
-	        		return new Affectation(result.getInt(1),result.getString(2));
+	        		int id = result.getInt("id");
+	        		String libelle = result.getString("libelle");
+	        		Affectation affectation = new Affectation(id,libelle);
+	        		System.out.println(affectation);
+	        		return affectation;
 	        	}
-	        	
 	        }
 	        return null;
 	    }
-	
-//	public void addSerie(Serie serie) throws SQLException {
-//		String requeteInsertionSerie = "INSERT INTO serie"
-//				+ " (nom, nomoriginal, anneeparution, synopsys, idstatut, idpaysorigine) values (?,?,?,?)";
-//		try(Connection connexion = dataSource.getConnection();
-//				PreparedStatement stmt = connexion.prepareStatement(requeteInsertionSerie, 
-//				PreparedStatement.RETURN_GENERATED_KEYS)){
-//			stmt.setString(1, serie.getNom());
-//			stmt.setString(2, serie.getNomOriginal());
-//			stmt.setInt(3, serie.getAnneeParution());
-//			stmt.setString(4, serie.getSynopsys());
-//			stmt.setInt(5, serie.getStatut().getId());
-//			stmt.setInt(6, serie.getPaysOrigine().getId());
-//			stmt.executeUpdate(requeteInsertionSerie);
-//			serie.setId(extractPrimaryKey(connexion,stmt));
-//			
-//		}
-//	}
-//
-//
-//	private int extractPrimaryKey(Connection connexion, Statement stmt) throws SQLException {
-//		try(ResultSet resultSet = stmt.getGeneratedKeys()) {
-//			if(! resultSet.next()) {
-//				connexion.rollback();
-//				throw new SQLException("Aucune série insérée !");
-//			}
-//			return resultSet.getInt(1);
-//		}
-//	}
-
-	
 }
+	

@@ -21,6 +21,7 @@ import G7Netflix.jdbc.DAOPublic;
 import G7Netflix.jdbc.DAOSaison;
 import G7Netflix.jdbc.DAOSerie;
 import G7Netflix.jdbc.DAOStatut;
+import G7Netflix.modele.Affectation;
 import G7Netflix.modele.DonneesInvalidesException;
 import G7Netflix.modele.Episode;
 import G7Netflix.modele.Public;
@@ -32,15 +33,17 @@ import G7Netflix.modele.Statut;
 public class EpisodeControleur extends HttpServlet {
 	private static final String VUE_FORMULAIRE_EPISODE = "/WEB-INF/jsp/ajoutEpisode.jsp";
 	private static final String VUE_AFFICHAGE = "/WEB-INF/jsp/affichageListeEpisodes.jsp";
+	private static final String VUE_AFFICHAGE_EPISODE = "/WEB-INF/jsp/affichageEpisode.jsp";
 
 	@Resource(name = "BddMyNetflix")
 	private DataSource bddMyNetflix;
-	
+
 	private DAOEpisode episodeDAO;
 	private DAOSaison saisonDAO;
 	private DAOPublic publicDAO;
 	private DAOStatut statutDAO;
 	private DAOSerie serieDAO;
+	private DAOAffectation affDAO;
 
 	@Override
 	public void init() throws ServletException {
@@ -50,38 +53,56 @@ public class EpisodeControleur extends HttpServlet {
 		statutDAO = new DAOStatut(bddMyNetflix);
 		serieDAO = new DAOSerie(bddMyNetflix);
 	}
-	
-	
+
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setAttribute("entiteeTraiter", "episodes");
 		try {
-			Integer idSerie = Integer.valueOf(req.getServletContext().getAttribute("idSerie").toString());
-			Serie serieSaison = serieDAO.getSerie(idSerie);
-			req.setAttribute("serie", serieSaison);
-			Integer idSaison = Integer.valueOf(req.getServletContext().getAttribute("idSaison").toString());
-			Saison saisonEpisode = saisonDAO.getSaison(idSaison, serieSaison);
-			req.setAttribute("saison", saisonEpisode);
 			List<Episode> episodes = new ArrayList<Episode>();
-			episodes = episodeDAO.getEpisodes(saisonEpisode);
-			req.setAttribute("liste", episodes);
-			if (req.getParameter("action")!=null) {
-//				req.getServletContext().setAttribute("episodes", episodeDAO.getepisode(saisonDAO.getSerie()));
-//				req.getServletContext().setAttribute("saisons", saisonDAO.getSaisons());
-				if (req.getParameter("action").equals("ajouter")) {
-					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_EPISODE).forward(req, resp);
+			if(req.getParameter("idsaison")!=null && req.getParameter("idserie")!= null) {
+				Integer idSerie = Integer.valueOf(req.getParameter("idserie"));
+				Serie serieSaison = serieDAO.getSerie(idSerie);
+				req.setAttribute("serie", serieSaison);
+				Integer idSaison = Integer.valueOf(req.getParameter("idsaison"));
+				Saison saisonEpisode = saisonDAO.getSaison(idSaison, serieSaison);
+				req.setAttribute("saison", saisonEpisode);
+				episodes = episodeDAO.getEpisodes(saisonEpisode);
+				req.setAttribute("liste", episodes);
+				if (req.getParameter("action")!=null) { 
+					if (req.getParameter("action").equals("ajouter")) {
+						List <Public> publics = publicDAO.getPublics();
+						req.setAttribute("publics", publics);
+						Affectation aff = affDAO.getAffectation("episode"); // <--- NIQUES TA MERE TOI !!! 
+						System.out.println(aff);
+						List <Statut> statuts = statutDAO.getStatuts(aff);
+						req.setAttribute("statuts", statuts);
+						if(idSerie != 0 && idSaison != 0) {
+							Integer numDernierEpisode = saisonDAO.getDernierEpisode(saisonEpisode);
+							req.setAttribute("dernierEpisode", numDernierEpisode);
+						}
+						req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_EPISODE).forward(req, resp);
+					}
+					else if (req.getParameter("action").equals("modifier")) {
+						//req.setAttribute("serie", serieDAO.getSerie(Integer.valueOf(req.getParameter("idserie"))));
+						//req.setAttribute("saison", saisonDAO.getSaison(Integer.valueOf(req.getParameter("idsaison")), serieSaison));
+						req.setAttribute("episode",episodeDAO.getEpisode(Integer.valueOf(req.getParameter("idepisode")),saisonEpisode));
+						req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_EPISODE).forward(req, resp);
+					}
+					//				else if (req.getParameter("action").equals("supprimer")) {
+					//					this.doPost(req, resp);
+					//				}
 				}
-				else if (req.getParameter("action").equals("modifier")) {
-					req.setAttribute("serie", serieDAO.getSerie(Integer.valueOf(req.getParameter("idserie"))));
-					req.setAttribute("saison", saisonDAO.getSaison(Integer.valueOf(req.getParameter("idsaison")), serieSaison));
-					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_EPISODE).forward(req, resp);
+				else if(req.getParameter("idepisode")!=null) { // Si on clique sur un episode
+					Integer idEpisode = Integer.valueOf(req.getParameter("idepisode"));
+					req.setAttribute("episode", episodeDAO.getEpisode(idEpisode,saisonEpisode));
+					req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE_EPISODE).forward(req, resp);
+				}else {
+					req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 				}
-//				else if (req.getParameter("action").equals("supprimer")) {
-//					this.doPost(req, resp);
-//				}
-			}
-			else {
-				req.setAttribute("liste", serieDAO.getSeries());
+			}else { // Si on arrive depuis le menu de navigation
+				episodes=episodeDAO.getAllEpisodes();
+				req.setAttribute("liste", episodes);
 				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 			}
 		}
@@ -93,7 +114,7 @@ public class EpisodeControleur extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			Integer idSerie = Integer.valueOf(req.getParameter("idserie"));
+			Integer idSerie = req.getParameter("idserie") != null?Integer.valueOf(req.getParameter("idserie")):0;
 			Serie serieSaison = serieDAO.getSerie(idSerie);
 			Integer idSaison = Integer.valueOf(req.getParameter("idsaison"));
 			Saison saisonEpisode = saisonDAO.getSaison(idSaison, serieSaison);

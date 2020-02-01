@@ -52,29 +52,36 @@ public class SaisonControleur extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setAttribute("entiteeTraiter", "saisons");
 		try {
-			Integer idSerie = Integer.valueOf(req.getServletContext().getAttribute("idSerie").toString());
-			Serie serieSaison = serieDAO.getSerie(idSerie);
-			req.setAttribute("serie", serieSaison);
+			//			Integer idSerie = Integer.valueOf(req.getServletContext().getAttribute("idSerie").toString());
 			List<Saison> saisons = new ArrayList<Saison>();
-			saisons = saisonDAO.getSaisons(serieSaison);
-			req.setAttribute("liste", saisons);
-			if(req.getParameter("action")!=null) { // Si on a appuyer sur un bouton
-				//	req.getServletContext().setAttribute("serie", serieDAO.getSerie(Integer.valueOf(req.getParameter("id")))); //<----- POURQUOI j'ai fait ca ?? Où est ce que je m'en sert ??
-				req.getServletContext().setAttribute("statuts", statutDAO.getStatuts(affDAO.getAffectation("saison")));
-				if(req.getParameter("action").equals("ajouter")) { // Appui sur ajouter
-					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SAISON).forward(req, resp);
-				}else if(req.getParameter("action").equals("modifier")) {//Transfert vers la page de modification 
-					req.setAttribute("saison", saisonDAO.getSaison(Integer.valueOf(req.getParameter("id")),serieSaison));
-					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SAISON).forward(req, resp);
-				}else if(req.getParameter("action").equals("supprimer")) {// Appui sur supprimer
-					this.doDelete(req, resp);
-					req.setAttribute("liste", serieDAO.getSeries());
+			if(req.getParameter("idserie")!=null) {				
+				Integer idSerie = Integer.valueOf(req.getParameter("idserie").toString());
+				Serie serieSaison = serieDAO.getSerie(idSerie);
+				req.setAttribute("serie", serieSaison);
+				saisons = saisonDAO.getSaisons(serieSaison);
+				req.setAttribute("liste", saisons);
+				if(req.getParameter("action")!=null) { // Si on a appuyer sur un bouton
+					//	req.getServletContext().setAttribute("serie", serieDAO.getSerie(Integer.valueOf(req.getParameter("id")))); //<----- POURQUOI j'ai fait ca ?? Où est ce que je m'en sert ??
+					req.getServletContext().setAttribute("statuts", statutDAO.getStatuts(affDAO.getAffectation("saison")));
+					if(req.getParameter("action").equals("ajouter")) { // Appui sur ajouter
+						req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SAISON).forward(req, resp);
+					}else if(req.getParameter("action").equals("modifier")) {//Transfert vers la page de modification 
+						req.setAttribute("saison", saisonDAO.getSaison(Integer.valueOf(req.getParameter("idsaison")),serieSaison));
+						req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SAISON).forward(req, resp);
+					}else if(req.getParameter("action").equals("supprimer")) {// Appui sur supprimer
+						this.doDelete(req, resp);
+						req.setAttribute("liste", serieDAO.getSeries());
+						req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
+					}
+				}else if(req.getParameter("idsaison")!=null) { //Si on clique sur une saison
+					req.getServletContext().setAttribute("idSaison", req.getParameter("idsaison"));
+					req.getServletContext().getRequestDispatcher("/episodes").forward(req, resp);
+				}else {
 					req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 				}
-			}else if(req.getParameter("idsaison")!=null) { //Si on clique sur une saison
-				req.getServletContext().setAttribute("idSaison", req.getParameter("idsaison"));
-				req.getServletContext().getRequestDispatcher("/episodes").forward(req, resp);
 			}else {
+				saisons=saisonDAO.getAllSaisons();
+				req.setAttribute("liste", saisons);
 				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 			}
 		} catch (SQLException | NumberFormatException | DonneesInvalidesException e) {

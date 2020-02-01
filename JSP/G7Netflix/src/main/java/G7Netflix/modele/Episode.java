@@ -20,13 +20,11 @@ public class Episode {
 
 
 
-	public Episode(Integer id, Integer numero, String titre, String titreOriginal,
-			Integer duree, String resume, Date dateRealisation,
-			Date datePremiereDiffusion, Public publics, Statut statut, Saison saison) throws DonneesInvalidesException {
-		
+// Création d'un épisode depuis le formulaire
+	public Episode(Integer numero, String titre, String titreOriginal, Integer duree, String resume,
+			Date dateRealisation, Date datePremiereDiffusion, Public publics, Statut statut, Saison saison) throws DonneesInvalidesException {
 		List<Erreur> errEpisode = new ArrayList<Erreur>();
 		
-		this.id = id;
 		this.numero = numero;
 		if(statut.getId() ==0) {
 			errEpisode.add(new Erreur("statut","Oubliez pas de renseigner un statut"));
@@ -57,21 +55,23 @@ public class Episode {
 			throw new DonneesInvalidesException(errEpisode);
 	}
 
-	// VERIFICATION DES ERREURS A FAIRE
-	public Episode(Integer numero, String titre, String titreOriginal, Integer duree, String resume,
-			Date dateRealisation, Date datePremiereDiffusion, Public publics, Statut statut, Saison saison) {
-		this.numero = numero;
-		this.titre = titre;
-		this.titreOriginal = titreOriginal;
-		this.duree = duree;
-		this.resume = resume;
-		this.dateRealisation = dateRealisation;
-		this.datePremiereDiffusion = datePremiereDiffusion;
-		this.publics = publics;
-		this.statut = statut;
-		this.saison = saison;
+	//Depuis la BDD
+	public Episode(Integer id, Integer numero, String titre, String titreOriginal,
+			Integer duree, String resume, Date dateRealisation,
+			Date datePremiereDiffusion, Public publics, Statut statut, Saison saison) throws DonneesInvalidesException {
+		this(numero, titre, titreOriginal, duree, resume, dateRealisation, datePremiereDiffusion, publics, statut, saison);		
+		this.id = id;
+		
 	}
-
+	//Pour affichage de tout les épisodes
+	public Episode(Integer id, Integer numero, String titre, Saison saison){
+		this.id=id;
+		this.numero=numero;
+		this.titre=titre;
+		this.saison=saison;
+		
+	}
+	
 	public Integer getId() {
 		return id;
 	}

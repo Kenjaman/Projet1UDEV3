@@ -12,12 +12,14 @@
 	</header>
 	<nav class='menu'>
 		<ul>
-			<li><a href="<c:url value="/series"/>">Serie</a></li>
-			<li><a href="<c:url value="/saisons?idserie=0"/>">Saison</a></li>
-			<li><a href="<c:url value="/episodes?idserie=0&$idsaison=0"/>">Episode</a></li>
+			<li><a href="<c:url value="/series"/>">Series</a></li>
+			<li><a href="<c:url value="/saisons"/>">Saisons</a></li>
+			<li><a href="<c:url value="/episodes"/>">Episodes</a></li>
 		</ul>
 	</nav>
 </section>
+<c:if test="${erreurs}">
 <section class="erreur">
 	<c:out value="${erreurs}" />
 </section>
+</c:if>

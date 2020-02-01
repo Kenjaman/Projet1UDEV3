@@ -62,6 +62,40 @@ public class DAOEpisode {
 
 	}
 	
+	public Episode getEpisode(int idEpisode, Saison saison) throws SQLException, DonneesInvalidesException {
+		String requeteGetEpisode = "SELECT e.id, e.numero, e.titre, e.titreoriginal, "
+				+ "e.duree, e.resume, e.daterealisation, e.date_premiere_diffusion, "
+				+ "p.id, p.libelle, p.limiteage, s.id, s.libelle, a.id, a.libelle, sai.id, sai.numero, sai.resume "
+				+ "FROM episode e "
+				+ "INNER JOIN public p ON e.idpublic = p.id "
+				+ "INNER JOIN statut s ON e.idstatut = s.id "
+				+ "INNER JOIN affectation a ON s.idaffectation = a.id "
+				+ "INNER JOIN saison sai ON e.idsaison = sai.id "
+				+ "WHERE e.id = " + idEpisode + " and sai.id = "+saison.getId();
+		try (Connection connexion = dataSource.getConnection();
+				Statement stmt = connexion.createStatement();
+				ResultSet result = stmt.executeQuery(requeteGetEpisode)) {
+			while (result.next()) {
+				int id = result.getInt("e.id");
+				int numero = result.getInt("e.numero");
+				String titre = result.getString("e.titre");
+				String titreOriginal = result.getString("e.titreoriginal");
+				int duree = result.getInt("e.duree");
+				String resume = result.getString("e.resume");
+				Date dateRealisation = result.getDate("e.daterealisation");
+				Date datePremiereDiffusion = result.getDate("e.date_premiere_diffusion");
+				Public publics = new Public(result.getInt("p.id"), result.getString("p.libelle"), result.getInt("p.limiteage"));
+				Statut statut = new Statut(result.getInt("s.id"), result.getString("s.libelle"),
+						new Affectation(result.getInt("a.id"), result.getString("a.libelle")));
+				Episode episode = new Episode(id, numero, titre, titreOriginal, duree, resume, dateRealisation,
+						datePremiereDiffusion, publics, statut,saison);
+				return episode;
+			}
+		}
+		return null;
+		
+	}
+	
 	public void addEpisode(Episode episode) throws SQLException {
 		String requeteInsertionEpisode = "INSERT INTO episode"
 				+ " (numero, titre, titreOriginal, duree, resume, dateRealisation, " + 
@@ -87,10 +121,16 @@ public class DAOEpisode {
 	
 	public void updateEpisode(Episode episode) throws SQLException{
 		String requeteUpdateEpisode = "UPDATE episode SET "
-				+"numero = "+episode.getNumero()+", titre = "+episode.getTitre()+", titreOriginal = "+episode.getTitreOriginal()+", " 
-				+"duree = "+episode.getDuree()+", resume = "+episode.getResume()+", dateRealisation = "+episode.getDateRealisation()+","
-				+"datePremiereDiffusion = "+episode.getDatePremiereDiffusion()+", idpublic = "+episode.getPublics().getId()+","
-				+"idstatut ="+episode.getStatut().getId()+", idsaison = "+episode.getSaison().getId()+","
+				+"numero = "+episode.getNumero()+
+				", titre = "+episode.getTitre()+
+				", titreOriginal = "+episode.getTitreOriginal()+", " 
+				+"duree = "+episode.getDuree()+
+				", resume = "+episode.getResume()+
+				", dateRealisation = "+episode.getDateRealisation()+","
+				+"datePremiereDiffusion = "+episode.getDatePremiereDiffusion()+
+				", idpublic = "+episode.getPublics().getId()+","
+				+"idstatut ="+episode.getStatut().getId()+
+				", idsaison = "+episode.getSaison().getId()+","
 				+ " WHERE id ="+episode.getId();
 		try(Connection connexion = dataSource.getConnection();
 				PreparedStatement stmt = connexion.prepareStatement(requeteUpdateEpisode)){
@@ -99,6 +139,7 @@ public class DAOEpisode {
 				System.out.println(episode.getNumero() + "a bien été mise a jour");
 			}else {
 				connexion.rollback();
+				System.out.println("ca n'a pas marcher");
 			}
 		}
 	}
@@ -132,6 +173,32 @@ public class DAOEpisode {
 			}
 			return resultSet.getInt(1);
 		}
+	}
+
+	public List<Episode> getAllEpisodes() throws SQLException, DonneesInvalidesException {
+		List<Episode> episodes = new ArrayList<Episode>();
+		// TODO Auto-generated method stubList<Saison> saisons = new ArrayList<Saison>();	
+		String requeteGetSaison ="SELECT ep.id, ep.numero, ep.titre, sai.id, sai.numero, ser.id, ser.nom FROM episode ep "
+				+ "INNER JOIN saison sai on sai.id = ep.idsaison "
+				+ "INNER JOIN serie ser on sai.idserie = ser.id";
+		try(Connection connexion = dataSource.getConnection();
+				Statement stmt = connexion.createStatement();
+				ResultSet result = stmt.executeQuery(requeteGetSaison)){
+			while(result.next()) {
+				int idEpisode = result.getInt("ep.id");
+				int numeroEp = result.getInt("ep.numero");
+				String titreEp=result.getString("ep.titre");
+				int idSaison = result.getInt("sai.id");
+				int numeroSaison = result.getInt("sai.numero");
+				int idSerie= result.getInt("ser.id");
+				String nomSerie = result.getString("ser.nom");
+				episodes.add(
+						new Episode(idEpisode, numeroEp,titreEp,
+								new Saison(idSaison,numeroSaison,
+										new Serie(idSerie,nomSerie))));
+			}
+			return episodes;
+		}		
 	}
 
 }

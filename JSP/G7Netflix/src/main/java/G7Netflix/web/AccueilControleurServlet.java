@@ -29,6 +29,12 @@ public class AccueilControleurServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		try {
+			bddMyNetflix.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		getServletContext().getRequestDispatcher(VUE_CONNEXION).forward(req, resp);
 	}

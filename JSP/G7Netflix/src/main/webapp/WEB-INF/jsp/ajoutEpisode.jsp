@@ -11,15 +11,15 @@
 		<header>Fiche d'ajout d'un Épisode</header>
 		<div>
 			<label for="numeroEpisode">Numéro d'Épisode: </label>
-			<input id="numeroEpisode" name="numeroEpisode" type="number" min="1" step="1" value="<c:out value="${param['numeroEpisode']}" />"> 
+			<input id="numeroEpisode" name="numeroEpisode" type="number" min="${dernierEpisode}" step="1" value="<c:out value="${dernierEpisode}" />"> 
 		</div>
 		<div>
 			<label for="titreEpisode">Titre Épisode :</label>
-			<input type="text" name="titreEpisode" id="titreEpisode" placeholder="Saisir le titre de l'Ã©pisode" value="<c:out value="${param['titreEpisode']}"/>">
+			<input type="text" name="titreEpisode" id="titreEpisode" placeholder="Saisir le titre de l'Épisode" value="<c:out value="${param['titreEpisode']}"/>">
 		</div>
 		<div>
 			<label for="titreEpisodeOriginal">Titre Épisode Original:</label>
-			<input type="text" name="titreEpisodeOriginal" id="titreEpisodeOriginal" placeholder="Saisir le titre Original de l'Ã©pisode" value="<c:out value="${param['titreEpisodeOriginal']}"/>">
+			<input type="text" name="titreEpisodeOriginal" id="titreEpisodeOriginal" placeholder="Saisir le titre Original de l'Épisode" value="<c:out value="${param['titreEpisodeOriginal']}"/>">
 		</div>
 		<div>
 			<label for="dureeEpisode">Durée épisode en Minutes :</label>

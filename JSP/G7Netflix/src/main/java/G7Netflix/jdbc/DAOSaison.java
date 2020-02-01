@@ -117,6 +117,21 @@ public class DAOSaison {
 			stmt.executeUpdate(requeteDeleteSaison);
 		}
 	}
+	
+	public int getDernierEpisode(Saison saison) throws SQLException {
+		String requeteDernierEpisode = "Select max(numero) FROM Episode "
+				+ "WHERE idsaison = " + saison.getId();
+		try(Connection connexion = dataSource.getConnection();
+				Statement stmt = connexion.createStatement();
+				ResultSet result = stmt.executeQuery(requeteDernierEpisode)){
+			while(result.next()) {
+				int numero = result.getInt(1);
+				System.out.println(numero);
+				return numero;
+			}
+		}
+		return 0;		
+	}
 
 	public DataSource getDataSource() {
 		return dataSource;
@@ -134,6 +149,29 @@ public class DAOSaison {
 			}
 			return resultSet.getInt(1);
 		}
+	}
+
+	public List<Saison> getAllSaisons() throws DonneesInvalidesException, SQLException {
+		List<Saison> saisons = new ArrayList<Saison>();	
+		String requeteGetSaison ="SELECT sai.id, sai.numero, sai.resume, sai.annee_diffusion, "
+				+ "s.id, s.libelle, a.id, a.libelle, ser.id, ser.nom FROM saison sai "
+				+ "INNER JOIN statut s ON sai.idstatut = s.id "
+				+ "INNER JOIN affectation a ON s.idaffectation = a.id "
+				+ "INNER JOIN serie ser on sai.idserie = ser.id";
+		try(Connection connexion = dataSource.getConnection();
+				Statement stmt = connexion.createStatement();
+				ResultSet result = stmt.executeQuery(requeteGetSaison)){
+			while(result.next()) {
+				int id = result.getInt("sai.id");
+				int numero = result.getInt("sai.numero");
+				String resume=result.getString("sai.resume");
+				int anneeDiffusion = result.getInt("sai.annee_diffusion");
+				Statut statut = new Statut(result.getInt("s.id"), result.getString("s.libelle"), 
+						new Affectation(result.getInt("a.id"), result.getString("a.libelle")));
+				saisons.add(new Saison(id, numero, resume, anneeDiffusion, statut,new Serie(result.getInt("ser.id"),result.getString("ser.nom"))));
+			}
+			return saisons;
+		}		
 	}
 	
 }
