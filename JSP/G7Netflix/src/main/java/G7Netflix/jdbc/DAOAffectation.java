@@ -31,7 +31,6 @@ public class DAOAffectation {
 			int id = result.getInt("id");
 			String libelle = result.getString("libelle");
 			Affectation affectation = new Affectation(id,libelle);
-			System.out.println(affectation);
 			return affectation;
 
 		}

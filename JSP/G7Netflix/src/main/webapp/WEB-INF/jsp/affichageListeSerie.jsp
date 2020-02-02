@@ -13,7 +13,7 @@
 			<div class="col-lg-8">
 				<br>
 				<h2 id="titreAffichSerie">LES SERIES</h2>
-				<br> <a
+				<br> <a class="btn btn-primary"
 					href='./<c:out value="${entiteeTraiter}"/>?action=ajouter'>Ajouter</a><br>
 				<br>
 				<table>

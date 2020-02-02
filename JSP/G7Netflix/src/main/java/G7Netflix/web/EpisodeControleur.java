@@ -66,11 +66,11 @@ public class EpisodeControleur extends HttpServlet {
 			List<Episode> episodes = new ArrayList<Episode>();
 			if(req.getServletContext().getAttribute("saison")!=null && req.getServletContext().getAttribute("serie")!=null){// on arrive d'un clique sur une serie puis d'une saison
 				serieSaison = (Serie) req.getServletContext().getAttribute("serie");
-				Saison saisonEpisode = (Saison) req.getServletContext().getAttribute("saison");
+				saisonEpisode = (Saison) req.getServletContext().getAttribute("saison");
 				System.out.println("getServletcontext :"+req.getServletContext().getAttribute("saison"));
 				episodes = episodeDAO.getEpisodes(saisonEpisode);
 				req.setAttribute("liste", episodes);
-				if(req.getParameter("idepisode")!=null) { // Si on clique sur un episode
+				if(req.getParameter("idepisode")!=null && req.getParameter("action")==null) { // Si on clique sur un episode
 					Integer idEpisode = Integer.valueOf(req.getParameter("idepisode"));
 					req.getServletContext().setAttribute("episode", episodeDAO.getEpisode(idEpisode,saisonEpisode));
 					req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE_EPISODE).forward(req, resp);
@@ -78,7 +78,7 @@ public class EpisodeControleur extends HttpServlet {
 			}else { // Si on arrive depuis le menu de navigation
 				episodes=episodeDAO.getAllEpisodes();
 				req.setAttribute("liste", episodes);
-				if(req.getParameter("idsaison")!=null && req.getParameter("idserie")!=null) {
+				if(req.getParameter("idsaison")!="" && req.getParameter("idserie")!="") {
 					Integer idSaison = Integer.valueOf(req.getParameter("idsaison"));
 					Integer idSerie = Integer.valueOf(req.getParameter("idserie"));
 					serieSaison = serieDAO.getSerie(idSerie);
@@ -102,17 +102,23 @@ public class EpisodeControleur extends HttpServlet {
 					}
 					req.getServletContext().removeAttribute("episode");
 					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_EPISODE).forward(req, resp);
-				}else if (req.getParameter("action").equals("modifier")) {
-					req.getServletContext().setAttribute("episode",episodeDAO.getEpisode(Integer.valueOf(req.getParameter("idepisode")),saisonEpisode));
-					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_EPISODE).forward(req, resp);
-				}
-				else if (req.getParameter("action").equals("supprimer")) {
-					System.out.println("todo Suppression");
+				}else {
+					Integer idEpisode = Integer.valueOf(req.getParameter("idepisode"));
+					req.getServletContext().setAttribute("episode",episodeDAO.getEpisode(idEpisode, saisonEpisode));
+					if (req.getParameter("action").equals("modifier")) {
+						System.out.println("Modifi"+saisonEpisode.getId()+ " avec idEpisode"+ idEpisode);
+						req.getServletContext().setAttribute("episode", episodeDAO.getEpisode(idEpisode,saisonEpisode));
+						//req.getServletContext().setAttribute("episode",episodeDAO.getEpisode(Integer.valueOf(req.getParameter("idepisode")),saisonEpisode));
+						req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_EPISODE).forward(req, resp);
+					}
+					else{
+						System.out.println("todo Suppression");
+						req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
+					}
 				}
 			}else {
 				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 			}
-
 		}
 		catch (SQLException | NumberFormatException | DonneesInvalidesException e) {
 			e.printStackTrace();

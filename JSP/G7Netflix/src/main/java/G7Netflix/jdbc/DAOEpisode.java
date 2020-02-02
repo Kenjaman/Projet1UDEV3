@@ -71,7 +71,8 @@ public class DAOEpisode {
 				+ "INNER JOIN statut s ON e.idstatut = s.id "
 				+ "INNER JOIN affectation a ON s.idaffectation = a.id "
 				+ "INNER JOIN saison sai ON e.idsaison = sai.id "
-				+ "WHERE e.id = " + idEpisode + " and sai.id = "+saison.getId();
+				+ "WHERE e.id = " + idEpisode 
+				+ " and sai.id = "+saison.getId();
 		try (Connection connexion = dataSource.getConnection();
 				Statement stmt = connexion.createStatement();
 				ResultSet result = stmt.executeQuery(requeteGetEpisode)) {
@@ -98,8 +99,8 @@ public class DAOEpisode {
 	
 	public void addEpisode(Episode episode) throws SQLException {
 		String requeteInsertionEpisode = "INSERT INTO episode"
-				+ " (numero, titre, titreOriginal, duree, resume, daterealisation, " + 
-				"date_premiere_diffusion, idpublic, idstatut, idsaison) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ " (numero, titre, titreoriginal, duree, resume, daterealisation, " + 
+				"date_premiere_diffusion, idpublic, idstatut, idsaison) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try (Connection connexion = dataSource.getConnection();
 				PreparedStatement stmt = connexion.prepareStatement(requeteInsertionEpisode,
 						PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -113,7 +114,7 @@ public class DAOEpisode {
 			stmt.setInt(8, episode.getPublics().getId());
 			stmt.setInt(9, episode.getStatut().getId());
 			stmt.setInt(10, episode.getSaison().getId());
-			stmt.executeUpdate(requeteInsertionEpisode);
+			stmt.executeUpdate();
 			episode.setId(extractPrimaryKey(connexion, stmt));
 
 		}

@@ -62,12 +62,6 @@ public class SaisonControleur extends HttpServlet {
 				//				req.getServletContext().setAttribute("serie", serieSaison);
 				saisons = saisonDAO.getSaisons(serieSaison);
 				req.setAttribute("liste", saisons);
-				if(req.getParameter("idsaison")!=null) { //Si on clique sur une saison
-					req.setAttribute("entiteeTraiter", "episodes");
-					System.out.println("Envoie vers /episodes");
-					req.getServletContext().setAttribute("saison", saisonDAO.getSaison(Integer.valueOf(req.getParameter("idsaison")),serieSaison));
-					req.getServletContext().getRequestDispatcher("/episodes").forward(req, resp); // Envoie vers episodeControlleur
-				}
 			}else { // Si l'on viens de la navigation 
 				saisons=saisonDAO.getAllSaisons();
 				req.setAttribute("liste", saisons);
@@ -90,7 +84,14 @@ public class SaisonControleur extends HttpServlet {
 					}
 				}
 			}else {
-				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
+				if(req.getParameter("idsaison")!=null) { //Si on clique sur une saison
+					req.setAttribute("entiteeTraiter", "episodes");
+					System.out.println("Envoie vers /episodes");
+					req.getServletContext().setAttribute("saison", saisonDAO.getSaison(Integer.valueOf(req.getParameter("idsaison")),serieSaison));
+					req.getServletContext().getRequestDispatcher("/episodes").forward(req, resp); // Envoie vers episodeControlleur
+				}else {
+					req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
+				}
 
 			}
 		} catch (SQLException | NumberFormatException | DonneesInvalidesException e) {
@@ -107,7 +108,7 @@ public class SaisonControleur extends HttpServlet {
 			Integer anneDif = Integer.valueOf(req.getParameter("anneeDiffusion"));
 			String resume = req.getParameter("resume");
 			// BESOIN DE RECUPERER LE STATUT
-			Statut statut = statutDAO.getStatut(req.getParameter("statutSaison"));
+			Statut statut = statutDAO.getStatut(Integer.valueOf(req.getParameter("statutSaison")));
 			if (req.getParameter("action").equals("modifier")) {
 				Integer id = Integer.valueOf(req.getParameter("idSaison"));
 				Saison saisonMaj =new Saison (id,numSaison, resume,anneDif,statut,serieSaison);
