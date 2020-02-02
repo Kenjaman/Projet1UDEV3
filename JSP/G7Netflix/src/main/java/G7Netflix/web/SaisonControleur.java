@@ -71,11 +71,12 @@ public class SaisonControleur extends HttpServlet {
 			}else { // Si l'on viens de la navigation 
 				saisons=saisonDAO.getAllSaisons();
 				req.setAttribute("liste", saisons);
-				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 			}
 			if(req.getParameter("action")!=null) { // Si on a appuyer sur un bouton
 				req.getServletContext().setAttribute("statuts", statutDAO.getStatuts(affDAO.getAffectation("saison")));
 				if(req.getParameter("action").equals("ajouter")) { // Appui sur ajouter
+					req.setAttribute("series", serieDAO.getSeries());
+					req.getServletContext().removeAttribute("saison");
 					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SAISON).forward(req, resp);
 				}else {
 					serieSaison=serieDAO.getSerie(Integer.valueOf(req.getParameter("idserie")));
@@ -86,12 +87,11 @@ public class SaisonControleur extends HttpServlet {
 					}else if(req.getParameter("action").equals("supprimer")) {// Appui sur supprimer
 						this.doDelete(req, resp);
 						req.setAttribute("liste", serieDAO.getSeries());
-						req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 					}
 				}
 			}else {
-				System.out.println("Saison action vide");
 				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
+
 			}
 		} catch (SQLException | NumberFormatException | DonneesInvalidesException e) {
 			e.printStackTrace();

@@ -31,7 +31,7 @@ form input{
 	width:100%;
 }
 
-.content table{
+table{
 	margin:auto;
 	border-collapse:collapse;
 }
@@ -40,7 +40,7 @@ form input{
 	width:80%;
 }
 
-.content table td{
+table td{
 	border:1px solid;
 	padding: 10px;
 }

@@ -74,8 +74,6 @@ public class EpisodeControleur extends HttpServlet {
 					Integer idEpisode = Integer.valueOf(req.getParameter("idepisode"));
 					req.getServletContext().setAttribute("episode", episodeDAO.getEpisode(idEpisode,saisonEpisode));
 					req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE_EPISODE).forward(req, resp);
-				}else {
-					req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 				}
 			}else { // Si on arrive depuis le menu de navigation
 				episodes=episodeDAO.getAllEpisodes();
@@ -102,6 +100,7 @@ public class EpisodeControleur extends HttpServlet {
 						Integer numDernierEpisode = saisonDAO.getDernierEpisode(saisonEpisode);
 						req.setAttribute("dernierEpisode", numDernierEpisode);
 					}
+					req.getServletContext().removeAttribute("episode");
 					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_EPISODE).forward(req, resp);
 				}else if (req.getParameter("action").equals("modifier")) {
 					req.getServletContext().setAttribute("episode",episodeDAO.getEpisode(Integer.valueOf(req.getParameter("idepisode")),saisonEpisode));
@@ -133,8 +132,8 @@ public class EpisodeControleur extends HttpServlet {
 			Date dateReal = Date.valueOf(req.getParameter("dateRealisation"));
 			Date dateDiff = Date.valueOf(req.getParameter("datePremiereDiffusion"));
 			String resume = req.getParameter("resume");
-			Public publics = publicDAO.getPublic(req.getParameter("public"));
-			Statut statut = statutDAO.getStatut((Integer.valueOf(req.getParameter("statutSaison"))));
+			Public publics = publicDAO.getPublic(Integer.valueOf(req.getParameter("public")));
+			Statut statut = statutDAO.getStatut((Integer.valueOf(req.getParameter("statutEpisode"))));
 			if (req.getParameter("action").equals("modifier")) {
 				Integer id = Integer.valueOf(req.getParameter("idepisode"));
 				Episode episodeMaj = new Episode(numEpisode, titre, titreOriginal,duree, resume, dateReal, dateDiff, publics, statut, saisonEpisode);

@@ -98,8 +98,8 @@ public class DAOEpisode {
 	
 	public void addEpisode(Episode episode) throws SQLException {
 		String requeteInsertionEpisode = "INSERT INTO episode"
-				+ " (numero, titre, titreOriginal, duree, resume, dateRealisation, " + 
-				"datePremiereDiffusion, idpublic, idstatut, idsaison) VALUES (?,?,?,?,?,?,?,?,?,?)";
+				+ " (numero, titre, titreOriginal, duree, resume, daterealisation, " + 
+				"date_premiere_diffusion, idpublic, idstatut, idsaison) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try (Connection connexion = dataSource.getConnection();
 				PreparedStatement stmt = connexion.prepareStatement(requeteInsertionEpisode,
 						PreparedStatement.RETURN_GENERATED_KEYS)) {

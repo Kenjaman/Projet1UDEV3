@@ -29,8 +29,8 @@
 						<li>Pays d'origine : <c:out value="${serie.paysOrigine.nom}" /></li>
 					</ul>
 				</div>
-			</c:if>
 				<a href='./<c:out value="${entiteeTraiter}"/>?action=ajouter'>Ajouter</a><br>
+			</c:if>
 				<br><table>
 					<c:forEach items="${liste}" var="item">
 						<tr>

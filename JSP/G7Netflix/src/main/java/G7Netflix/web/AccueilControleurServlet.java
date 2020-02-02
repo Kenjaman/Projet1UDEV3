@@ -31,6 +31,9 @@ public class AccueilControleurServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			bddMyNetflix.getConnection();
+			req.getServletContext().removeAttribute("serie");
+			req.getServletContext().removeAttribute("saison");
+			req.getServletContext().removeAttribute("episode");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
