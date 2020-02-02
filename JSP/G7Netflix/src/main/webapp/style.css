@@ -2,6 +2,10 @@ body{
 	background-color: #ff8080;
 }
 
+#titre{
+	color: #d82c2e;
+}
+
 .erreur{
 	background-color:light-red;
 	border : 1px solid red;
@@ -38,4 +42,24 @@ form input{
 .content table td{
 	border:1px solid;
 	padding: 10px;
+}
+
+#actions{
+	text-align: center;
+	}
+	
+#headerAjoutModifSaison{
+	text-align: center;
+}
+
+#titreAjoutModifSaison{
+	text-align: center;
+}
+.container{
+	text-decoration : none;
+	color : "black";
+	
+}
+#titreAffichSerie{
+	text-align: center;
 }
