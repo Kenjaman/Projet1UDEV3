@@ -28,7 +28,7 @@
 					</ul>
 				</div>
 			</c:if>
-				<a	href='./<c:out value="${entiteeTraiter}"/>?
+				<br><a	href='./<c:out value="${entiteeTraiter}"/>?
 					idserie=<c:out value="${serie.id}" default="0"/>
 					&idsaison=<c:out value="${saison.id}" default="0"/>&action=ajouter'>
 					Ajouter
