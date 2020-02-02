@@ -28,7 +28,7 @@
 				</div>
 				<div>
 					<label for="dureeEpisode">Durée épisode en Minutes :</label>
-					<input id="dureeEpisode" name="dureeEpisode" type="number" step="1" value="<c:out value="${param['dureeEpisode']}" />"> 
+					<input id="dureeEpisode" name="dureeEpisode" type="number" min="0" step="1" value="<c:out value="${param['dureeEpisode']}" />"> 
 				</div>
 				<div>
 					<label for="resume">Résumé :</label>
@@ -36,11 +36,11 @@
 				</div>
 				<div>
 					<label for="dateRealisation">Date de réalisation :</label>
-					<input type="text" name="dateRealisation" id="dateRealisation" placeholder="Saisir la date de réalisation" value="<c:out value="${param['dateRealisation']}"/>">
+					<input type="date" name="dateRealisation" id="dateRealisation" placeholder="Saisir la date de réalisation" value="<c:out value="${param['dateRealisation']}" default="0"/>">
 				</div>
 				<div>
 					<label for="datePremiereDiffusion">Date 1ère diffusion :</label>
-					<input type="text" name="datePremiereDiffusion" id="datePremiereDiffusion" placeholder="Saisir la date de première diffusion" value="<c:out value="${param['datePremiereDiffusion']}"/>">
+					<input type="date" name="datePremiereDiffusion" id="datePremiereDiffusion" placeholder="Saisir la date de première diffusion" value="<c:out value="${param['datePremiereDiffusion']}"/>">
 				</div>
 				<div>
 				  <select name="public">

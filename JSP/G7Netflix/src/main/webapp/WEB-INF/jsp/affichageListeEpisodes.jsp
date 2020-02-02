@@ -12,7 +12,7 @@
 		<div class="col-lg-2">
 		</div>
 		<div class="col-lg-8">
-			<c:if test="${saison.numero != null }">
+			<c:if test="${saison != null }">
 				<br><h2>Episodes de la Saison ${saison.numero} de ${serie.nom}</h2><br>
 				<div id="infoSaison">
 					<h3>Infos sur la saison</h3>
@@ -27,12 +27,13 @@
 								default="Non renseigné" /></li>
 					</ul>
 				</div>
-			</c:if>
-				<br><a	href='./<c:out value="${entiteeTraiter}"/>?
-					idserie=<c:out value="${serie.id}" default="0"/>
-					&idsaison=<c:out value="${saison.id}" default="0"/>&action=ajouter'>
+				<br><a class='btn btn-primary' href='./<c:out value="${entiteeTraiter}"/>?
+					idserie=<c:out value="${serie.id}" />
+					&idsaison=<c:out value="${saison.id}"/>&action=ajouter'>
 					Ajouter
-				</a><br>
+				</a>
+			</c:if>
+				<br>
 				<br><table>
 					<c:forEach items="${liste}" var="item">
 						<tr>

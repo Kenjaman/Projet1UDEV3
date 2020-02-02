@@ -2,8 +2,9 @@ body{
 	background-color: #ff8080;
 }
 
-#titre{
-	color: #d82c2e;
+
+#titre a{
+	color: #d82c2e !important;
 }
 
 .erreur{

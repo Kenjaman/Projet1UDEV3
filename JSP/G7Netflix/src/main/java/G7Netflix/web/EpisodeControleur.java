@@ -44,6 +44,8 @@ public class EpisodeControleur extends HttpServlet {
 	private DAOStatut statutDAO;
 	private DAOSerie serieDAO;
 	private DAOAffectation affDAO;
+	private Saison saisonEpisode;
+	private Serie serieSaison;
 
 	@Override
 	public void init() throws ServletException {
@@ -52,50 +54,25 @@ public class EpisodeControleur extends HttpServlet {
 		publicDAO = new DAOPublic(bddMyNetflix);
 		statutDAO = new DAOStatut(bddMyNetflix);
 		serieDAO = new DAOSerie(bddMyNetflix);
+		affDAO = new DAOAffectation(bddMyNetflix);
 	}
 
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setAttribute("entiteeTraiter", "episodes");
+		System.out.println("Nous somme dans /episodes");
 		try {
 			List<Episode> episodes = new ArrayList<Episode>();
-			if(req.getParameter("idsaison")!=null && req.getParameter("idserie")!= null) {
-				Integer idSerie = Integer.valueOf(req.getParameter("idserie"));
-				Serie serieSaison = serieDAO.getSerie(idSerie);
-				req.setAttribute("serie", serieSaison);
-				Integer idSaison = Integer.valueOf(req.getParameter("idsaison"));
-				Saison saisonEpisode = saisonDAO.getSaison(idSaison, serieSaison);
-				req.setAttribute("saison", saisonEpisode);
+			if(req.getServletContext().getAttribute("saison")!=null && req.getServletContext().getAttribute("serie")!=null){// on arrive d'un clique sur une serie puis d'une saison
+				serieSaison = (Serie) req.getServletContext().getAttribute("serie");
+				Saison saisonEpisode = (Saison) req.getServletContext().getAttribute("saison");
+				System.out.println("getServletcontext :"+req.getServletContext().getAttribute("saison"));
 				episodes = episodeDAO.getEpisodes(saisonEpisode);
 				req.setAttribute("liste", episodes);
-				if (req.getParameter("action")!=null) { 
-					if (req.getParameter("action").equals("ajouter")) {
-						List <Public> publics = publicDAO.getPublics();
-						req.setAttribute("publics", publics);
-						Affectation aff = affDAO.getAffectation("episode"); // <--- NIQUES TA MERE TOI !!! 
-						System.out.println(aff);
-						List <Statut> statuts = statutDAO.getStatuts(aff);
-						req.setAttribute("statuts", statuts);
-						if(idSerie != 0 && idSaison != 0) {
-							Integer numDernierEpisode = saisonDAO.getDernierEpisode(saisonEpisode);
-							req.setAttribute("dernierEpisode", numDernierEpisode);
-						}
-						req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_EPISODE).forward(req, resp);
-					}
-					else if (req.getParameter("action").equals("modifier")) {
-						//req.setAttribute("serie", serieDAO.getSerie(Integer.valueOf(req.getParameter("idserie"))));
-						//req.setAttribute("saison", saisonDAO.getSaison(Integer.valueOf(req.getParameter("idsaison")), serieSaison));
-						req.setAttribute("episode",episodeDAO.getEpisode(Integer.valueOf(req.getParameter("idepisode")),saisonEpisode));
-						req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_EPISODE).forward(req, resp);
-					}
-					//				else if (req.getParameter("action").equals("supprimer")) {
-					//					this.doPost(req, resp);
-					//				}
-				}
-				else if(req.getParameter("idepisode")!=null) { // Si on clique sur un episode
+				if(req.getParameter("idepisode")!=null) { // Si on clique sur un episode
 					Integer idEpisode = Integer.valueOf(req.getParameter("idepisode"));
-					req.setAttribute("episode", episodeDAO.getEpisode(idEpisode,saisonEpisode));
+					req.getServletContext().setAttribute("episode", episodeDAO.getEpisode(idEpisode,saisonEpisode));
 					req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE_EPISODE).forward(req, resp);
 				}else {
 					req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
@@ -103,8 +80,40 @@ public class EpisodeControleur extends HttpServlet {
 			}else { // Si on arrive depuis le menu de navigation
 				episodes=episodeDAO.getAllEpisodes();
 				req.setAttribute("liste", episodes);
+				if(req.getParameter("idsaison")!=null && req.getParameter("idserie")!=null) {
+					Integer idSaison = Integer.valueOf(req.getParameter("idsaison"));
+					Integer idSerie = Integer.valueOf(req.getParameter("idserie"));
+					serieSaison = serieDAO.getSerie(idSerie);
+					saisonEpisode = saisonDAO.getSaison(idSaison, serieSaison);
+					req.getServletContext().setAttribute("saison", saisonEpisode);
+					req.getServletContext().setAttribute("serie", serieSaison);
+				}
+			}
+			if (req.getParameter("action")!=null) { 
+				Affectation aff = affDAO.getAffectation("episode");
+				List <Public> publics = publicDAO.getPublics();
+				List <Statut> statuts = statutDAO.getStatuts(aff);
+				List <Saison> saisons = saisonDAO.getSaisons(serieSaison);
+				req.setAttribute("publics", publics);
+				req.setAttribute("saisons", saisons);
+				req.setAttribute("statuts", statuts);
+				if (req.getParameter("action").equals("ajouter")) {
+					if(serieSaison != null && saisonEpisode != null) {
+						Integer numDernierEpisode = saisonDAO.getDernierEpisode(saisonEpisode);
+						req.setAttribute("dernierEpisode", numDernierEpisode);
+					}
+					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_EPISODE).forward(req, resp);
+				}else if (req.getParameter("action").equals("modifier")) {
+					req.getServletContext().setAttribute("episode",episodeDAO.getEpisode(Integer.valueOf(req.getParameter("idepisode")),saisonEpisode));
+					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_EPISODE).forward(req, resp);
+				}
+				else if (req.getParameter("action").equals("supprimer")) {
+					System.out.println("todo Suppression");
+				}
+			}else {
 				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 			}
+
 		}
 		catch (SQLException | NumberFormatException | DonneesInvalidesException e) {
 			e.printStackTrace();
@@ -114,8 +123,7 @@ public class EpisodeControleur extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			Integer idSerie = req.getParameter("idserie") != null?Integer.valueOf(req.getParameter("idserie")):0;
-			Serie serieSaison = serieDAO.getSerie(idSerie);
+			Serie serieSaison = (Serie) req.getServletContext().getAttribute("serie");
 			Integer idSaison = Integer.valueOf(req.getParameter("idsaison"));
 			Saison saisonEpisode = saisonDAO.getSaison(idSaison, serieSaison);
 			Integer numEpisode = Integer.valueOf(req.getParameter("numeroEpisode"));

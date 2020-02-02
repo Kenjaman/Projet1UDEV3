@@ -51,13 +51,13 @@ public class SerieControleur extends HttpServlet {
 		try {
 			req.setAttribute("liste", serieDAO.getSeries());
 			if(req.getParameter("action")!=null) { // Si on a appuyer sur un bouton
-				req.getServletContext().setAttribute("series", serieDAO.getSeries()); //<----- POURQUOI j'ai fait ca ?? Où est ce que je m'en sert ??
+				//req.getServletContext().setAttribute("series", serieDAO.getSeries());
 				req.getServletContext().setAttribute("statuts", statutDAO.getStatuts(affDAO.getAffectation("serie")));
 				req.getServletContext().setAttribute("paysOrigines", paysDAO.getPays());
 				if(req.getParameter("action").equals("ajouter")) { // Appui sur ajouter
 					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SERIE).forward(req, resp);
 				}else if(req.getParameter("action").equals("modifier")) {//Transfert vers la page de modification 
-					req.setAttribute("serie", serieDAO.getSerie(Integer.valueOf(req.getParameter("id"))));
+					req.setAttribute("serie", serieDAO.getSerie(Integer.valueOf(req.getParameter("idserie"))));
 					req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SERIE).forward(req, resp);
 				}else if(req.getParameter("action").equals("supprimer")) {// Appui sur supprimer
 					this.doDelete(req, resp);
@@ -65,14 +65,20 @@ public class SerieControleur extends HttpServlet {
 					req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 				}
 			}else if(req.getParameter("idserie")!=null) {
-				req.getServletContext().setAttribute("idSerie", req.getParameter("idserie"));
-				req.getServletContext().getRequestDispatcher("/saisons").forward(req, resp);
+				req.setAttribute("entiteeTraiter", "saisons");
+				req.setAttribute("idSerie", req.getParameter("idserie"));
+				req.getServletContext().setAttribute("serie", serieDAO.getSerie(Integer.valueOf(req.getParameter("idserie"))));
+				System.out.println("Envoie vers /saisons");
+				req.getServletContext().getRequestDispatcher("/saisons").forward(req, resp); // envoi vers controlleur saison
 			}else {
 				req.getServletContext().getRequestDispatcher(VUE_AFFICHAGE).forward(req, resp);
 			}
-		} catch (SQLException | NumberFormatException | DonneesInvalidesException e) {
+		} catch (SQLException e){
+			req.setAttribute("erreurs", e.getMessage());
+			
+		}catch( NumberFormatException | DonneesInvalidesException e) {
 			// TODO Auto-generated catch block
-			req.setAttribute("erreurs", ((SQLException)e).getMessage());
+			req.setAttribute("erreurs", e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -94,13 +100,13 @@ public class SerieControleur extends HttpServlet {
 				resp.sendRedirect("series");
 			}else {
 				Serie serie = new Serie(nom,nomOriginal,anneeParution,synopsys,statut,paysOrigine);
-				System.out.println("ajout "+serie);
+				System.out.println("ajout "+serie.getNom());
 				serieDAO.addSerie(serie);
 				resp.sendRedirect("series");
 			}
 		} catch (DonneesInvalidesException e) {
 			req.setAttribute("erreursSerie", e.getErreurs());
-//			req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SERIE).forward(req, resp);
+			req.getServletContext().getRequestDispatcher(VUE_FORMULAIRE_SERIE).forward(req, resp);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {

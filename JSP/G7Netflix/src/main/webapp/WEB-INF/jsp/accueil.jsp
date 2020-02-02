@@ -6,5 +6,6 @@
   </head>
   <body>
 	<%@ include file="header.jsp"%>
+	<div class="content"><p>Bienvenue sur G7Netflix</p></div>
   </body>
 </html>

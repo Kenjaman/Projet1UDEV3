@@ -15,7 +15,7 @@
 				<form action="" method="post">
 				<br><header id="headerAjoutModifSaison">Fiche d'ajout/modification d'une saison</header><br>
 				<h3 id="titreAjoutModifSaison">
-					<c:out value="Serie : ${saison.serie.nom}" />
+					<c:out value="Serie : ${serie.nom}" />
 				</h3>
 				<div>
 					<input type='hidden' name="idSerie"
