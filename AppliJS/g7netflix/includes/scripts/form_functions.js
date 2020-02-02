@@ -46,6 +46,6 @@ function remplitCbRealisateurs(field){
 			}
 		}
 	};
-	xmlHttpReal.open("GET", "http://localhost/apinetflix/api.php?data=personnes&idfonction=4");
+	xmlHttpReal.open("GET", "https://www.devatom.net/formation/UDEV3/APINetflix/api.php?data=personnes&idfonction=4");
 	xmlHttpReal.send();
 }
