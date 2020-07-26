@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c335e0de-6cad-4e94-bf09-5615e9974084" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JSP/G7Netflix/src/main/java/G7Netflix/jdbc/DAOAffectation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JSP/G7Netflix/src/main/java/G7Netflix/jdbc/DAOAffectation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JSP/G7Netflix/src/main/java/G7Netflix/web/SerieControleur.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JSP/G7Netflix/src/main/java/G7Netflix/web/SerieControleur.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JSP/G7Netflix/src/main/webapp/WEB-INF/jsp/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../JSP/G7Netflix/src/main/webapp/WEB-INF/jsp/header.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JSP/G7Netflix/src/main/webapp/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/../JSP/G7Netflix/src/main/webapp/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,7 +11,7 @@
   </component>
   <component name="ComposerSettings">
     <execution>
-      <executable />
+      <executable path="composer" />
     </execution>
   </component>
   <component name="Git.Settings">
@@ -33,6 +29,16 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="All in rest-api" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/rest-api.http">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="HTTP Request.All in rest-api" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -58,11 +64,40 @@
       <updated>1574764796303</updated>
       <workItem from="1574764797779" duration="2457000" />
       <workItem from="1579508097638" duration="183000" />
-      <workItem from="1580657689056" duration="368000" />
+      <workItem from="1580657689056" duration="1177000" />
+      <workItem from="1583742765934" duration="1144000" />
+      <workItem from="1583744134661" duration="262000" />
+      <workItem from="1591842012586" duration="542000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="449" y="149" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1583744016239">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="449" y="149" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1536.824@0.0.1536.824" timestamp="1583744016239" />
+    <state x="545" y="325" key="ComposerInitDialogKey" timestamp="1583744191455">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="545" y="325" key="ComposerInitDialogKey/0.0.1536.824@0.0.1536.824" timestamp="1583744191455" />
+    <state width="1493" height="202" key="GridCell.Tab.0.bottom" timestamp="1591842553832">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="202" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1591842553832" />
+    <state width="1493" height="202" key="GridCell.Tab.0.center" timestamp="1591842553832">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="202" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1591842553832" />
+    <state width="1493" height="202" key="GridCell.Tab.0.left" timestamp="1591842553832">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="202" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1591842553832" />
+    <state width="1493" height="202" key="GridCell.Tab.0.right" timestamp="1591842553832">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="202" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1591842553832" />
   </component>
 </project>
